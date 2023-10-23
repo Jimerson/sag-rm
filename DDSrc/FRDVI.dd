@@ -1,0 +1,117 @@
+Use DataDict.pkg
+
+Open FRDVI
+Open FRDVH
+Open ICTE
+
+Register_Object oICTE_sl
+
+Class FRDVIDataDictionary is a DataDictionary
+    
+    Procedure Construct_Object
+        Forward Send Construct_Object
+        Set Main_File to FRDVI.File_Number
+
+        Set Add_Server_File to FRDVH.File_Number
+
+        Set Foreign_Field_Option DD_KEYFIELD DD_NOPUT to True
+        Set Foreign_Field_Option DD_KEYFIELD DD_FINDREQ to True
+        Set Foreign_Field_Option DD_INDEXFIELD DD_NOPUT to True
+        Set Foreign_Field_Option DD_INDEXFIELD DD_AUTOFIND to True
+        Set Foreign_Field_Option DD_INDEXFIELD DD_FINDREQ to True
+        Set Foreign_Field_Option DD_DEFAULT DD_DISPLAYONLY to True
+
+        Set Field_Option Field FRDVI.CODIGO DD_CAPSLOCK to True
+        Set Field_Option Field FRDVI.CODIGO DD_AUTOFIND to True
+        Set Key_Field_State Field FRDVI.CODIGO to True
+
+        Set Field_Option Field FRDVI.EMPRESA DD_CAPSLOCK to True
+
+        Set Field_Option Field FRDVI.NR_CTE DD_CAPSLOCK to True
+        Set Key_Field_State Field FRDVI.NR_CTE to True
+        Set Field_Option Field FRDVI.NR_CTE DD_AUTOFIND to True
+//        Set Field_Prompt_Object Field FRDVI.NR_CTE to oICTE_sl
+
+        Set Field_Option Field FRDVI.SERIE_CTE DD_CAPSLOCK to True
+        Set Key_Field_State Field FRDVI.SERIE_CTE to True
+        Set Field_Option Field FRDVI.SERIE_CTE DD_AUTOFIND to True
+
+        Set Field_Option Field FRDVI.PES_TRANSP DD_CAPSLOCK to True
+        Set Key_Field_State Field FRDVI.PES_TRANSP to True
+        Set Field_Option Field FRDVI.PES_TRANSP DD_AUTOFIND to True
+
+        Set Field_Option Field FRDVI.ORIGEM DD_CAPSLOCK to True
+
+        Set Field_Option Field FRDVI.DESTINO DD_CAPSLOCK to True
+
+        Set Field_Option Field FRDVI.PRODUTO DD_CAPSLOCK to True
+
+        Set Field_Exit_msg Field FRDVI.PESO_SAIDA to CalculaValores
+        
+        Set Field_Exit_msg Field FRDVI.VLR_FRETE to CalculaValores
+        
+        Set Field_Exit_msg Field FRDVI.PESO_CHEGADA to CalculaValores
+        
+        Set Field_Exit_msg Field FRDVI.VLR_SEGURO to CalculaValores
+        
+        Set Field_Exit_msg Field FRDVI.VLR_DESC_OUTROS to CalculaValores
+        
+        Set Field_Exit_msg Field FRDVI.VLR_RECEBIDO_ADTO to CalculaValores
+        
+        Set Field_Exit_msg Field FRDVI.SALDO_RECEBIDO to CalculaValores
+
+        Set Field_Option Field FRDVI.BANCO_DEPOSITO_ADTO DD_CAPSLOCK to True
+
+        Set Field_Option Field FRDVI.BANCO_DEPOSITO DD_CAPSLOCK to True
+
+    End_Procedure
+    
+    
+    Procedure CalculaValores Integer iColumn Number nValue
+        Number nVlrFreteTon nPesoSaida nPesoChegada nVlrSeguroFrete nVlrDescontoOutros nVlrRecebAdto nSaldoRecebido
+        Number nVlrTotalFrete nVlrDescQuebra nVlrFreteReceber nDiferenca
+        Integer iAlterado
+        
+        Get Field_Changed_State iColumn to iAlterado
+        
+        If (iAlterado <> 0) Begin
+            Get Field_Current_Value Field FRDVI.VLR_FRETE           to nVlrFreteTon
+            Get Field_Current_Value Field FRDVI.PESO_SAIDA          to nPesoSaida
+            Get Field_Current_Value Field FRDVI.PESO_CHEGADA        to nPesoChegada
+            Get Field_Current_Value Field FRDVI.VLR_SEGURO          to nVlrSeguroFrete
+            Get Field_Current_Value Field FRDVI.VLR_DESC_OUTROS     to nVlrDescontoOutros
+            Get Field_Current_Value Field FRDVI.VLR_RECEBIDO_ADTO   to nVlrRecebAdto
+            Get Field_Current_Value Field FRDVI.SALDO_RECEBIDO      to nSaldoRecebido
+            
+            Move ((nPesoSaida/1000)*nVlrFreteTon) to nVlrTotalFrete
+            Set Field_Changed_Value Field FRDVI.VLR_TOTAL           to nVlrTotalFrete
+            
+            Move (((nPesoSaida-nPesoChegada)/1000)*nVlrFreteTon)    to nVlrDescQuebra
+            Set Field_Changed_Value Field FRDVI.VLR_DESC_QUEBRA     to nVlrDescQuebra
+            
+            Move (nVlrTotalFrete-nVlrSeguroFrete-nVlrDescontoOutros-nVlrDescQuebra) to nVlrFreteReceber
+            Set Field_Changed_Value Field FRDVI.VLR_RECEBER         to nVlrFreteReceber
+            
+            Move (nVlrRecebAdto+nSaldoRecebido-nVlrFreteReceber) to nDiferenca
+            Set Field_Changed_Value Field FRDVI.DIFERENCA           to nDiferenca
+            
+        End
+    End_Procedure
+
+    Procedure Update
+        Forward Send Update
+        
+        Move (FRDVH.TOT_RECEITA_LIQ+FRDVI.VLR_RECEBER) to FRDVH.TOT_RECEITA_LIQ
+    End_Procedure
+
+    Procedure Backout
+        Forward Send Backout
+        Move (FRDVH.TOT_RECEITA_LIQ-FRDVI.VLR_RECEBER) to FRDVH.TOT_RECEITA_LIQ
+    End_Procedure
+
+End_Class
+
+#IFDEF Is$WebApp
+#ELSE
+Use ICTE.sl
+#ENDIF

@@ -1,0 +1,42 @@
+-----------------------------------------------------------------------------
+  DATE: 10/08/2021      TIME: 11:33                                  PAGE:  1
+  FILE DEFINITION FOR FILE: FRDVDEBANT (# 27)
+-----------------------------------------------------------------------------
+  DRIVER NAME               : MSSQLDRV
+  FILE ROOT NAME            : FRDVDESP.INT
+  USER DISPLAY NAME         : FRDVDEBANT
+  DATAFLEX FILE NAME        : FRDVDEBANT
+-----------------------------------------------------------------------------
+  RECORD LENGTH             : 1231      ( USED: 1231 )
+  MAX NUMBER OF RECORDS     : 2147483647  ( USED: 66 )
+  FILE COMPRESSION          : NONE
+  RE-USE DELETED SPACE      : YES
+  LOCKING TYPE              : RECORD
+  HEADER INTEGRITY CHECKING : NO 
+  TRANSACTION TYPE          : SERVER LOGGED
+  RECORD IDENTITY INDEX     : 0 ( 0 , 0 )
+  FILE LOGIN PARAMETER      : DFCONNID=SAGRM
+  SYSTEM FILE               : NO 
+-----------------------------------------------------------------------------
+
+NUM  FIELD NAME       TYPE SIZE  OFFST IX   RELATES TO FILE.FIELD
+---  ---------------  ---- ----- ----- --   ---------------------------------
+  1  FRDVH_COD        ASC      8     1  1   FRDVH.FIELD_1 (10,1)
+  2  SEQ              NUM    5.0     9  1   
+  3  PES_CODIGO       ASC      8    15      
+  4  RAZAO_SOCIAL     ASC     80    23      
+  5  DPR_DOCUM        ASC     16   103      
+  6  AGR_COD          ASC      8   119      
+  7  DESCRICAO        ASC     30   127      
+  8  VALOR            NUM   12.2   157      
+  9  DT_VENCTO        DAT     10   173      
+ 10  HISTORICO        TEX   1024   189      
+ 11  TIPO             NUM    1.0  1213      
+ 12  ABONADO          NUM    1.0  1215      
+
+
+INDEX# FIELDS          DES U/C    LENGTH LEVELS SEGMENTS MODE
+------ --------------- --- ---    ------ ------ -------- -------
+  1    FRDVH_COD       NO  NO       0      0       2     ON-LINE
+       SEQ             NO  NO 
+

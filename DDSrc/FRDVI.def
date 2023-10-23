@@ -1,0 +1,58 @@
+-----------------------------------------------------------------------------
+  DATE: 10/08/2021      TIME: 11:33                                  PAGE:  1
+  FILE DEFINITION FOR FILE: FRDVI (# 11)
+-----------------------------------------------------------------------------
+  DRIVER NAME               : MSSQLDRV
+  FILE ROOT NAME            : FRDVI.INT
+  USER DISPLAY NAME         : FRDVI
+  DATAFLEX FILE NAME        : FRDVI
+-----------------------------------------------------------------------------
+  RECORD LENGTH             : 478       ( USED: 478 )
+  MAX NUMBER OF RECORDS     : 2147483647  ( USED: 1 )
+  FILE COMPRESSION          : NONE
+  RE-USE DELETED SPACE      : YES
+  LOCKING TYPE              : RECORD
+  HEADER INTEGRITY CHECKING : NO 
+  TRANSACTION TYPE          : SERVER LOGGED
+  RECORD IDENTITY INDEX     : 0 ( 0 , 0 )
+  FILE LOGIN PARAMETER      : DFCONNID=SAGRM
+  SYSTEM FILE               : NO 
+-----------------------------------------------------------------------------
+
+NUM  FIELD NAME       TYPE SIZE  OFFST IX   RELATES TO FILE.FIELD
+---  ---------------  ---- ----- ----- --   ---------------------------------
+  1  CODIGO           ASC      8     1  1   FRDVH.FIELD_1 (10,1)
+  2  DATA             DAT     10     9      
+  3  EMPRESA          ASC     50    32      
+  4  NR_CTE           ASC     16    82  1   
+  5  SERIE_CTE        ASC      6    98  1   
+  6  PES_TRANSP       ASC      8   104  1   
+  7  ORIGEM           ASC     20   112      
+  8  DESTINO          ASC     20   132      
+  9  KM_INICIAL       NUM   10.0   152      
+ 10  KM_FINAL         NUM   10.0   163      
+ 11  PRODUTO          ASC     30   174      
+ 12  PESO_SAIDA       NUM   12.3   204      
+ 13  PESO_CHEGADA     NUM   12.3   221      
+ 14  VLR_FRETE        NUM   12.2   238      
+ 15  VLR_TOTAL        NUM   12.2   254      
+ 16  VLR_SEGURO       NUM   12.2   270      
+ 17  VLR_DESC_OUTROS  NUM   12.2   286      
+ 18  VLR_DESC_QUEBRA  NUM   12.2   302      
+ 19  VLR_RECEBER      NUM   12.2   318      
+ 20  VLR_RECEBIDO_ADTO  NUM   12.2   334      
+ 21  DATA_DEPOSITO_ADTO  DAT     10   350      
+ 22  BANCO_DEPOSITO_ADTO  ASC     20   373      
+ 23  SALDO_RECEBIDO   NUM   12.2   393      
+ 24  DATA_DEPOSITO    DAT     10   409      
+ 25  BANCO_DEPOSITO   ASC     20   432      
+ 26  DIFERENCA        NUM   12.2   452      
+
+
+INDEX# FIELDS          DES U/C    LENGTH LEVELS SEGMENTS MODE
+------ --------------- --- ---    ------ ------ -------- -------
+  1    CODIGO          NO  NO       0      0       4     ON-LINE
+       PES_TRANSP      NO  NO 
+       SERIE_CTE       NO  NO 
+       NR_CTE          NO  NO 
+

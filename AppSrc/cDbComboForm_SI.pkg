@@ -1,0 +1,177 @@
+Use Dfcentry.pkg
+Use BPCoreBase.bp
+
+
+{ DesignerClass=cDTComboForm }
+Class cDbComboForm_SI is a dbComboForm      
+    Procedure Construct_Object        
+        Integer iColor iCorSeq iCorSel
+        String sLabelAnt sPrefixo sSufixo sCorSeq sCorSel
+        Forward Send Construct_Object
+        
+        Get Color to iColor
+        Get Label to sLabelAnt
+        
+        { Visibility=Private }
+        Property Integer piColorAnt iColor
+        
+        { Visibility=Private }
+        Property String psLabelAnt sLabelAnt
+        
+        { Visibility=Private }
+        Property String psPrefixo ""
+        
+        { Visibility=Private }
+        Property String psSufixo ""
+        
+        { Visibility=Public }
+        Property Integer piColorSeq 
+        
+        { Visibility=Public }
+        Property Integer piColorSel 
+        
+        { Category=Behavior }
+        Property Boolean pbForceFillList False
+        
+        Get Server_Param of oBPCoreBase "P_PREFIXO_LABEL_SEL"       to sPrefixo
+        Get Server_Param of oBPCoreBase "P_SUFIXO_LABEL_SEL"        to sSufixo
+        Get Server_Param of oBPCoreBase "P_COR_PADRAO_SEQ_AUTO"     to sCorSeq
+        Get Server_Param of oBPCoreBase "P_COR_PADRAO_CAMPO_SEL"    to sCorSel
+        
+        Move (Eval(sCorSeq)) to iCorSeq
+        Move (Eval(sCorSel)) to iCorSel
+    
+        Set psPrefixo   to sPrefixo
+        Set psSufixo    to sSufixo
+        Set piColorSeq  to iCorSeq
+        Set piColorSel  to iCorSel
+
+        // Visual DataFlex 17.0 Migration Utility, added November 28, 2012: 09:32:51
+        #IF (!@ >= 120)
+        { InitialValue=0 }
+        #ENDIF
+        Property Integer Label_Col_Offset 0
+        // Visual DataFlex 17.0 Migration Utility, added November 28, 2012: 09:32:51
+        #IF (!@ >= 120)
+        { InitialValue=jMode_Top }
+        #ENDIF
+        Property Integer Label_Justification_Mode jMode_Top jMode_Top jMode_Left jMode_Right
+        // Visual DataFlex 17.0 Migration Utility, added November 28, 2012: 09:32:51
+        #IF (!@ >= 120)
+        { InitialValue=cb_code_display_both }
+        #ENDIF
+        Property Integer Code_display_Mode cb_code_display_both cb_code_display_both cb_code_display_description cb_code_display_code 
+        // Visual DataFlex 17.0 Migration Utility, added November 28, 2012: 09:32:51
+        #IF (!@ >= 120)
+        { InitialValue=cb_err_update_blank_value }
+        #ENDIF
+        Property Integer Undefined_display_Mode cb_err_update_blank_value cb_err_update_blank_value cb_err_update_none cb_err_update_window_value    
+        Property String psNameObject ""
+        Property Boolean Check_Visible False
+
+        ////Set Form_Border Item 0 to Border_Normal
+        Set ListRowCount    to    10 // how many drop-down rows are required (0 = use size to determine number of rows)
+        Set ListWidth       to    10 // width of dropped-down list (0=default width of edit)    
+        Set Entry_State to False
+
+    End_Procedure // Construct_Object
+
+    Procedure End_Construct_Object
+        Forward Send End_Construct_Object   
+
+    End_Procedure
+//    
+//    Procedure onSetFocus
+//        Set Color     to 10550453//15784895
+//        Set TextColor to clWindowText
+//    End_Procedure
+//
+//    Procedure onKillFocus
+//        Set Color     to clWindow
+//        Set TextColor to clWindowText
+//    End_Procedure   
+    
+    Procedure OnSetFocus
+        Integer iColorPad iCorSel
+        String sLabel sPrefixo sSufixo
+        
+        Forward Send OnSetFocus
+        
+        
+        Get Color to iColorPad      //Pega cor padrao configurada para o componente
+        Set piColorAnt to iColorPad 
+        Get piColorSel to iCorSel   //Pega cor padrao configurada para componentes selecionados
+        Set Color to iCorSel
+        
+        Get psPrefixo to sPrefixo
+        Get psSufixo  to sSufixo
+        
+        Get Label to sLabel
+        Set psLabelAnt to sLabel
+        Set Label to (Trim(sPrefixo)+Trim(sLabel)+Trim(sSufixo))
+        Set Label_FontWeight to FW_BOLD
+        
+        Set TextColor to clWindowText
+        
+    End_Procedure
+
+    Procedure OnKillFocus
+        Integer iColorPad
+        String sLabel
+        
+        Forward Send OnKillFocus
+
+        Get piColorAnt to iColorPad 
+        Set Color to iColorPad
+        
+        Get psLabelAnt to sLabel
+        Set Label to sLabel
+        
+        Set Label_FontWeight to FW_NORMAL
+        
+        Set TextColor to clWindowText
+    End_Procedure
+    
+    Procedure Combo_Fill_List
+        String sFileField sValues sStatusHelp
+        String[][2] sArrayList
+        Integer iDDO iDDField iLoop iCountArray
+        Boolean bLoadByVT bForceFillList
+        Handle hDD
+        
+        Get pbForceFillList  to bForceFillList
+        If (not(bForceFillList)) Forward Send Combo_Fill_List
+    
+        Get Data_File  item 0 to iDDO
+        Get Data_Field item 0 to iDDField
+        Get Server to hDD
+        
+        If (not(bForceFillList)) Get VerifyValidationObjectInField of oBPCoreBase hDD iDDField to bLoadByVT
+        Else Move False to bLoadByVT
+        If (not(bLoadByVT)) Begin
+        
+            Send Combo_Delete_Data
+        
+            Get Get_Names of (oBPCoreBase(Self)) iDDO iDDField C_GETNAME_BOTH to sFileField
+    
+            If (Trim(sFileField) <> "") Set psNameObject to sFileField
+            Set Entry_State to False
+            Get Get_Description of (oBPCoreBase(Self)) sFileField C_GETDESC_LABEL_LONG to sValues
+            If (Trim(sValues) <> "") Set Label to (Trim(sValues))
+            Get Get_Description of (oBPCoreBase(Self)) sFileField C_GETDESC_STATUS_HELP to sStatusHelp
+            If (Trim(sStatusHelp) <> "") Set Status_Help to sStatusHelp
+            
+            Get Get_List_Object_Array of (oBPCoreBase(Self)) (Trim(sFileField)) to sArrayList
+            
+            Move (SizeOfArray(sArrayList)) to iCountArray
+            For iLoop from 0 to (iCountArray-1)
+                Send Combo_Add_Item (Trim(sArrayList[iLoop][1])) (Trim(sArrayList[iLoop][0]))
+            Loop
+        End
+    End_Procedure
+  
+End_Class // 
+
+
+
+

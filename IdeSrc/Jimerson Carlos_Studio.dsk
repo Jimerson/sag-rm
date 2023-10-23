@@ -1,0 +1,94 @@
+[Workspace]
+CurrentProject=sag-rm.src
+Location=C:\Users\Jimerson Carlos\Documents\OneDrive - gcap.com.br\Pessoal\Des\Projetos\vdf\sag-rm\IdeSrc\Jimerson Carlos_Studio.dsk
+CreateNew=-1
+[TabWindows]
+GroupCount=1
+HorizontalGroups=1
+[TabGroup0]
+GroupSize=40
+SelectedTab=7
+[Window0]
+Filename=Workspace Dashboard
+ViewType=101
+Top=24
+Left=4
+Bottom=892
+Right=1319
+TabIndex=0
+TabGroup=0
+[Window1]
+Filename=C:\Users\Jimerson Carlos\Documents\OneDrive - gcap.com.br\Pessoal\Des\Projetos\vdf\sag-rm\AppSrc\BPCoreBase.bp
+ViewType=1
+Top=24
+Left=4
+Bottom=892
+Right=1319
+CursorLine=616
+CursorColumn=60
+TabIndex=3
+TabGroup=0
+[Window2]
+Filename=C:\Users\Jimerson Carlos\Documents\OneDrive - gcap.com.br\Pessoal\Des\Projetos\vdf\sag-rm\AppSrc\sag-rm.src
+ViewType=1
+Top=24
+Left=4
+Bottom=892
+Right=1319
+CursorLine=274
+CursorColumn=41
+TabIndex=4
+TabGroup=0
+[Window3]
+Filename=C:\Users\Jimerson Carlos\Documents\OneDrive - gcap.com.br\Pessoal\Des\Projetos\vdf\sag-rm\AppSrc\cCJMenuItem_SI.pkg
+ViewType=1
+Top=24
+Left=4
+Bottom=892
+Right=1319
+CursorLine=65
+CursorColumn=9
+TabIndex=5
+TabGroup=0
+[Window4]
+Filename=C:\Users\Jimerson Carlos\Documents\OneDrive - gcap.com.br\Pessoal\Des\Projetos\vdf\sag-rm\AppSrc\VWGERACTEMDFE.vw
+ViewType=2
+Top=24
+Left=4
+Bottom=892
+Right=1319
+TabIndex=1
+TabGroup=0
+[Window5]
+Filename=C:\Users\Jimerson Carlos\Documents\OneDrive - gcap.com.br\Pessoal\Des\Projetos\vdf\sag-rm\AppSrc\VWCADRDV.vw
+ViewType=1
+Top=24
+Left=4
+Bottom=892
+Right=1319
+CursorLine=1535
+CursorColumn=81
+TabIndex=2
+TabGroup=0
+[Window6]
+Filename=C:\Users\Jimerson Carlos\Documents\OneDrive - gcap.com.br\Pessoal\Des\Projetos\vdf\sag-rm\AppSrc\sag-cfg.src
+ViewType=1
+Top=24
+Left=4
+Bottom=892
+Right=1319
+CursorLine=382
+CursorColumn=41
+TabIndex=6
+TabGroup=0
+[Window7]
+Filename=C:\Users\Jimerson Carlos\Documents\OneDrive - gcap.com.br\Pessoal\Des\Projetos\vdf\sag-rm\AppSrc\DGLoginCfg.dg
+ViewType=1
+Top=24
+Left=4
+Bottom=892
+Right=1319
+CursorLine=84
+CursorColumn=31
+TabIndex=7
+TabGroup=0

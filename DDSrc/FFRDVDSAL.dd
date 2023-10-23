@@ -1,0 +1,44 @@
+Use DataDict.pkg
+
+Open FFRDVDSAL
+Open FRDVH
+
+Class FFRDVDSALDataDictionary is a DataDictionary
+    
+    Procedure Construct_Object
+        Forward Send Construct_Object
+        Set Main_File to FFRDVDSAL.File_Number
+
+        Set Add_Server_File to FRDVH.File_Number
+
+        Set Foreign_Field_Option DD_KEYFIELD DD_NOPUT to True
+        Set Foreign_Field_Option DD_KEYFIELD DD_FINDREQ to True
+        Set Foreign_Field_Option DD_INDEXFIELD DD_NOPUT to True
+        Set Foreign_Field_Option DD_DEFAULT DD_DISPLAYONLY to True
+
+        Set Field_Option Field FFRDVDSAL.FRDVH_COD DD_AUTOFIND to True
+        Set Field_Option Field FFRDVDSAL.FRDVH_COD DD_CAPSLOCK to True
+        Set Key_Field_State Field FFRDVDSAL.FRDVH_COD to True
+
+        Set Field_Option Field FFRDVDSAL.SEQ DD_AUTOFIND to True
+        Set Key_Field_State Field FFRDVDSAL.SEQ to True
+
+        Set Field_Option Field FFRDVDSAL.PES_CODIGO DD_CAPSLOCK to True
+
+        Set Field_Option Field FFRDVDSAL.RAZAO_SOCIAL DD_CAPSLOCK to True
+
+        Set Field_Option Field FFRDVDSAL.DPR_DOCUM DD_CAPSLOCK to True
+
+        Set Field_Option Field FFRDVDSAL.AGR_COD DD_CAPSLOCK to True
+
+        Set Field_Option Field FFRDVDSAL.DESCRICAO DD_CAPSLOCK to True
+
+        Set Field_Option Field FFRDVDSAL.HISTORICO DD_CAPSLOCK to True
+
+        Set Field_Label_Long Field FFRDVDSAL.ABONADO to "Abonado"
+        Set Field_Label_Short Field FFRDVDSAL.ABONADO to "Abonado"
+        Set Field_Class_Name Field FFRDVDSAL.ABONADO to "Checkbox"
+
+    End_Procedure
+
+End_Class

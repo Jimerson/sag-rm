@@ -1,0 +1,34 @@
+-----------------------------------------------------------------------------
+  DATE: 10/08/2021      TIME: 11:33                                  PAGE:  1
+  FILE DEFINITION FOR FILE: GPARAM (# 9)
+-----------------------------------------------------------------------------
+  DRIVER NAME               : MSSQLDRV
+  FILE ROOT NAME            : GPARAM.INT
+  USER DISPLAY NAME         : GPARAM
+  DATAFLEX FILE NAME        : GPARAM
+-----------------------------------------------------------------------------
+  RECORD LENGTH             : 16540     ( USED: 16540 )
+  MAX NUMBER OF RECORDS     : 2147483647  ( USED: 4 )
+  FILE COMPRESSION          : NONE
+  RE-USE DELETED SPACE      : YES
+  LOCKING TYPE              : RECORD
+  HEADER INTEGRITY CHECKING : NO 
+  TRANSACTION TYPE          : SERVER LOGGED
+  RECORD IDENTITY INDEX     : 0 ( 0 , 0 )
+  FILE LOGIN PARAMETER      : DFCONNID=SAGRM
+  SYSTEM FILE               : NO 
+-----------------------------------------------------------------------------
+
+NUM  FIELD NAME       TYPE SIZE  OFFST IX   RELATES TO FILE.FIELD
+---  ---------------  ---- ----- ----- --   ---------------------------------
+  1  NOME             ASC     50     1  1   
+  2  VALOR            ASC     50    51      
+  3  OBSERVACAO       TEX   1024   101      
+  4  DATA_C           DTM     26 16484      
+  5  DATA_M           DTM     26 16507      
+
+
+INDEX# FIELDS          DES U/C    LENGTH LEVELS SEGMENTS MODE
+------ --------------- --- ---    ------ ------ -------- -------
+  1    NOME            NO  NO       0      0       1     ON-LINE
+

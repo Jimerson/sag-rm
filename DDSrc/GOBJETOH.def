@@ -1,0 +1,33 @@
+-----------------------------------------------------------------------------
+  DATE: 10/08/2021      TIME: 11:33                                  PAGE:  1
+  FILE DEFINITION FOR FILE: GOBJETOH (# 24)
+-----------------------------------------------------------------------------
+  DRIVER NAME               : MSSQLDRV
+  FILE ROOT NAME            : GOBJETOH.INT
+  USER DISPLAY NAME         : GOBJETOH
+  DATAFLEX FILE NAME        : GOBJETOH
+-----------------------------------------------------------------------------
+  RECORD LENGTH             : 221       ( USED: 221 )
+  MAX NUMBER OF RECORDS     : 2147483647  ( USED: 11 )
+  FILE COMPRESSION          : NONE
+  RE-USE DELETED SPACE      : YES
+  LOCKING TYPE              : RECORD
+  HEADER INTEGRITY CHECKING : NO 
+  TRANSACTION TYPE          : SERVER LOGGED
+  RECORD IDENTITY INDEX     : 0 ( 0 , 0 )
+  FILE LOGIN PARAMETER      : DFCONNID=SAGRM
+  SYSTEM FILE               : NO 
+-----------------------------------------------------------------------------
+
+NUM  FIELD NAME       TYPE SIZE  OFFST IX   RELATES TO FILE.FIELD
+---  ---------------  ---- ----- ----- --   ---------------------------------
+  1  OBJETO           ASC     50     1  1   
+  2  LABEL_LONG       ASC     40    51      
+  3  LABEL_SHORT      ASC     20    91      
+  4  STATUS_HELP      ASC    100   111      
+
+
+INDEX# FIELDS          DES U/C    LENGTH LEVELS SEGMENTS MODE
+------ --------------- --- ---    ------ ------ -------- -------
+  1    OBJETO          NO  NO       0      0       1     ON-LINE
+

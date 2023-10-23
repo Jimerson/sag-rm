@@ -1,0 +1,33 @@
+-----------------------------------------------------------------------------
+  DATE: 10/08/2021      TIME: 11:33                                  PAGE:  1
+  FILE DEFINITION FOR FILE: GUSER (# 3)
+-----------------------------------------------------------------------------
+  DRIVER NAME               : MSSQLDRV
+  FILE ROOT NAME            : GUSER.INT
+  USER DISPLAY NAME         : GUSER
+  DATAFLEX FILE NAME        : GUSER
+-----------------------------------------------------------------------------
+  RECORD LENGTH             : 127       ( USED: 127 )
+  MAX NUMBER OF RECORDS     : 2147483647  ( USED: 1 )
+  FILE COMPRESSION          : NONE
+  RE-USE DELETED SPACE      : YES
+  LOCKING TYPE              : RECORD
+  HEADER INTEGRITY CHECKING : NO 
+  TRANSACTION TYPE          : SERVER LOGGED
+  RECORD IDENTITY INDEX     : 0 ( 0 , 0 )
+  FILE LOGIN PARAMETER      : DFCONNID=SAGRM
+  SYSTEM FILE               : NO 
+-----------------------------------------------------------------------------
+
+NUM  FIELD NAME       TYPE SIZE  OFFST IX   RELATES TO FILE.FIELD
+---  ---------------  ---- ----- ----- --   ---------------------------------
+  1  ID               ASC     20     1  1   
+  2  NOME             ASC     50    21      
+  3  ATIVO            NUM    1.0    71      
+  4  SENHA            ASC     40    77      
+
+
+INDEX# FIELDS          DES U/C    LENGTH LEVELS SEGMENTS MODE
+------ --------------- --- ---    ------ ------ -------- -------
+  1    ID              NO  NO       0      0       1     ON-LINE
+

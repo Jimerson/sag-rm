@@ -1,0 +1,282 @@
+Use cCrystal.pkg
+Use Prnt_dlg.pkg
+
+Define PE_SUBREPORT_NAME_LEN for 512
+
+Define PS_REPORT_HEADER for "RH"
+Define PS_PAGE_HEADER   for "PH"
+Define PS_GROUP_HEADER  for "GHn" // Onde "n" referese ao numero do grupo
+Define PS_DETAIL        for "D"
+Define PS_GROUP_FOOTER  for "GFn" // Onde "n" referese ao numero do grupo
+Define PS_PAGE_FOOTER   for "PF"
+Define PS_REPORT_FOOTER for "RF"
+
+Class cCrystal_SI is a cCrystal
+    
+    Procedure Construct_Object
+        Forward Send Construct_Object
+        
+        { Visibility=Public }
+        Property String psReportNameShort ""
+        
+        { Visibility=Public }
+        Property String psReportTitle ""
+        
+        Object oSelectPrinter is a PrintDialog
+        End_Object // Dialogo e impressao para selecionar impressora
+
+    End_Procedure
+
+    Procedure End_Construct_Object
+        String sReportName
+        Forward Send End_Construct_Object
+
+        Get psReportName to sReportName
+        Set psReportNameShort to sReportName 
+    End_Procedure
+    
+    Procedure OnDisplayReport Handle hoReport
+        Handle hoPreview hoViewer
+        Integer iDestination iZoomFactor iGroups
+
+        Forward Send OnDisplayReport hoReport
+
+        Get PreviewObject of hoReport to hoPreview
+        If (hoPreview) Begin
+            // Preview Com Object
+            Get ActiveXReportViewerObject of hoReport to hoViewer
+            Set ComDisplayToolbar of hoViewer to True
+            Set ComDisplayTabs of hoViewer to True
+            Set ComDisplayGroupTree of hoViewer to false
+            Get ComNumberOfGroup of hoReport to iGroups // Quantidade de grupos
+            Set ComEnableGroupTree of hoViewer to (iGroups > 0)
+            Set ComEnablePrintButton of hoViewer to True
+            Set ComEnableCloseButton of hoViewer to True
+            Set ComEnableStopButton of hoViewer to True
+            Set ComEnableRefreshButton of hoViewer to True
+            Set ComEnableExportButton of hoViewer to True
+            Set ComEnableSearchExpertButton of hoViewer to True
+            Set ComEnableHelpButton of hoViewer to False
+            Set ComEnableZoomControl of hoViewer to True
+            Set ComEnableProgressControl of hoViewer to True
+            Set ComEnableSearchControl of hoViewer to True
+            Set ComEnableNavigationControls of hoViewer to True
+            Set ComEnableDrillDown of hoViewer to True
+            Set ComEnableAnimationCtrl of hoViewer to False
+            Set ComEnableSelectExpertButton of hoViewer to True
+            Set ComLaunchHTTPHyperlinksInNewBrowser of hoViewer to True
+
+            // Setar zoom de acordo com o parametro (1 - Ajustar … largura; 2 - Ajustar … pagina; Outro - % de zoom)
+            Get peOutputDestination to iDestination
+            If (iDestination = PRINT_TO_WINDOW) Begin
+                String sWindowTitle
+                //Get psWindowTitle to sWindowTitle
+                Set Label of hoPreview to sWindowTitle
+                //Move (Server_Param('P_PRINT_ZOOMPREVIEWWINDOW','V')) to iZoomFactor
+                Move 100 to iZoomFactor
+                Set piZoom of hoPreview to iZoomFactor
+            End
+        End
+        
+    End_Procedure
+    
+    // Event is called when report is sent to Export
+        Procedure OnExportReport Handle hoReport
+            Handle hoExport
+            
+            Forward Send OnExportReport hoReport
+            
+            // By default Export options will be prompted when report is run.
+            
+            // Or, Export can be set up within the program
+            //Set pbExportPrompt of hoReport to False // suppress prompt for all export information
+            //Get ExportObject of hoReport to hoExport
+            
+            // Sample for export to disk file (word)
+            //Set ComDestinationType of hoExport to crEDTDiskFile
+            //Set ComFormatType      of hoExport to crEFTWordForWindows
+            //Set ComDiskFileName    of hoExport to "Report.dat"
+            
+            // Sample for export to disk file (XML)
+            //Set ComDestinationType of hoExport to crEDTDiskFile
+            //Set ComFormatType      of hoExport to crEFTXML
+            //Set ComXMLFileName     of hoExport to "Report.xml"
+            
+            // Sample for export to disk file (HTML)
+            //Set ComDestinationType of hoExport to crEDTDiskFile
+            //Set ComFormatType      of hoExport to crEFTHTML40
+            //Set ComHTMLFileName    of hoExport to "Report.html"
+            
+            // Sample for export to mapi
+            //Get ExportObject of hoReport to hoExport
+            //Set ComDestinationType of hoExport to crEDTEMailMAPI
+            //Set ComFormatType      of hoExport to crEFTWordForWindows
+            //Set ComDiskFileName    of hoExport to "Report.dat"
+            //Set ComMailToList      of hoExport to "Add-name@name.net"
+            //Set ComMailSubject     of hoExport to "Add-Subject"
+            //Set ComMailMessage     of hoExport to "Add-Message"
+            //Set ComMailBccList     of hoExport to "Add-name@name.net"
+            
+            // Sample for export to application (Word)
+            //Get ExportObject of hoReport to hoExport
+            //Set ComDestinationType of hoExport to crEDTApplication
+            //Set ComFormatType      of hoExport to crEFTWordForWindows
+        
+        End_Procedure // OnExportReport
+    
+    Procedure OnInitializeReport Handle hoReport
+        Handle hoDatabase
+        Short ShortVariable
+        String sReportTitle
+        
+        Forward Send OnInitializeReport hoReport
+        
+        Set ComUseIndexForSpeed of hoReport to True
+        
+        Get DatabaseObject of hoReport to hoDatabase
+        
+        Get psReportTitle to sReportTitle
+
+        Handle hoApp
+        Get ApplicationObject to hoApp
+        Send ComLogOnServer of hoApp "crdb_odbc.dll" gsRptServerNameBD gsRptDatabaseName gsRptUserID gsRptPassword
+        
+        Send Seta_Formula_Crystal "GSCOD_USER" ('"'+(Trim(Uppercase(gsCodUser)))+'"')
+        
+        Set ComReportTitle of hoReport to (Trim(sReportTitle))
+        
+    End_Procedure
+
+    Procedure SubSelectionFormula String sSubReport String sFormula
+        Handle hoReport hoSubReport
+        Get ReportObject to hoReport
+        Get GetSubReportObjectbyName of hoReport sSubReport to hoSubReport
+        If (hoSubReport) Set ComRecordSelectionFormula of hoSubReport to sFormula
+    End_Procedure
+    
+    Function SubSelectionFormula String sSubReport Returns String
+        Handle hoReport hoSubReport
+        String sFormula
+        Get ReportObject to hoReport
+        Get GetSubReportObjectbyName of hoReport sSubReport to hoSubReport
+        If (hoSubReport) Get ComRecordSelectionFormula of hoSubReport to sFormula
+        Function_Return sFormula
+    End_Function
+
+    // Retrocompatibilidade
+    Procedure Set SelectionFormula String sFormula
+        Handle hoReport
+        Get ReportObject to hoReport
+        Set ComRecordSelectionFormula of hoReport to sFormula
+    End_Procedure
+
+    // Retrocompatibilidade
+    Function SelectionFormula Returns String
+        Handle hoReport
+        String sFormula
+        Get ReportObject to hoReport
+        Get ComRecordSelectionFormula of hoReport to sFormula
+        Function_Return sFormula
+    End_Function
+
+    // Retrocompatibilidade
+    Procedure SelectAndSetPrinter
+        Integer iResult
+        String sDevice sPort sDriver
+        Get PrintDialog of (oSelectPrinter(Self)) to iResult
+        If (iResult) Procedure_Return
+        Get DeviceName of (oSelectPrinter(Self)) to sDevice
+        Get OutputName of (oSelectPrinter(Self)) to sPort
+        Get DriverName of (oSelectPrinter(Self)) to sDriver
+        
+        Handle hoReport
+        Get ReportObject to hoReport
+        Send ComSelectPrinter of hoReport sDriver sDevice sPort
+    End_Procedure
+
+    // Retrocompatibilidade    
+    Function Existe_Formula String sFormula Returns Boolean
+        Integer iSize iCount
+        Variant vFormulas vFormula
+        Handle hoReport hoFormulas hoFormula
+        String sName
+        Boolean bResult
+        
+        Get ReportObject to hoReport
+                
+        Get Create U_cCrystalFormulaFieldDefinitions to hoFormulas
+        Get Create U_cCrystalFormulaFieldDefinition to hoFormula
+        Get ComFormulaFields of hoReport to vFormulas
+        Set pvComObject of hoFormulas to vFormulas
+        Get ComCount of hoFormulas to iSize
+        
+        Move False to bResult
+        
+        For iCount from 1 to iSize
+            Get ComItem of hoFormulas iCount to vFormula
+            Set pvComObject of hoFormula to vFormula
+            Get ComName of hoFormula to sName
+            If (Uppercase(sName) = Uppercase("{@"+sFormula+"}")) Begin
+                Move True to bResult
+                Send ReleaseComObject of hoFormula
+                Break
+            End
+            Send ReleaseComObject of hoFormula 
+        Loop
+        
+        Send Destroy of hoFormula
+        Send Destroy of hoFormulas
+        
+        Function_Return bResult
+    End_Function
+
+    // Associa valor para da formula
+    // Retrocompatibilidade    
+    Procedure Seta_Formula_Crystal String sFormula String sValue
+        Boolean bExiste
+        Get Existe_Formula sFormula to bExiste
+        If (bExiste) Begin
+            Handle hoReport
+            Get ReportObject to hoReport
+            Send AssignFormula of hoReport sFormula sValue
+        End
+    End_Procedure
+    
+    // Retrocompatibilidade    
+    Procedure AddSortField String sFieldName Integer iSortType
+        Handle hoReport
+        Integer iSepIndex
+        String sTable sField
+
+        Get ReportObject to hoReport
+        
+        Move (Pos(".", sFieldName, 0)) to iSepIndex
+        Move (Left(sFieldName, iSepIndex-1)) to sTable
+        Move (Right(sFieldName, Length(sFieldName) - iSepIndex)) to sField
+        Move (Replaces("{", sTable, "")) to sTable
+        Move (Replaces("}", sField, "")) to sField
+
+        If (iSortType = 1) Send AppendSortField of hoReport sTable sField crAscendingOrder
+        Else Send AppendSortField of hoReport sTable sField crDescendingOrder
+    End_Procedure
+    
+    Procedure Section_Visible String sArea Boolean bVisible
+        Handle hoReport hoAreas hoArea
+        Variant vAreas vArea
+        
+        Get ReportObject to hoReport
+        Get Create U_cCrystalAreas to hoAreas
+        Get Create U_cCrystalArea to hoArea
+        
+        Get ComAreas of hoReport to vAreas
+        Set pvComObject of hoAreas to vAreas
+        
+        Get ComItem     of hoAreas sArea to vArea
+        Set pvComObject of hoArea to vArea
+        Set ComSuppress of hoArea to (not(bVisible))
+
+        Send Destroy of hoArea
+        Send Destroy of hoAreas
+    End_Procedure
+
+End_Class

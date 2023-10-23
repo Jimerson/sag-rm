@@ -1,0 +1,96 @@
+Use cProcessStatusPanel.pkg
+
+#IFNDEF ghoStatusPanel
+    Global_Variable Handle ghoStatusPanel // will contain the ID of the global StatusPanel object
+#ENDIF
+
+Object psStatusPanel is a cProcessStatusPanel
+    
+    Move Self to ghoStatusPanel // this can be used throughout your applicaton to access this object
+    
+    Set Size to 100 280
+
+    Object oTitleTxt is a TextBox
+        Set location to 10 10
+        Set Auto_Size_State to False
+        Set size to 20 264
+        Set Justification_Mode to JMode_Center
+        Set peAnchors to anTopLeftRight
+    End_Object
+
+    Object oMessageTxt is a TextBox
+        Set location to 25 10
+        Set Auto_Size_State to False
+        Set Size to 20 264
+        Set peAnchors to anTopLeftRight
+    End_Object
+
+    Object oActionTxt is a TextBox
+        Set Auto_Size_State to False
+        Set Size to 31 259
+        Set Location to 45 10
+        Set peAnchors to anAll
+        Set Justification_Mode to JMode_Left
+    End_Object
+
+    Object oStopButton is a Button
+        Set Size to 14 74
+        Set Location to 81 103
+        Set Label to C_$Cancel
+        Set peAnchors to anBottomLeftRight
+        
+        Procedure OnClick
+            Send Close_panel
+        End_Procedure
+    
+    End_Object
+
+    // These messages bind the standard cProcessStatusPanel interface to the actual
+    // objects defined within this instance of the status panel.
+    
+    // note: all of the messages that change text should be forwarded
+    // as the forwarded messages allows the panel to paint when in a tight loop
+
+    Procedure Set Message_Text String sText
+        Set Label of oMessageTxt to sText
+        Forward Set Message_Text to sText
+    End_Procedure
+    
+    Function Message_Text Returns String
+        Function_Return (Label(oMessageTxt))
+    End_Function
+    
+    Procedure Set Action_Text String sText
+        Set Label of oActionTxt to sText
+        Forward Set Action_Text to sText
+    End_Procedure
+    
+    Function Action_Text Returns String
+        Function_Return (Label(oActionTxt))
+    End_Function
+    
+    Procedure Set Button_Text String sText
+        Set Label of oStopButton to sText
+        Forward Set Button_Text to sText
+    End_Procedure
+    
+    Function Button_Text Returns String
+        Function_Return (Label(oStopButton))
+    End_Function
+    
+    Procedure Set Title_Text String sText
+        Set Label of oTitleTxt to sText
+        Forward Set Title_Text to sText
+    End_Procedure
+    
+    Function Title_Text Returns String
+        Function_Return (Label(oTitleTxt))
+    End_Function
+
+    // gets called when status panel is activated passing whether a button
+    // should appear
+    Procedure EnableCancelButton Boolean bEnable
+        Set Enabled_State of oStopButton to bEnable
+    End_Procedure
+   
+End_Object

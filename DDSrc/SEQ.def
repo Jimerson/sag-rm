@@ -1,0 +1,25 @@
+-----------------------------------------------------------------------------
+  DATE: 09/03/2021      TIME: 23:20                                  PAGE:  1
+  FILE DEFINITION FOR FILE: SEQ (# 4)
+-----------------------------------------------------------------------------
+  DRIVER NAME               : MSSQLDRV
+  FILE ROOT NAME            : SEQ.INT
+  USER DISPLAY NAME         : SEQ
+  DATAFLEX FILE NAME        : SEQ
+-----------------------------------------------------------------------------
+  RECORD LENGTH             : 11        ( USED: 11 )
+  MAX NUMBER OF RECORDS     : 2147483647  ( USED: 0 )
+  FILE COMPRESSION          : NONE
+  RE-USE DELETED SPACE      : YES
+  LOCKING TYPE              : RECORD
+  HEADER INTEGRITY CHECKING : NO 
+  TRANSACTION TYPE          : SERVER LOGGED
+  RECORD IDENTITY INDEX     : 0 ( 0 , 0 )
+  FILE LOGIN PARAMETER      : DFCONNID=SAGATE
+  SYSTEM FILE               : YES
+-----------------------------------------------------------------------------
+
+NUM  FIELD NAME       TYPE SIZE  OFFST IX   RELATES TO FILE.FIELD
+---  ---------------  ---- ----- ----- --   ---------------------------------
+  1  SEQ_FRDVH        NUM    8.0     1      
+

@@ -1,0 +1,44 @@
+Use DataDict.pkg
+
+Open GWVIEWS
+
+Class GWVIEWSDataDictionary is a DataDictionary
+    
+    Procedure Construct_Object
+        Forward Send Construct_Object
+        Set Main_File to GWVIEWS.File_Number
+
+        Set Foreign_Field_Option DD_KEYFIELD DD_NOPUT to True
+        Set Foreign_Field_Option DD_KEYFIELD DD_FINDREQ to True
+        Set Foreign_Field_Option DD_INDEXFIELD DD_NOPUT to True
+        Set Foreign_Field_Option DD_DEFAULT DD_DISPLAYONLY to True
+
+        Set Field_Option Field GWVIEWS.COD_CURRENT_USER DD_AUTOFIND to True
+        Set Field_Label_Long Field GWVIEWS.COD_CURRENT_USER to "Usu rio Atual"
+        Set Field_Label_Short Field GWVIEWS.COD_CURRENT_USER to "Usu rio Atual"
+        Set Field_Option Field GWVIEWS.COD_CURRENT_USER DD_CAPSLOCK to True
+        Set Key_Field_State Field GWVIEWS.COD_CURRENT_USER to True
+
+        Set Field_Option Field GWVIEWS.COD_USER DD_AUTOFIND to True
+        Set Field_Option Field GWVIEWS.COD_USER DD_CAPSLOCK to True
+        Set Field_Label_Long Field GWVIEWS.COD_USER to "C¢d. Usu rio"
+        Set Field_Label_Short Field GWVIEWS.COD_USER to "C¢d. Usu rio"
+        Set Key_Field_State Field GWVIEWS.COD_USER to True
+
+        Set Field_Option Field GWVIEWS.COD_VIEW DD_AUTOFIND to True
+        Set Field_Label_Long Field GWVIEWS.COD_VIEW to "C¢d. View"
+        Set Field_Label_Short Field GWVIEWS.COD_VIEW to "C¢d. View"
+        Set Key_Field_State Field GWVIEWS.COD_VIEW to True
+
+        Set Field_Option Field GWVIEWS.NOME DD_CAPSLOCK to True
+        Set Field_Label_Long Field GWVIEWS.NOME to "Nome"
+        Set Field_Label_Short Field GWVIEWS.NOME to "Nome"
+
+        Set Field_Label_Long Field GWVIEWS.STATUS to "Situa‡Æo"
+        Set Field_Label_Short Field GWVIEWS.STATUS to "Situa‡Æo"
+        
+//        Set Field_Value_Table Field GWVIEWS.STATUS to oStatusWVIEW
+
+    End_Procedure
+
+End_Class

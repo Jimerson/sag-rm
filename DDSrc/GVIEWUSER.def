@@ -1,0 +1,33 @@
+-----------------------------------------------------------------------------
+  DATE: 10/08/2021      TIME: 11:33                                  PAGE:  1
+  FILE DEFINITION FOR FILE: GVIEWUSER (# 6)
+-----------------------------------------------------------------------------
+  DRIVER NAME               : MSSQLDRV
+  FILE ROOT NAME            : GVIEWUSER.INT
+  USER DISPLAY NAME         : GVIEWUSER
+  DATAFLEX FILE NAME        : GVIEWUSER
+-----------------------------------------------------------------------------
+  RECORD LENGTH             : 43        ( USED: 43 )
+  MAX NUMBER OF RECORDS     : 2147483647  ( USED: 9 )
+  FILE COMPRESSION          : NONE
+  RE-USE DELETED SPACE      : YES
+  LOCKING TYPE              : RECORD
+  HEADER INTEGRITY CHECKING : NO 
+  TRANSACTION TYPE          : SERVER LOGGED
+  RECORD IDENTITY INDEX     : 0 ( 0 , 0 )
+  FILE LOGIN PARAMETER      : DFCONNID=SAGRM
+  SYSTEM FILE               : NO 
+-----------------------------------------------------------------------------
+
+NUM  FIELD NAME       TYPE SIZE  OFFST IX   RELATES TO FILE.FIELD
+---  ---------------  ---- ----- ----- --   ---------------------------------
+  1  COD_USER         ASC     20     1  1   GUSER.FIELD_1 (3,1)
+  2  COD_VIEW         NUM    4.0    21  1   GVIEWS.FIELD_1 (5,1)
+  3  STATUS           NUM    1.0    27      
+
+
+INDEX# FIELDS          DES U/C    LENGTH LEVELS SEGMENTS MODE
+------ --------------- --- ---    ------ ------ -------- -------
+  1    COD_USER        NO  NO       0      0       2     ON-LINE
+       COD_VIEW        NO  NO 
+

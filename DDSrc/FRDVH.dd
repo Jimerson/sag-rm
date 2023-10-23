@@ -1,0 +1,93 @@
+Use DataDictionary_SI.pkg
+Use ListValidationTable.pkg
+
+Open FRDVH
+Open FRDVI
+Open GSEQ
+Open FRDVDESP
+Open FRDVABAS
+Open FFRDVDSAL
+Open FFRDVMEC
+Open FFRDVABAEX
+
+Register_Object oFRDVH_sl
+
+Class FRDVHDataDictionary is a DataDictionary_SI
+    
+    Procedure Construct_Object
+        Forward Send Construct_Object
+        Set Main_File to FRDVH.File_Number
+
+        Set Add_Client_File to FRDVI.File_Number
+        Set Add_Client_File to FRDVDESP.File_Number
+        Set Add_Client_File to FRDVABAS.File_Number
+        Set Add_Client_File to FFRDVDSAL.File_Number
+        Set Add_Client_File to FFRDVMEC.File_Number
+        Set Add_Client_File to FFRDVABAEX.File_Number
+
+        Set Add_System_File to GSEQ.File_Number DD_Lock_On_All
+
+        Set Foreign_Field_Option DD_KEYFIELD DD_NOPUT to True
+        Set Foreign_Field_Option DD_KEYFIELD DD_FINDREQ to True
+        Set Foreign_Field_Option DD_KEYFIELD DD_AUTOFIND to True
+        Set Foreign_Field_Option DD_INDEXFIELD DD_NOPUT to True
+        Set Foreign_Field_Option DD_INDEXFIELD DD_AUTOFIND to True
+        Set Foreign_Field_Option DD_DEFAULT DD_DISPLAYONLY to True
+
+        Set Field_Option Field FRDVH.CODIGO DD_CAPSLOCK to True
+        Set Field_Option Field FRDVH.CODIGO DD_AUTOFIND to True
+        Set Field_Prompt_Object Field FRDVH.CODIGO to oFRDVH_sl
+        Set Field_Auto_Increment Field FRDVH.CODIGO to File_Field GSEQ.SEQ_FRDVH
+        Set Field_Label_Long Field FRDVH.CODIGO to "C¢digo"
+        Set Field_Label_Short Field FRDVH.CODIGO to "C¢digo"
+        Set Key_Field_State Field FRDVH.CODIGO to True
+
+        Set Field_Option Field FRDVH.CCU_CODIGO DD_CAPSLOCK to True
+        Set Field_Label_Long Field FRDVH.CCU_CODIGO to "Centro de Custo"
+        Set Field_Label_Short Field FRDVH.CCU_CODIGO to "C. Custo"
+
+        //Set Field_Value_Table Field FRDVH.MES to oListaMesRDV
+        Set Field_Label_Long Field FRDVH.MES to "Màs"
+        Set Field_Label_Short Field FRDVH.MES to "Màs"
+        Set Field_Class_Name Field FRDVH.MES to "Combo"
+
+        Set Field_Label_Long Field FRDVH.ANO to "Ano"
+        Set Field_Label_Short Field FRDVH.ANO to "Ano"
+        
+        //Set Field_Value_Table Field FRDVH.STATUS to oStatusRDV
+
+        Set Field_Label_Long Field FRDVH.PERC_COMISSAO to "% Comiss∆o"
+        Set Field_Label_Short Field FRDVH.PERC_COMISSAO to "% Comiss∆o"
+
+        Set Field_Label_Long Field FRDVH.TIPO_COMISSAO to "Tipo C†lculo"
+        Set Field_Label_Short Field FRDVH.TIPO_COMISSAO to "Tipo C†lculo"
+
+        Set Field_Label_Long Field FRDVH.TOT_DEB_ANT to "DÇb. Anteriores"
+        Set Field_Label_Short Field FRDVH.TOT_DEB_ANT to "DÇb. Anteriores"
+        Set Field_Mask_Type Field FRDVH.TOT_DEB_ANT to Mask_Numeric_Window
+
+        Set Field_Label_Long Field FRDVH.TOT_DESP_MOT to "Desp. PG. Motorista"
+        Set Field_Label_Short Field FRDVH.TOT_DESP_MOT to "Desp. PG. Motorista"
+        Set Field_Mask_Type Field FRDVH.TOT_DESP_MOT to Mask_Numeric_Window
+
+        Set Field_Label_Long Field FRDVH.OBSERVACOES to "Observaá‰es"
+        Set Field_Label_Short Field FRDVH.OBSERVACOES to "Observaá‰es"
+        //Set Field_Value_Table Field FRDVH.TIPO_COMISSAO to oTipoCalcRDV
+        
+        Set Cascade_Delete_State to False
+        
+    End_Procedure
+
+    Procedure OnSaveRecord
+        Forward Send OnSaveRecord
+        String sCodigo
+        Move FRDVH.CODIGO to sCodigo
+        Move (overstrike(trim(sCodigo),"000000",6-(Length(Trim(sCodigo))-1))) to FRDVH.CODIGO
+    End_Procedure
+
+End_Class
+
+#IFDEF Is$WebApp
+#ELSE
+Use FRDVH.sl
+#ENDIF

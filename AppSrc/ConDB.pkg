@@ -1,0 +1,32 @@
+Use sql.pkg
+Use MsSqlDrv.pkg
+
+
+#IFDEF gsBDDllConnect
+#ELSE
+    String gsBDDllConnect
+#ENDIF
+#IFDEF ghoConn
+#ELSE
+    Handle ghoConn
+#ENDIF
+#IFDEF ghSQLMngr
+#ELSE 
+    Handle  ghSQLMngr
+    //Integer giDBCSqlcon
+#ENDIF
+#IFDEF hStmt
+#ELSE 
+    Handle  hStmt
+#ENDIF
+
+Object oSQLHandlerGeral is a cSQLHandleManager
+    Move Self to ghSQLMngr
+End_Object
+
+String gsTemp
+String gsRptServerNameBD
+String gsConnectionInfo
+Integer giDBCSqlcon
+
+

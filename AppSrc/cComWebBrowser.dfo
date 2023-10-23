@@ -1,0 +1,9 @@
+//AB/ OBJECTDEF
+Object
+    //AB-StoreStart
+    Procedure OnCreate
+        Forward Send OnCreate
+        // ToDo: Set the ActiveX properties here...
+    End_Procedure // OnCreate
+    //AB-StoreEnd
+End_Object

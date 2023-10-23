@@ -1,0 +1,44 @@
+Use DataDict.pkg
+
+Open ICTE
+
+Register_Object oICTE_sl
+
+Class ICTEDataDictionary is a DataDictionary
+    
+    Procedure Construct_Object
+        Forward Send Construct_Object
+        Set Main_File to ICTE.File_Number
+
+        Set Foreign_Field_Option DD_KEYFIELD DD_NOPUT to True
+        Set Foreign_Field_Option DD_KEYFIELD DD_FINDREQ to True
+        Set Foreign_Field_Option DD_INDEXFIELD DD_NOPUT to True
+        Set Foreign_Field_Option DD_DEFAULT DD_DISPLAYONLY to True
+
+        Set Field_Prompt_Object Field ICTE.NUMERO to oICTE_sl
+        Set Field_Option Field ICTE.NUMERO DD_AUTOFIND to True
+        Set Field_Option Field ICTE.NUMERO DD_CAPSLOCK to True
+        Set Key_Field_State Field ICTE.NUMERO to True
+        Set Field_Option Field ICTE.COD_SERIE DD_CAPSLOCK to True
+        Set Field_Option Field ICTE.COD_SERIE DD_AUTOFIND to True
+        Set Key_Field_State Field ICTE.COD_SERIE to True
+        Set Field_Option Field ICTE.COD_TRANSP DD_CAPSLOCK to True
+        Set Field_Option Field ICTE.COD_TRANSP DD_AUTOFIND to True
+        Set Key_Field_State Field ICTE.COD_TRANSP to True
+
+        Set Field_Option Field ICTE.COD_PRODUTO DD_CAPSLOCK to True
+
+        Set Field_Option Field ICTE.PRODUTO DD_CAPSLOCK to True
+
+        Set Field_Option Field ICTE.MUN_ORIGEM DD_CAPSLOCK to True
+
+        Set Field_Option Field ICTE.MUN_DESTINO DD_CAPSLOCK to True
+
+    End_Procedure
+
+End_Class
+
+#IFDEF Is$WebApp
+#ELSE
+Use ICTE.sl
+#ENDIF

@@ -1,0 +1,662 @@
+Use Batchdd.pkg
+
+Use gFormatNumbers.pkg
+Use GCIDADES.dd
+Use GQUERIES.dd
+Use GPARAM.dd
+Use GUSER.dd
+Use GOBJETOH.dd
+Use GOBJETOI.dd
+
+Object oBPCoreBase is a BusinessProcess
+    Open GCIDADES
+    Open GQUERIES
+    Open GPARAM
+    Open GUSER
+    Open GOBJETOH
+    Open GOBJETOI
+    
+    // Send DoProcess to this BPO to start the business process
+    // DoProcess is a predefined method in the BusinessProcess class
+    // Send DoProcess of oNewBusinessProcess
+
+    // OnProcess
+    // ---------
+    // Place your processing code into Procedure OnProcess
+    // OnProcess is a predefined method in the BusinessProcess class
+
+    Procedure OnProcess
+    End_Procedure
+    
+    Function Salva_Header_Geral Integer iDD Returns Integer
+        Integer Rec Changed Srvr
+    
+        //Get Server of to Srvr                      // qual o ddo principal
+        Get Current_Record  of iDD to Rec       // qual o registro corrente.
+        Get Should_Save     of iDD to Changed              // houve mudancas?
+    
+        // se nao existe registro ativo retorna erro
+        If (Rec=0 and Changed=0) Begin // sem registro        
+            Send Stop_Box 'Entre com dados no arquivo principal' 'Erro'
+            Function_Return 1
+        End
+    
+        // Salva o registro da Header
+        //request_save_no_clear salva mais nao limpa o buffer
+        Send request_save_no_clear  of iDD
+        Get Should_Save             of iDD to Changed
+        Get Current_record of iDD to Rec
+        //If (Rec=0 or Changed) Function_Return 1
+        If (Rec=0) Function_Return 1
+    End_Function
+    
+    Function StringToArray String sSrc String sDelim Returns String[]
+        Integer iPos iCtr
+        String[] sData
+        String sWordDiv
+    
+        Move (Trim(sDelim)) to sDelim
+        Move (Trim(sSrc)) to sSrc
+        Move (Character(10) + Character(13) + " ;") to sWordDiv
+    
+        Repeat
+            Move (Pos(Uppercase(sDelim), Uppercase(sSrc), iPos)) to iPos
+            If (iPos > 0) Begin
+                Move (Mid(sSrc, Length(sDelim), iPos)) to sDelim
+                If (sWordDiv contains Mid(sSrc, 1, iPos - 1) and ;
+                   (sWordDiv contains Mid(sSrc, 1, iPos + Length(sDelim)) or ;
+                   (iPos + Length(sDelim) - 1) = Length(sSrc))) Begin
+                    Move (Left(sSrc, (iPos-1))) to sData[iCtr]
+                    Move (Replace(sData[iCtr], sSrc, '')) to sSrc
+                    Move (Replace(sDelim, sSrc, '')) to sSrc
+                    Increment iCtr
+                    Move 0 to iPos
+                End
+                Else Move (iPos + Length(sDelim)) to iPos
+            End
+            Else Break
+        Loop
+    
+        If (Length(Trim(sSrc)) > 0) Begin
+            Move sSrc to sData[iCtr]
+        End
+    
+        Function_Return sData
+    End_Function
+    
+    Function HowManyWords String src# String dlm# Returns Integer
+      local Integer count# Pos# in_item# len#
+      local String atom#
+      Move 0 to count#
+      Move 0 to in_item#
+      Move (Length(src#)) to len#
+      For Pos# from 1 to len#
+        Mid src# to atom# 1 Pos#
+        If in_item# Begin
+          If atom# in dlm# Move 0 to in_item#
+        End
+        Else Begin
+          ifnot atom# in dlm# Begin
+            Increment count#
+            Move 1 to in_item#
+          End
+        End
+      Loop
+      Function_Return count#
+    End_Function
+
+    Function ExtractWord2 String src# String dlm# Integer itm# Returns String
+      local Integer count# Pos# len#
+      local String rval# Char#
+      Move "" to rval#
+      Move 1 to count#
+      Move (Length(src#)) to len#
+      For Pos# from 1 to len#
+        Mid src# to Char# 1 Pos#
+        If Char# in dlm# Begin
+          If itm# eq count# Function_Return rval#
+          Increment count#
+        End
+        Else If itm# eq count# Move (rval#+Char#) to rval#
+      Loop
+      Function_Return rval#
+    End_Function
+    
+    Function ExtractWord String src# String dlm# Integer itm# Returns String
+      local Integer count# Pos# in_item# len#
+      local String rval# atom#
+      Move "" to rval#
+      Move 0 to count#
+      Move 0 to in_item#
+      Move (Length(src#)) to len#
+      For Pos# from 1 to len#
+        Mid src# to atom# 1 Pos#
+        If in_item# Begin
+          If atom# in dlm# Move 0 to in_item#
+          Else If count# eq itm# Append rval# atom#
+        End
+        Else Begin
+          ifnot atom# in dlm# Begin
+            Increment count#
+            Move 1 to in_item#
+            If count# eq itm# Move atom# to rval#
+          End
+        End
+      Loop
+      Function_Return rval#
+    End_Function
+    
+    Procedure pCarregaDadosERP String teste
+    End_Procedure
+    
+    Procedure Execute_ScriptSQL String sCodigoQuery String sParametros Integer iStatusPanel String sMsgPanel Handle hArray Boolean bNewConn
+        Handle  hSQL hstmt
+        Integer iQtdeParam iLoop iNumColumns iFetchResult iPosicao iContaColuna iChanel iApp iResult 
+        Integer iColType iColSize iMaxSize
+        Boolean bTemQueryPlus
+        
+        Get_Argument_Size to iMaxSize
+        
+        //Set_Argument_Size 100000
+        
+        String sQuery sVariavel sParametro sQueryAntes sValue sDataPath sSufixoCustom sCodigoQueryUpper
+        
+        Move (UpperCase(Trim(sCodigoQuery))) to sCodigoQueryUpper
+        
+        //Move sCodigoQuery to gsExecScript
+        
+        Clear GQUERIES
+        Move sCodigoQueryUpper to GQUERIES.CODIGO
+        Find eq GQUERIES by Index.1
+    
+        // SETA O STATUS PANEL
+        If (iStatusPanel>0) Begin
+            If ((Found) and (Trim(GQUERIES.DESCRICAO)) ne "") Send Update_statuspanel of iStatusPanel  (Trim(GQUERIES.DESCRICAO))
+            Else Begin
+                If ((Trim(sMsgPanel)) = "") Send Update_statuspanel of iStatusPanel "Processando..."
+                Else Send Update_statuspanel of iStatusPanel  sMsgPanel 
+            End
+        End    
+    
+        Get phoWorkspace of (oApplication(Self)) to iApp
+        Get psDataPath   of iApp to sDataPath            // Pega o diretorio data onde serao guardados os querys SQL
+    
+//        If (gsWriteQuery = "S" and gbWriteQuery) Begin
+        File_Exist (sDataPath + "\SQL") iResult    // Testa se o diret¢tio existe, senao ele cria
+        If (not(iResult)) Begin
+            Make_Directory ( sDataPath+"\SQL")
+        End
+//        End
+        
+        // VERIFICA SE ê UM SELECT CADASTRADO OU NAO
+        //
+        Move '_CUSTOM' to sSufixoCustom
+        If (Uppercase(sParametros) <> 'NOFIND')  Begin
+        
+            Get HowManyWords of (oBPCoreBase(Self)) sParametros ";" to iQtdeParam
+        
+            Clear GQUERIES
+            Move (Trim(sCodigoQuery) + Trim(sSufixoCustom)) to GQUERIES.CODIGO
+            Find eq GQUERIES by Index.1
+            If (not (Found)) Begin
+                Clear GQUERIES
+                Move sCodigoQuery to GQUERIES.CODIGO
+                Find eq GQUERIES by Index.1
+            End
+            If (Found) Begin
+                Move (Trim(GQUERIES.QUERY)) to sQuery
+    
+                // Numero de parametros precisa ser "PAR"
+                //
+                If (Mod( iQtdeParam ,2)<>0) Begin
+                    Send Stop_Box ("N£mero de parÉmetros inv†lidos" + " - "+sCodigoQuery) "Atená∆o"
+                    //Move "" to gsExecScript
+                    Procedure_Return
+                End
+        
+                For iLoop from 1 to (iQtdeParam/2)
+                    Get ExtractWord of (oBPCoreBase(Self)) sParametros ";" ((iLoop*2)-1)    to sVariavel
+                    Get ExtractWord of (oBPCoreBase(Self)) sParametros ";" (iLoop*2)        to sParametro
+                    Move sQuery to sQueryAntes
+    
+                    Move (Replaces(sVariavel,sQuery,sParametro)) to sQuery
+                    
+                Loop
+                                   
+//                If (gsWriteQuery = "S" and gbWriteQuery) Begin
+                    Get Seq_New_Channel to iChanel
+                    Direct_Output channel iChanel (sDataPath +'\SQL\'+  sCodigoQuery + '_' + Trim(Uppercase(gsCodUser)) + ".sql.txt")
+                    Writeln channel iChanel sQuery
+                    Close_Output channel iChanel
+                    Send Seq_Release_Channel iChanel
+//                End
+                
+                // Tira os CR+ENTER do query
+                //
+                //Move (Character(13) + Character(10))    to sCRLF
+                //Move (Replaces(sCRLF, sQuery, " "))     to sQuery
+             
+            End
+            
+        End
+        Else Begin
+    
+            // Se for apenas um query fixo passado ele converte aqui
+            //
+            Clear GQUERIES
+            Move (Trim(sCodigoQuery) + Trim(sSufixoCustom)) to GQUERIES.CODIGO
+            Find eq GQUERIES by Index.1
+            If (not (Found)) Begin
+                Clear GQUERIES
+                Move sCodigoQuery to GQUERIES.CODIGO
+                Find eq GQUERIES by Index.1
+            End
+            If (Found) Begin
+                Move (Trim(GQUERIES.QUERY)) to sQuery
+            End
+            Else Begin
+                Move sCodigoQuery to sQuery
+            End
+            
+            Get Seq_New_Channel to iChanel
+            Direct_Output channel iChanel (sDataPath +'\SQL\'+ Trim(Uppercase(gsCodUser)) + '_ultimaquery' + ".sql.txt")
+            Writeln channel iChanel sQuery
+            Close_Output channel iChanel
+            Send Seq_Release_Channel iChanel
+        End
+        
+        // ABRE A CONEXAO
+        // Cria handle antes da execuá∆o
+        Move giDBCSqlcon to hSQL
+        If (Num_Arguments = 6) Begin
+            If (bNewConn) Get SQLFileConnect of ghSQLMngr GQUERIES.File_Number to hSQL
+        End
+        Get SQLOpen of hSQL to hstmt
+        
+//        If (gsIgnoraGO='') Move 'N' to gsIgnoraGO
+//        
+//        If (gsIgnoraGO='S') Begin
+//            Send SQLPrepare of hstmt (ToANSI(sQuery))
+//            Send SQLExecute of hstmt        
+//        End
+//        Else Begin
+            Integer iCount iSize
+            String[] sScripts
+              
+           
+            Get StringToArray sQuery "GO" to sScripts
+            Move (SizeOfArray(sScripts)) to iSize
+            
+            For iCount from 0 to (iSize-1)
+                If (not(Uppercase(sScripts[iCount]) contains "CREATE ")) ;
+                    Move ("SET NOCOUNT ON" + Character(10) + Character(13) + sScripts[iCount] + Character(10) + Character(13) + "SET NOCOUNT OFF") to sScripts[iCount]
+        
+                Send SQLPrepare of hstmt (ToANSI(sScripts[iCount]))
+                Send SQLExecute of hstmt    
+            Loop       
+//        End    
+    
+        //SQLExecDirect hstmt sQuery
+        
+        // FER - 14/02/2006 - se foi passado algum array no parametro, ele vai pegar o resultado da query e copiar para dentro desse array
+        //
+        If (hArray<>0) Begin
+        
+            Send Delete_data of hArray
+            
+            Get SQLStmtAttribute of hstmt SQLSTMTATTRIB_COLUMNCOUNT to iNumColumns
+                
+            If (iNumColumns>0) Begin
+                Move 0 to iPosicao
+                Repeat
+                    Get SQLFetch of hstmt to iFetchResult
+                    If (iFetchResult <> 0) Begin
+                        // Coluna Tipo -152 Ç XML no SQL
+                        For iContaColuna from 1 to iNumColumns
+                            Get SQLColAttribute of hstmt iContaColuna SQLCOLATTRIB_SQLTYPE to iColType
+                            Get SQLColAttribute of hstmt iContaColuna SQLCOLATTRIB_SIZE to iColSize
+                            If (iColType = SQL_LONGVARCHAR or iColType = SQL_BINARY or ;
+                                iColType = SQL_VARBINARY or iColType = SQL_LONGVARBINARY or ;
+                                iColType = -152 or iColType = SQL_WLONGVARCHAR or ;
+                                (iColType = SQL_VARCHAR and iColSize <= 0)) ;
+                                    Get SQLGetData of hstmt iContaColuna iMaxSize to sValue
+                            Else Get SQLColumnValue of hstmt iContaColuna to sValue
+                            Set Value of hArray iPosicao to (ToOEM(sValue))
+                            Increment iPosicao
+                        Loop
+                    End
+                Until (iFetchResult = 0)
+            End
+            Else Begin
+                // Se nao achou nada ele seta com "" a primeira posicao do array
+                //
+                Set Value of hArray 0 to '' 
+            End        
+            
+        End
+        
+        Send SQLClose of hstmt
+        If (Num_Arguments = 6) Begin
+            If (bNewConn) Send SQLDisconnect of hSQL
+        End
+    
+        Set_Argument_Size iMaxSize
+    
+//        Move "" to gsExecScript
+    End_Procedure
+    
+    Function Consulta_ScriptSQL Global String sCodigoQuery String sParametros Integer iStatusPanel String sMsgPanel Boolean bNewConn Returns String
+        String sRet 
+        Integer iItems
+       
+        Send Execute_ScriptSQL sCodigoQuery (If(sParametros='','NOFIND',sParametros)) iStatusPanel sMsgPanel giArrayQuery False
+        
+        Get Item_count of giArrayQuery to iItems
+        If (iItems>0) Get value of giArrayQuery 0 to sRet           
+        
+        Function_Return sRet    
+    End_Function
+    
+    Function Number_Format_2D Global String sValue Returns String
+        Move (Replaces('-',sValue,'')) to sValue
+        Move (Replaces('.',sValue,',')) to sValue
+        Move (FormatValue(sValue,'#.##')) to sValue
+        Function_Return sValue
+    End_Function
+    
+    Function Update_Footer String sSQLAgregador String sCampo String sTabela String sSQLFiltro Handle hoColumn Returns String
+        String sRetorno
+        If (eval(rtrim(sTabela)+'.Recnum')=0) Begin
+            If (Uppercase(sSQLAgregador)='SUM') Move 'R$ 0,00'  to sRetorno
+            Else Move '0 itens' to sRetorno
+            If (hoColumn<>0) Set psFooterText of hoColumn to sRetorno
+            Function_Return sRetorno
+        End
+        Get Consulta_ScriptSQL of (oBPCoreBase(Self)) ("select "+sSQLAgregador+"("+sCampo+") from "+sTabela+;
+                           " WHERE "+ sSQLFiltro) "" 0 "" False to sRetorno
+        If (Uppercase(sSQLAgregador)='COUNT') Begin
+            If (sRetorno='1') Move (sRetorno+" item")  to sRetorno
+            Else              Move (sRetorno+" itens") to sRetorno
+        End
+        If (Uppercase(sSQLAgregador)='SUM') Begin
+            Move (Number_Format_2D(sRetorno)) to sRetorno
+            Move ("R$ "+sRetorno) to sRetorno
+        End
+        If (hoColumn<>0) Set psFooterText of hoColumn to sRetorno
+        Function_Return sRetorno
+    End_Function // Update_Footer
+    
+    Procedure Aplica_FiltroSQL Global Handle hDD Integer iFile String sFilter
+        String sSelecaoUser
+        Boolean bUserFilter
+        
+        // Tratativa para filtros dentro de processos que abortam
+//        If (ghoActiveProcess) Begin
+//            String sOldFilter
+//            Handle hoFilters
+//            
+//            Get_Attribute DF_FILE_SQL_FILTER of iFile to sOldFilter
+//            Get psFilters of ghoActiveProcess to hoFilters
+//    
+//            Send AddValue of hoFilters (String(iFile)) sOldFilter
+//        End
+        
+//        If (hDD) Get pbEnableUserFilter of hDD to bUserFilter
+//        Else Move True to bUserFilter
+        
+//        If (bUserFilter) Get Monta_Selecao_File iFile to sSelecaoUser
+//        Send ApplyGlobalFilter hDD iFile (&sFilter)
+        
+        //PEGA O FILTRO QUE E PASSADO PRA A VARIAVEL NOS EVENTOS PROMPT
+        If (Trim(sFilter) <> "") Begin
+//            If (Trim(sSelecaoUser) <> "") Move (sFilter + " AND " + sSelecaoUser) to sSelecaoUser
+//            Else Move sFilter to sSelecaoUser
+            Move sFilter to sSelecaoUser
+        End
+    
+        Set_Attribute DF_FILE_SQL_FILTER of iFile to sSelecaoUser
+    
+        If (sSelecaoUser <> "") Set_Attribute DF_FILE_SQL_FILTER_ACTIVE of iFile to True
+        Else Set_Attribute DF_FILE_SQL_FILTER_ACTIVE of iFile to False
+    End_Procedure
+    
+    Function Server_Param String sParamName Returns String
+        Clear GPARAM
+        Move (Trim(sParamName)) to GPARAM.NOME
+        Find eq GPARAM by Index.1
+        If (Found) Begin
+            Function_Return (Trim(GPARAM.VALOR))
+        End
+        Function_Return ""
+    End_Function
+    
+    Function Valida_User String sUser String sSenha Returns Boolean
+        String sSenhaCript
+        Clear GUSER
+        Move (Trim(sUser)) to GUSER.ID
+        Find EQ GUSER by index.1
+        If (Found) Begin
+            Get CriptpwdBD sSenha 0 to sSenhaCript
+            If (Trim(sSenhaCript) = Trim(GUSER.SENHA)) Function_Return True
+            Else Function_Return False
+        End
+        Function_Return False
+    End_Function
+    
+    Procedure Sincroniza_Dados_PSGA
+        Send Execute_ScriptSQL "SINCRONIZA_CTE" "NOFIND" 0 "" 0 False
+        Send Execute_ScriptSQL "SINCRONIZA_CCUSTO" "NOFIND" 0 "" 0 False
+        
+    End_Procedure
+    
+    Function GetPath_WS Global String sTipoPath Returns String
+        String sWork
+        Handle hoWorkspace 
+    
+        Get phoWorkspace    of oApplication to hoWorkspace 
+        If (Uppercase(sTipoPath) ="DATA");
+            Get psDataPath      of hoWorkspace  to sWork    
+        If (Uppercase(sTipoPath) ="HELP");
+            Get psHelpPath      of hoWorkspace  to sWork    
+        If (Uppercase(sTipoPath) ="BITMAPS");
+            Get psBitmapPath      of hoWorkspace  to sWork        
+        If (Uppercase(sTipoPath) ="PROGRAMS");
+            Get psProgramPath      of hoWorkspace  to sWork
+        If (Uppercase(sTipoPath) ="APPHTML");
+            Get psAppHtmlPath      of hoWorkspace  to sWork                            
+        If (Uppercase(sTipoPath) ="APPSRC");
+            Get psAppSrcPath       of hoWorkspace  to sWork                                
+        If (Uppercase(sTipoPath) ="PERSONALIZADO");
+            Get PathPersonalizado to sWork
+                            
+        Function_Return (Uppercase(sWork))
+    End_Function
+    
+    Function PathPersonalizado Returns String
+        String  sPath sFile
+        Integer iSize
+    
+        Get GetPath_WS "PROGRAMS" to sPath
+    
+        // Tira o "\programs"
+        Move (Length(sPath)) to iSize
+        Move (Remove(sPath, (iSize - 9 + 1), 9)) to sPath
+        Append sPath "\Personalizado"
+    
+        Function_Return sPath
+    End_Function
+    
+    Function Open_File Integer iFile Returns Handle
+        Integer iOpenFile
+        Handle hTable
+        
+        Get_Attribute DF_FILE_OPENED of iFile to iOpenfile
+        If (not(iOpenfile)) Open iFile as hTable
+        Else Move iFile to hTable
+        
+        Function_Return hTable
+    End_Procedure
+    
+    Procedure Open_file Integer iFile
+        Integer iOpenFile
+        
+        Get_Attribute DF_FILE_OPENED of iFile to iOpenfile
+        If (not(iOpenfile)) Open iFile
+    End_Procedure
+
+    //iTipoRet: C_GETDESC_LABEL_LONG
+    //          C_GETDESC_LABEL_SHORT
+    //          C_GETDESC_STATUS_HELP
+    Function Get_Description String sObj Integer iTipoRet Returns String
+        Clear GOBJETOH
+        Move (Trim(sObj)) to GOBJETOH.OBJETO
+        Find EQ GOBJETOH by Index.1
+        If (Found) Begin
+            If (iTipoRet = C_GETDESC_LABEL_SHORT) Function_Return (Trim(GOBJETOH.LABEL_SHORT))
+            If (iTipoRet = C_GETDESC_LABEL_LONG) Function_Return (Trim(GOBJETOH.LABEL_LONG))
+            If (iTipoRet = C_GETDESC_STATUS_HELP) Function_Return (Trim(GOBJETOH.STATUS_HELP))
+        End
+        Function_Return ""
+    End_Function
+    
+
+    // iTipoFind:   C_FINDTYPE_DESCRIPTIONITENS_SEQ
+    //              C_FINDTYPE_DESCRIPTIONITENS_LABEL
+    //              C_FINDTYPE_DESCRIPTIONITENS_BOTH
+    // iTipoRet:    C_RETURNTYPE_DESCRIPTIONITENS_SEQ
+    //              C_RETURNTYPE_DESCRIPTIONITENS_LABEL
+    //              C_RETURNTYPE_DESCRIPTIONITENS_BOTH
+    Function Get_Description_Items String sObj String  sVelueFind Integer iTipoFind Integer iTipoRet Returns String
+        String sRetorno
+        If (iTipoRet = C_RETURNTYPE_DESCRIPTIONITENS_SEQ) Move "GOBJETOI.SEQ" to sRetorno
+        If (iTipoRet = C_RETURNTYPE_DESCRIPTIONITENS_LABEL) Move "GOBJETOI.LABEL" to sRetorno
+        If (iTipoRet = C_RETURNTYPE_DESCRIPTIONITENS_BOTH) Move ("(TRIM(GOBJETOI.SEQ)+' - '+TRIM(GOBJETOI.LABEL))") to sRetorno
+        
+        If (iTipoFind = C_FINDTYPE_DESCRIPTIONITENS_SEQ) Begin
+            Clear GOBJETOI
+            Move (Trim(sObj))   to GOBJETOI.OBJETO
+            Move sVelueFind     to GOBJETOI.SEQ
+            Find EQ GOBJETOI by Index.1
+            If (Found) Begin
+                Function_Return (Eval(sRetorno))
+            End
+        End
+        If (iTipoFind = C_FINDTYPE_DESCRIPTIONITENS_LABEL) Begin
+            Clear GOBJETOI
+            Move (Trim(sObj)) to GOBJETOI.OBJETO
+            Move -1 to GOBJETOI.SEQ
+            Repeat 
+                Find gt GOBJETOI by Index.1
+                If ((Found) and ((Trim(sObj)) = Trim(GOBJETOI.OBJETO))) Begin
+                    If (Trim(Uppercase(sVelueFind)) = Trim(Uppercase(GOBJETOI.LABEL))) Function_Return (Eval(sRetorno))
+                End
+                Else Break
+            Loop
+        End
+        If (iTipoFind = C_FINDTYPE_DESCRIPTIONITENS_BOTH) Begin
+            Clear GOBJETOI
+            Move (Trim(sObj)) to GOBJETOI.OBJETO
+            Move -1 to GOBJETOI.SEQ
+            Repeat 
+                Find gt GOBJETOI by Index.1
+                If ((Found) and ((Trim(sObj)) = Trim(GOBJETOI.OBJETO))) Begin
+                    If (Trim(Uppercase(sVelueFind)) = (Trim(Uppercase(GOBJETOI.SEQ))+' - '+Trim(Uppercase(GOBJETOI.LABEL)))) Function_Return (Eval(sRetorno))
+                End
+                Else Break
+            Loop
+        End
+        Function_Return ""
+    End_Function
+    
+    Function Get_List_Object_Array String sObj Returns String[][2]
+        String[][2] sArrayRet
+        Integer i
+        
+        Move 0 to i
+        Clear GOBJETOI
+        Move (Trim(sObj)) to GOBJETOI.OBJETO
+        Move -1 to GOBJETOI.SEQ //Faz isso para pegar os campos seq = 0
+        Repeat
+            Find gt GOBJETOI by Index.1
+            If ((Found) and ((Trim(sObj)) = Trim(GOBJETOI.OBJETO))) Begin
+                Move GOBJETOI.SEQ to sArrayRet[i][0]
+                Move (Trim(GOBJETOI.LABEL)) to sArrayRet[i][1]
+                Increment i
+            End
+            Else Break
+        Loop
+        Function_Return sArrayRet
+    End_Function
+    
+    
+    //Retorna o nome do arquivo ou do campo ou dos dois
+    //Constantes    C_GETNAME_FILE
+    //              C_GETNAME_FIELD
+    //              C_GETNAME_BOTH
+    //              C_GETNAME_FIELDNUMBER
+    Function Get_Names Global Integer iFile Integer iField Integer iTipo Returns String   
+        String sFile sField sValue    
+        Integer iFieldNumber
+        
+        Get_Attribute DF_FIELD_NAME         of iFile iField to sField
+        //Get_Attribute DF_FILE_LOGICAL_NAME  of iFile        to sFile#
+        Get_Attribute DF_FILE_ROOT_NAME     of iFile        to sFile
+        Get_Attribute DF_FIELD_NUMBER       of iFile iField to iFieldNumber
+    
+        If (Pos('.',sFile)) Move (Mid (sFile, (Pos('.',sFile)-1),1)) to sFile
+        
+        If (iTipo eq C_GETNAME_FILE) Move sFile                     to sValue       // Pega o arquivo
+        If (iTipo eq C_GETNAME_FIELD) Move sField                   to sValue       // Pega o campo
+        If (iTipo eq C_GETNAME_BOTH) Move (sFile + "." + sField)    to sValue
+        If (iTipo eq C_GETNAME_FIELDNUMBER) Move iFieldNumber       to sValue
+    
+        Function_Return sValue
+    End_Function
+    
+    Procedure LoadValidationTables Handle hDD Integer iFile
+        Integer iFields iFieldNumber iSizeArray iCont iCont2
+        String  sFile sCampo sObjeto
+        String[][2]  sArrayItens
+        Handle  hoFile hVT
+        
+        Get_Attribute DF_FILE_ROOT_NAME     of iFile        to sFile
+    
+        If (Pos('.',sFile)) Move (Mid (sFile, (Pos('.',sFile)-1),1)) to sFile
+        
+        Get Open_File of (oBPCoreBase(Self)) iFile to hoFile
+        
+        Get_Attribute DF_FILE_NUMBER_FIELDS of hoFile to iFields
+        
+        For iCont from 1 to iFields
+            Get_Attribute DF_FIELD_NAME         of hoFile iCont to sCampo
+            Get_Attribute DF_FIELD_NUMBER       of hoFile iCont to iFieldNumber
+            Move (Trim(sFile)+'.'+Trim(sCampo)) to sObjeto
+            Get Get_List_Object_Array sObjeto to sArrayItens
+            Move (SizeOfArray(sArrayItens)) to iSizeArray
+            If (iSizeArray > 0) Begin
+                Get CreateNamed (RefClass(DescriptionValidationTable)) ("oVT"+sObjeto) to hVT
+                For iCont2 from 0 to (iSizeArray-1)
+                    Send Add_Table_Value of hVT (Trim(sArrayItens[iCont2][0])) (Trim(sArrayItens[iCont2][1]))
+                Loop
+                Send Fill_List of hVT
+                Set Field_Value_Table of hDD iFieldNumber to hVT
+            End
+        Loop        
+    End_Procedure
+    
+    Function VerifyValidationObjectInField Handle hDD Integer iField Returns Boolean
+        Integer iType
+        Get Field_Validation_Type of hDD iField to iType
+        If (iType = FA_VALIDATION_TYPE_TABLE) Function_Return True
+        Else Function_Return False
+    End_Function
+    
+    Function RetornaSinalFiltro Integer iConstFilter Returns String
+        If (iConstFilter = C_FILTERTYPE_EQ) Function_Return " = "
+        If (iConstFilter = C_FILTERTYPE_GE) Function_Return " >= "
+        If (iConstFilter = C_FILTERTYPE_LE) Function_Return " <= "
+        Function_Return " = "
+    End_Function
+    
+End_Object
+

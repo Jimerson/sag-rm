@@ -1,0 +1,34 @@
+-----------------------------------------------------------------------------
+  DATE: 10/08/2021      TIME: 11:33                                  PAGE:  1
+  FILE DEFINITION FOR FILE: GCADREL (# 21)
+-----------------------------------------------------------------------------
+  DRIVER NAME               : MSSQLDRV
+  FILE ROOT NAME            : GCADREL.INT
+  USER DISPLAY NAME         : GCADREL
+  DATAFLEX FILE NAME        : GCADREL
+-----------------------------------------------------------------------------
+  RECORD LENGTH             : 257       ( USED: 257 )
+  MAX NUMBER OF RECORDS     : 2147483647  ( USED: 2 )
+  FILE COMPRESSION          : NONE
+  RE-USE DELETED SPACE      : YES
+  LOCKING TYPE              : RECORD
+  HEADER INTEGRITY CHECKING : NO 
+  TRANSACTION TYPE          : SERVER LOGGED
+  RECORD IDENTITY INDEX     : 0 ( 0 , 0 )
+  FILE LOGIN PARAMETER      : DFCONNID=SAGRM
+  SYSTEM FILE               : NO 
+-----------------------------------------------------------------------------
+
+NUM  FIELD NAME       TYPE SIZE  OFFST IX   RELATES TO FILE.FIELD
+---  ---------------  ---- ----- ----- --   ---------------------------------
+  1  CHAVE            ASC     40     1  1   
+  2  NOME_REL         ASC    100    41  1   
+  3  NOME_ARQ         ASC    100   141      
+  4  CUSTOM           NUM    1.0   241      
+
+
+INDEX# FIELDS          DES U/C    LENGTH LEVELS SEGMENTS MODE
+------ --------------- --- ---    ------ ------ -------- -------
+  1    CHAVE           NO  NO       0      0       2     ON-LINE
+       NOME_REL        NO  NO 
+

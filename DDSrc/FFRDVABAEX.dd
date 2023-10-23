@@ -1,0 +1,44 @@
+Use DataDict.pkg
+
+Open FFRDVABAEX
+Open FRDVH
+
+Class FFRDVABAEXDataDictionary is a DataDictionary
+    
+    Procedure Construct_Object
+        Forward Send Construct_Object
+        Set Main_File to FFRDVABAEX.File_Number
+
+        Set Add_Server_File to FRDVH.File_Number
+
+        Set Foreign_Field_Option DD_KEYFIELD DD_NOPUT to True
+        Set Foreign_Field_Option DD_KEYFIELD DD_FINDREQ to True
+        Set Foreign_Field_Option DD_INDEXFIELD DD_NOPUT to True
+        Set Foreign_Field_Option DD_DEFAULT DD_DISPLAYONLY to True
+
+        Set Field_Option Field FFRDVABAEX.FRDVH_COD DD_AUTOFIND to True
+        Set Field_Option Field FFRDVABAEX.FRDVH_COD DD_CAPSLOCK to True
+        Set Key_Field_State Field FFRDVABAEX.FRDVH_COD to True
+
+        Set Field_Option Field FFRDVABAEX.SEQ DD_AUTOFIND to True
+        Set Key_Field_State Field FFRDVABAEX.SEQ to True
+
+        Set Field_Option Field FFRDVABAEX.PES_CODIGO DD_CAPSLOCK to True
+
+        Set Field_Option Field FFRDVABAEX.RAZAO_SOCIAL DD_CAPSLOCK to True
+
+        Set Field_Option Field FFRDVABAEX.DPR_DOCUM DD_CAPSLOCK to True
+
+        Set Field_Option Field FFRDVABAEX.AGR_COD DD_CAPSLOCK to True
+
+        Set Field_Option Field FFRDVABAEX.DESCRICAO DD_CAPSLOCK to True
+
+        Set Field_Option Field FFRDVABAEX.HISTORICO DD_CAPSLOCK to True
+
+        Set Field_Label_Long Field FFRDVABAEX.ABONADO to "Abonado"
+        Set Field_Label_Short Field FFRDVABAEX.ABONADO to "Abonado"
+        Set Field_Class_Name Field FFRDVABAEX.ABONADO to "Checkbox"
+
+    End_Procedure
+
+End_Class

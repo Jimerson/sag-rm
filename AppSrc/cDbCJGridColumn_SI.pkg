@@ -1,0 +1,92 @@
+Use cDbCJGridColumn.pkg
+Use BPCoreBase.bp
+
+Class cDbCJGridColumn_SI is a cDbCJGridColumn
+    
+    Procedure Construct_Object
+        Forward Send Construct_Object
+        
+        { Category=Behavior }
+        Property Boolean pbForceFillList False
+
+    End_Procedure
+
+    Procedure End_Construct_Object
+        Forward Send End_Construct_Object
+
+    End_Procedure
+    
+    Procedure OnSetDisplayMetrics Handle hoGridItemMetrics Integer iRow String  ByRef sValue
+        String sFileField sResult
+        Integer iDDO iDDField
+        Boolean bCombo bForceFillList bLoadByVT
+        Handle hoSrvr
+        Forward Send OnSetDisplayMetrics hoGridItemMetrics iRow (&sValue)
+        
+        Get pbComboButton to bCombo
+        Get pbForceFillList  to bForceFillList
+        
+        Get piBindingTable to iDDO
+        Get piBindingColumn to iDDField
+        Get Server to hoSrvr
+        
+        If (not(bForceFillList)) Get VerifyValidationObjectInField of oBPCoreBase hoSrvr iDDField to bLoadByVT
+        Else Move False to bLoadByVT
+        
+        If (bCombo and (not(bLoadByVT))) Begin
+
+            Get Get_Names of (oBPCoreBase(Self)) iDDO iDDField C_GETNAME_BOTH to sFileField
+            
+            Get Get_Description_Items of (oBPCoreBase(Self)) sFileField sValue ; 
+                C_FINDTYPE_DESCRIPTIONITENS_SEQ C_RETURNTYPE_DESCRIPTIONITENS_LABEL to sResult
+            Move sResult to sValue
+        End
+        
+    End_Procedure
+
+    Procedure ComboFillList
+        Integer iFile iField eDisplayMode iCountArray iLoop
+        Handle  hoSrvr hoTable
+        Boolean bEntry bAllowBlank bForceFillList bLoadByVT
+        String[][2] sArrayList
+        String sFileField
+        tComboItemData[] AComboData
+        
+        Get pbForceFillList  to bForceFillList
+        If (not(bForceFillList)) Forward Send ComboFillList
+
+        Get Server to hoSrvr
+        Get piBindingTable  to iFile
+        Get piBindingColumn to iField
+        If (hoSrvr and iFile) Begin
+            If (not(bForceFillList)) Get VerifyValidationObjectInField of oBPCoreBase hoSrvr iField to bLoadByVT
+            Else Move False to bLoadByVT
+            
+            If (not(bLoadByVT)) Begin
+            
+                Get Get_Names of (oBPCoreBase(Self)) iFile iField C_GETNAME_BOTH to sFileField
+                
+                Get Get_List_Object_Array of (oBPCoreBase(Self)) (Trim(sFileField)) to sArrayList
+            
+                Move (SizeOfArray(sArrayList)) to iCountArray
+                For iLoop from 0 to (iCountArray-1)
+                    Move (Trim(sArrayList[iLoop][1])) to AComboData[iLoop].sCaption 
+                    Move (Trim(sArrayList[iLoop][0])) to AComboData[iLoop].iData
+                Loop    
+                Set pComboItemData to AComboData
+            End
+        End
+    End_Procedure
+    
+    
+//    Procedure OnExit
+//        Forward Send OnExit
+//        Integer iRow
+//        Handle hoDataSource
+//
+//        Get phoDataSource of (Parent(Self)) to hoDataSource
+//        Get SelectedRow of hoDataSource     to iRow
+//        Send OnColumnExit of (Parent(Self)) Self iRow
+//    End_Procedure
+
+End_Class

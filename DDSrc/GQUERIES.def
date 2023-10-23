@@ -1,0 +1,32 @@
+-----------------------------------------------------------------------------
+  DATE: 10/08/2021      TIME: 11:33                                  PAGE:  1
+  FILE DEFINITION FOR FILE: GQUERIES (# 2)
+-----------------------------------------------------------------------------
+  DRIVER NAME               : MSSQLDRV
+  FILE ROOT NAME            : GQUERIES.INT
+  USER DISPLAY NAME         : GQUERIES
+  DATAFLEX FILE NAME        : GQUERIES
+-----------------------------------------------------------------------------
+  RECORD LENGTH             : 16474     ( USED: 16474 )
+  MAX NUMBER OF RECORDS     : 2147483647  ( USED: 18 )
+  FILE COMPRESSION          : NONE
+  RE-USE DELETED SPACE      : YES
+  LOCKING TYPE              : RECORD
+  HEADER INTEGRITY CHECKING : NO 
+  TRANSACTION TYPE          : SERVER LOGGED
+  RECORD IDENTITY INDEX     : 0 ( 0 , 0 )
+  FILE LOGIN PARAMETER      : DFCONNID=SAGRM
+  SYSTEM FILE               : NO 
+-----------------------------------------------------------------------------
+
+NUM  FIELD NAME       TYPE SIZE  OFFST IX   RELATES TO FILE.FIELD
+---  ---------------  ---- ----- ----- --   ---------------------------------
+  1  CODIGO           ASC     30     1  1   
+  2  DESCRICAO        ASC     50    31      
+  3  QUERY            TEX  250000    81      
+
+
+INDEX# FIELDS          DES U/C    LENGTH LEVELS SEGMENTS MODE
+------ --------------- --- ---    ------ ------ -------- -------
+  1    CODIGO          NO  NO       0      0       1     ON-LINE
+

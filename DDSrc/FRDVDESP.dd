@@ -1,0 +1,47 @@
+Use DataDictionary_SI.pkg
+Use ListValidationTable.pkg
+
+Open FRDVDESP
+Open FRDVH
+
+Class FRDVDESPDataDictionary is a DataDictionary_SI
+    
+    Procedure Construct_Object
+        Forward Send Construct_Object
+        Set Main_File to FRDVDESP.File_Number
+
+        Set Add_Server_File to FRDVH.File_Number
+
+        Set Foreign_Field_Option DD_KEYFIELD DD_NOPUT to True
+        Set Foreign_Field_Option DD_KEYFIELD DD_FINDREQ to True
+        Set Foreign_Field_Option DD_INDEXFIELD DD_NOPUT to True
+        Set Foreign_Field_Option DD_DEFAULT DD_DISPLAYONLY to True
+
+        Set Field_Option Field FRDVDESP.FRDVH_COD DD_AUTOFIND to True
+        Set Field_Option Field FRDVDESP.FRDVH_COD DD_CAPSLOCK to True
+        Set Key_Field_State Field FRDVDESP.FRDVH_COD to True
+
+        Set Field_Option Field FRDVDESP.SEQ DD_AUTOFIND to True
+        Set Key_Field_State Field FRDVDESP.SEQ to True
+
+        Set Field_Option Field FRDVDESP.PES_CODIGO DD_CAPSLOCK to True
+
+        Set Field_Option Field FRDVDESP.RAZAO_SOCIAL DD_CAPSLOCK to True
+
+        Set Field_Option Field FRDVDESP.DPR_DOCUM DD_CAPSLOCK to True
+
+        Set Field_Option Field FRDVDESP.AGR_COD DD_CAPSLOCK to True
+
+        Set Field_Option Field FRDVDESP.DESCRICAO DD_CAPSLOCK to True
+
+        Set Field_Option Field FRDVDESP.HISTORICO DD_CAPSLOCK to True
+
+        Set Field_Label_Long Field FRDVDESP.ABONADO to "Abonado"
+        Set Field_Label_Short Field FRDVDESP.ABONADO to "Abonado"
+        Set Field_Class_Name Field FRDVDESP.ABONADO to "Checkbox"
+        
+//        Set Field_Value_Table Field FRDVDESP.TIPO to oListaTiposRDVDESP
+
+    End_Procedure
+
+End_Class

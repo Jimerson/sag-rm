@@ -1,0 +1,49 @@
+Use Windows.pkg
+
+Class cComboFormFiltro_SI is a ComboForm
+    
+    Procedure Construct_Object
+        Forward Send Construct_Object
+        
+        { Visibility=Public }
+        Property String psTableName ""
+        
+        { Visibility=Public }
+        Property String psFieldName ""
+        
+        { Visibility=Public }
+        Property String psKeyName ""
+        
+        { Visibility=Public }
+        Property String pbForceEnabled False
+
+    End_Procedure
+
+    Procedure End_Construct_Object
+        Forward Send End_Construct_Object
+
+    End_Procedure
+    
+    Procedure Combo_Fill_List
+        String sTable sField sFileField
+        String[][2] sArrayList
+        Integer iLoop iSizeArray
+        Boolean bAlowBlankState
+        
+        Get psTableName to sTable
+        Get psFieldName to sField
+        Get Allow_Blank_State to bAlowBlankState
+        
+        Move (Trim(sTable)+'.'+Trim(sField)) to sFileField
+        
+        Get Get_List_Object_Array of (oBPCoreBase(Self)) (Trim(sFileField)) to sArrayList
+            
+        Move (SizeOfArray(sArrayList)) to iSizeArray
+        For iLoop from 0 to (iSizeArray-1)
+            If (bAlowBlankState and iLoop = 0) Send Combo_Add_Item "" -1
+            Send Combo_Add_Item (Trim(sArrayList[iLoop][0])+' - '+Trim(sArrayList[iLoop][1])) (Trim(sArrayList[iLoop][0]))
+        Loop
+                
+    End_Procedure
+
+End_Class

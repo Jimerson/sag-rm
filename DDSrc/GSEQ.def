@@ -1,0 +1,26 @@
+-----------------------------------------------------------------------------
+  DATE: 10/08/2021      TIME: 11:33                                  PAGE:  1
+  FILE DEFINITION FOR FILE: GSEQ (# 4)
+-----------------------------------------------------------------------------
+  DRIVER NAME               : MSSQLDRV
+  FILE ROOT NAME            : GSEQ.INT
+  USER DISPLAY NAME         : GSEQ
+  DATAFLEX FILE NAME        : GSEQ
+-----------------------------------------------------------------------------
+  RECORD LENGTH             : 17        ( USED: 17 )
+  MAX NUMBER OF RECORDS     : 2147483647  ( USED: 1 )
+  FILE COMPRESSION          : NONE
+  RE-USE DELETED SPACE      : YES
+  LOCKING TYPE              : RECORD
+  HEADER INTEGRITY CHECKING : NO 
+  TRANSACTION TYPE          : SERVER LOGGED
+  RECORD IDENTITY INDEX     : 0 ( 0 , 0 )
+  FILE LOGIN PARAMETER      : DFCONNID=SAGRM
+  SYSTEM FILE               : YES
+-----------------------------------------------------------------------------
+
+NUM  FIELD NAME       TYPE SIZE  OFFST IX   RELATES TO FILE.FIELD
+---  ---------------  ---- ----- ----- --   ---------------------------------
+  1  SEQ_FRDVH        NUM    8.0     1      
+  2  SEQ_GVIEWS       NUM    4.0    12      
+

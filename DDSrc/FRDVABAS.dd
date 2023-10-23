@@ -1,0 +1,38 @@
+Use DataDict.pkg
+
+Open FRDVABAS
+Open FRDVH
+
+Class FRDVABASDataDictionary is a DataDictionary
+    
+    Procedure Construct_Object
+        Forward Send Construct_Object
+        Set Main_File to FRDVABAS.File_Number
+
+        Set Add_Server_File to FRDVH.File_Number
+
+        Set Foreign_Field_Option DD_KEYFIELD DD_NOPUT to True
+        Set Foreign_Field_Option DD_KEYFIELD DD_FINDREQ to True
+        Set Foreign_Field_Option DD_INDEXFIELD DD_NOPUT to True
+        Set Foreign_Field_Option DD_DEFAULT DD_DISPLAYONLY to True
+
+        Set Field_Option Field FRDVABAS.FRDVH_COD DD_AUTOFIND to True
+        Set Field_Option Field FRDVABAS.FRDVH_COD DD_CAPSLOCK to True
+        Set Key_Field_State Field FRDVABAS.FRDVH_COD to True
+
+        Set Field_Option Field FRDVABAS.ROM_NUMERO DD_AUTOFIND to True
+        Set Key_Field_State Field FRDVABAS.ROM_NUMERO to True
+
+        Set Field_Option Field FRDVABAS.AALMOX_COD DD_CAPSLOCK to True
+
+        Set Field_Option Field FRDVABAS.ALMOX_DESCRICAO DD_CAPSLOCK to True
+
+        Set Field_Option Field FRDVABAS.MOTORISTA DD_CAPSLOCK to True
+
+        Set Field_Option Field FRDVABAS.CCU_CODIGO DD_CAPSLOCK to True
+
+        Set Field_Option Field FRDVABAS.CCU_DESCRICAO DD_CAPSLOCK to True
+
+    End_Procedure
+
+End_Class

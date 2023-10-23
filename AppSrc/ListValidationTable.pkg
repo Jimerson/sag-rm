@@ -1,0 +1,106 @@
+//FRDVH
+//Object oListaMesRDV is a DescriptionValidationTable
+//    Procedure Fill_List
+//        Forward Send Fill_List
+//        Send Add_Table_Value "1" "Janeiro"
+//        Send Add_Table_Value "2" "Fevereiro"
+//        Send Add_Table_Value "3" "Mar‡o"
+//        Send Add_Table_Value "4" "Abril"
+//        Send Add_Table_Value "5" "Maio"
+//        Send Add_Table_Value "6" "Junho"
+//        Send Add_Table_Value "7" "Julho"
+//        Send Add_Table_Value "8" "Agosto"
+//        Send Add_Table_Value "9" "Setembro"
+//        Send Add_Table_Value "10" "Outubro"
+//        Send Add_Table_Value "11" "Novembro"
+//        Send Add_Table_Value "12" "Dezembro"
+//    End_Procedure
+//End_Object
+
+//Object oStatusRDV is a DescriptionValidationTable
+//    Procedure Fill_List
+//        Forward Send Fill_List
+//        Send Add_Table_Value "0" "Aberto"
+//        Send Add_Table_Value "1" "Fechado"
+//    End_Procedure
+//End_Object
+
+//Object oTipoCalcRDV is a DescriptionValidationTable
+//    Procedure Fill_List
+//        Forward Send Fill_List
+//        Send Add_Table_Value "0" "L¡quido"
+//        Send Add_Table_Value "1" "Bruto"
+//    End_Procedure
+//End_Object
+
+//FRDVDESP
+//Object oListaTiposRDVDESP is a DescriptionValidationTable
+//    Procedure Fill_List
+//        Forward Send Fill_List
+//        Send Add_Table_Value "0" "Adto."
+//        Send Add_Table_Value "1" "Sal rio"
+//        Send Add_Table_Value "2" "Desp. Pe‡as"
+//        Send Add_Table_Value "3" "Abast. Ext."
+//        Send Add_Table_Value "4" "Desp. Diversas"
+//    End_Procedure
+//End_Object
+
+//GFILTREL
+//Object oTipoFILTREL is a DescriptionValidationTable
+//    Procedure Fill_List
+//        Forward Send Fill_List
+//        Send Add_Table_Value "0" "Igual"
+//        Send Add_Table_Value "1" "Inicial/Final"
+//    End_Procedure
+//End_Object
+
+//Object oTipoControleFILTREL is a DescriptionValidationTable
+//    Procedure Fill_List
+//        Forward Send Fill_List
+//        Send Add_Table_Value "0" "Form"
+//        Send Add_Table_Value "1" "ComboForm"
+//        Send Add_Table_Value "2" "CheckBox"
+//    End_Procedure
+//End_Object
+
+//GUSER
+//Object oStatusUSER is a DescriptionValidationTable
+//    Procedure Fill_List
+//        Forward Send Fill_List
+//        Send Add_Table_Value "0" "Inativo"
+//        Send Add_Table_Value "1" "Ativo"
+//    End_Procedure
+//End_Object
+
+//GVIEWUSER
+//Se alterar essa lista, alterar tamb‚m na GWVIEWS.dd
+//Object oStatusVIEW is a DescriptionValidationTable
+//    Procedure Fill_List
+//        Forward Send Fill_List
+//        Send Add_Table_Value "0" "Inabilitado"
+//        Send Add_Table_Value "1" "Habilitado"
+//        Send Add_Table_Value "2" "Leitura"
+//    End_Procedure
+//End_Object
+
+//GWVIEW
+//Se alterar essa lista, alterar tamb‚m na GVIEWUSER.dd E GWVIEWUSE.DD
+//Object oStatusWVIEW is a DescriptionValidationTable
+//    Procedure Fill_List
+//        Forward Send Fill_List
+//        Send Add_Table_Value "0" "Inabilitado"
+//        Send Add_Table_Value "1" "Habilitado"
+//        Send Add_Table_Value "2" "Leitura"
+//    End_Procedure
+//End_Object
+
+//GWVIEWUSE
+//Se alterar essa lista, alterar tamb‚m na GVIEWUSER.dd E GWVIEWS.DD
+//Object oStatusWVIEWUSE is a DescriptionValidationTable
+//    Procedure Fill_List
+//        Forward Send Fill_List
+//        Send Add_Table_Value "0" "Inabilitado"
+//        Send Add_Table_Value "1" "Habilitado"
+//        Send Add_Table_Value "2" "Leitura"
+//    End_Procedure
+//End_Object

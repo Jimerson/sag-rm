@@ -1,0 +1,93 @@
+-----------------------------------------------------------------------------
+  DATE: 18/08/2021      TIME: 11:01                                  PAGE:  1
+  FILE DEFINITION FOR FILE: GWGERACTE (# 28)
+-----------------------------------------------------------------------------
+  DRIVER NAME               : MSSQLDRV
+  FILE ROOT NAME            : GWGERACTE.INT
+  USER DISPLAY NAME         : GWGERACTE
+  DATAFLEX FILE NAME        : GWGERACTE
+-----------------------------------------------------------------------------
+  RECORD LENGTH             : 1526      ( USED: 1526 )
+  MAX NUMBER OF RECORDS     : 2147483647  ( USED: 3 )
+  FILE COMPRESSION          : NONE
+  RE-USE DELETED SPACE      : YES
+  LOCKING TYPE              : RECORD
+  HEADER INTEGRITY CHECKING : NO 
+  TRANSACTION TYPE          : SERVER LOGGED
+  RECORD IDENTITY INDEX     : 0 ( 0 , 0 )
+  FILE LOGIN PARAMETER      : DFCONNID=SAGRM
+  SYSTEM FILE               : NO 
+-----------------------------------------------------------------------------
+
+NUM  FIELD NAME       TYPE SIZE  OFFST IX   RELATES TO FILE.FIELD
+---  ---------------  ---- ----- ----- --   ---------------------------------
+  1  USUARIO          ASC     20     1  1   
+  2  CHAVE_NFE        ASC     50    21      
+  3  NF               ASC     10    71      
+  4  PESSOA_DEST      ASC      8    81      
+  5  NOME_DEST        ASC     80    89      
+  6  CNPJ_CPF_DEST    ASC     14   169      
+  7  CIDADE_DEST      ASC      8   183      
+  8  CIDADE_DEST_DESCR  ASC     50   191      
+  9  UF_DEST          ASC      2   241      
+ 10  PLACA            ASC      7   243      
+ 11  MOTORISTA_CPF    ASC     11   250      
+ 12  PRODUTO_COD      ASC     25   261      
+ 13  PRODUTO_DESCR    ASC    120   286      
+ 14  ST               ASC      3   406      
+ 15  CIDADE_ORI       ASC      8   409      
+ 16  CIDADE_ORI_DESCR  ASC     50   417      
+ 17  UF_ORI           ASC      2   467      
+ 18  PESSOA_ORI       ASC      8   469      
+ 19  CNPJ_CPF_ORI     ASC     14   477      
+ 20  NOME_ORI         ASC     80   491      
+ 21  PESO_NF          NUM   14.2   571      
+ 22  CFOP             ASC      4   589      
+ 23  MOTORISTA_COD    ASC      8   593      
+ 24  MOTORISTA_NOME   ASC     80   601      
+ 25  FAZENDA          ASC     50   681      
+ 26  RNTRC            ASC     20   731      
+ 27  VEICULO_COD      ASC     10   751      
+ 28  TRANSP_COD       ASC      8   761      
+ 29  TRANSP_RAZAO_SOCIAL  ASC     80   769      
+ 30  TRANSP_CNPJ_CPF  ASC     14   849      
+ 31  PESO_BRUTO       NUM   14.2   863      
+ 32  VALOR_NF         NUM   14.2   881      
+ 33  DIA_EMISSAO      NUM    2.0   899      
+ 34  MES_EMISSAO      NUM    2.0   905      
+ 35  ANO_EMISSAO      NUM    2.0   911      
+ 36  DT_EMISSAO       DAT     10   917      
+ 37  CTE              ASC     15   940      
+ 38  SERIE_COD        ASC      8   955      
+ 39  VLR_UN           NUM   14.2   963      
+ 40  VLR_TOTAL_CTRC   NUM   14.2   981      
+ 41  TPEND_DEST       ASC      2   999      
+ 42  TPEND_ORI        ASC      2  1001      
+ 43  TPEND_TRANSP     ASC      2  1003      
+ 44  DEST_RAZAO_SOCIAL  ASC     80  1005      
+ 45  DEST_CNPJ_CPF    ASC     14  1085      
+ 46  DEST_INSC_EST_RG  ASC     14  1099      
+ 47  DEST_END         ASC     50  1113      
+ 48  DEST_NUMERO      ASC      5  1163      
+ 49  DEST_CPL         ASC     50  1168      
+ 50  DEST_BAIRRO      ASC     50  1218      
+ 51  DEST_CEP         ASC      8  1268      
+ 52  MDFE_ANT_COD     ASC     10  1276      
+ 53  MDFE_ANT_SERIE   ASC      8  1286      
+ 54  MDFE_ANT_DATA    DAT     10  1294      
+ 55  MDFE_ANT_GERADO  ASC     20  1317      
+ 56  MDFE_ANT_ENCERRADO  ASC     20  1337      
+ 57  MDFE_ANT_CANCELADO  ASC     20  1357      
+ 58  MDFE_ANT_MOT_COD  ASC      8  1377      
+ 59  MDFE_ANT_MOT_NOME  ASC     80  1385      
+ 60  MDFE_ANT_PLACA   ASC     10  1465      
+ 61  MDFE_COD         ASC     10  1475      
+ 62  MDFE_SERIE       ASC      8  1485      
+ 63  MDFE_DATA        DAT     10  1493      
+
+
+INDEX# FIELDS          DES U/C    LENGTH LEVELS SEGMENTS MODE
+------ --------------- --- ---    ------ ------ -------- -------
+  1    USUARIO         NO  NO       0      0       2     ON-LINE
+       Recnum          NO  NO 
+

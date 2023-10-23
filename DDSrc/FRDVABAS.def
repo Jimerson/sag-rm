@@ -1,0 +1,41 @@
+-----------------------------------------------------------------------------
+  DATE: 10/08/2021      TIME: 11:33                                  PAGE:  1
+  FILE DEFINITION FOR FILE: FRDVABAS (# 15)
+-----------------------------------------------------------------------------
+  DRIVER NAME               : MSSQLDRV
+  FILE ROOT NAME            : FRDVABAS.INT
+  USER DISPLAY NAME         : FRDVABAS
+  DATAFLEX FILE NAME        : FRDVABAS
+-----------------------------------------------------------------------------
+  RECORD LENGTH             : 257       ( USED: 257 )
+  MAX NUMBER OF RECORDS     : 2147483647  ( USED: 4 )
+  FILE COMPRESSION          : NONE
+  RE-USE DELETED SPACE      : YES
+  LOCKING TYPE              : RECORD
+  HEADER INTEGRITY CHECKING : NO 
+  TRANSACTION TYPE          : SERVER LOGGED
+  RECORD IDENTITY INDEX     : 0 ( 0 , 0 )
+  FILE LOGIN PARAMETER      : DFCONNID=SAGRM
+  SYSTEM FILE               : NO 
+-----------------------------------------------------------------------------
+
+NUM  FIELD NAME       TYPE SIZE  OFFST IX   RELATES TO FILE.FIELD
+---  ---------------  ---- ----- ----- --   ---------------------------------
+  1  FRDVH_COD        ASC      8     1  1   FRDVH.FIELD_1 (10,1)
+  2  ROM_NUMERO       ASC      8     9  1   
+  3  AALMOX_COD       ASC      8    17      
+  4  ALMOX_DESCRICAO  ASC     30    25      
+  5  DT_SAIDA         DAT     10    55      
+  6  MOTORISTA        ASC     80    78      
+  7  QTDADE           NUM   12.2   158      
+  8  VLR_UNITARIO     NUM   12.2   174      
+  9  VLR_TOTAL        NUM   12.2   190      
+ 10  CCU_CODIGO       NUM    8.0   206      
+ 11  CCU_DESCRICAO    ASC     30   217      
+
+
+INDEX# FIELDS          DES U/C    LENGTH LEVELS SEGMENTS MODE
+------ --------------- --- ---    ------ ------ -------- -------
+  1    FRDVH_COD       NO  NO       0      0       2     ON-LINE
+       ROM_NUMERO      NO  NO 
+

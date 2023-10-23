@@ -1,0 +1,54 @@
+-----------------------------------------------------------------------------
+  DATE: 10/08/2021      TIME: 11:33                                  PAGE:  1
+  FILE DEFINITION FOR FILE: FRDVH (# 10)
+-----------------------------------------------------------------------------
+  DRIVER NAME               : MSSQLDRV
+  FILE ROOT NAME            : FRDVH.INT
+  USER DISPLAY NAME         : FRDVH
+  DATAFLEX FILE NAME        : FRDVH
+-----------------------------------------------------------------------------
+  RECORD LENGTH             : 16649     ( USED: 16649 )
+  MAX NUMBER OF RECORDS     : 2147483647  ( USED: 2 )
+  FILE COMPRESSION          : NONE
+  RE-USE DELETED SPACE      : YES
+  LOCKING TYPE              : RECORD
+  HEADER INTEGRITY CHECKING : NO 
+  TRANSACTION TYPE          : SERVER LOGGED
+  RECORD IDENTITY INDEX     : 0 ( 0 , 0 )
+  FILE LOGIN PARAMETER      : DFCONNID=SAGRM
+  SYSTEM FILE               : NO 
+-----------------------------------------------------------------------------
+
+NUM  FIELD NAME       TYPE SIZE  OFFST IX   RELATES TO FILE.FIELD
+---  ---------------  ---- ----- ----- --   ---------------------------------
+  1  CODIGO           ASC      8     1  1   
+  2  CCU_CODIGO       ASC      8     9  2   
+  3  MES              NUM    2.0    17  2   
+  4  ANO              NUM    4.0    23  2   
+  5  TOT_RECEITA_LIQ  NUM   12.2    29      
+  6  TOT_DESPESAS     NUM   12.2    45      
+  7  TOT_ABAST_FAZ    NUM   12.2    61      
+  8  TOT_ABAST_EX     NUM   12.2    77      
+  9  TOT_MEC_PECAS    NUM   12.2    93      
+ 10  TOT_DESP_DIVERSAS  NUM   12.2   109      
+ 11  SALDO            NUM   12.2   125      
+ 12  TOT_ADIANT       NUM   12.2   141      
+ 13  TOT_SALARIOS     NUM   12.2   157      
+ 14  TOT_COMISSAO     NUM   12.2   173      
+ 15  STATUS           NUM    1.0   189      
+ 16  ACERTO_FINAL     NUM   12.2   195      
+ 17  PERC_COMISSAO    NUM    3.2   211      
+ 18  TIPO_COMISSAO    NUM    1.0   218      
+ 19  TOT_DEB_ANT      NUM   12.2   224      
+ 20  TOT_DESP_MOT     NUM   12.2   240      
+ 21  OBSERVACOES      TEX   1024   256      
+
+
+INDEX# FIELDS          DES U/C    LENGTH LEVELS SEGMENTS MODE
+------ --------------- --- ---    ------ ------ -------- -------
+  1    CODIGO          NO  NO       0      0       1     ON-LINE
+
+  2    CCU_CODIGO      NO  NO       0      0       3     ON-LINE
+       MES             NO  NO 
+       ANO             NO  NO 
+

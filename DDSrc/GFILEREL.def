@@ -1,0 +1,32 @@
+-----------------------------------------------------------------------------
+  DATE: 10/08/2021      TIME: 11:33                                  PAGE:  1
+  FILE DEFINITION FOR FILE: GFILEREL (# 23)
+-----------------------------------------------------------------------------
+  DRIVER NAME               : MSSQLDRV
+  FILE ROOT NAME            : GFILEREL.INT
+  USER DISPLAY NAME         : GFILEREL
+  DATAFLEX FILE NAME        : GFILEREL
+-----------------------------------------------------------------------------
+  RECORD LENGTH             : 131       ( USED: 131 )
+  MAX NUMBER OF RECORDS     : 2147483647  ( USED: 7 )
+  FILE COMPRESSION          : NONE
+  RE-USE DELETED SPACE      : YES
+  LOCKING TYPE              : RECORD
+  HEADER INTEGRITY CHECKING : NO 
+  TRANSACTION TYPE          : SERVER LOGGED
+  RECORD IDENTITY INDEX     : 0 ( 0 , 0 )
+  FILE LOGIN PARAMETER      : DFCONNID=SAGRM
+  SYSTEM FILE               : NO 
+-----------------------------------------------------------------------------
+
+NUM  FIELD NAME       TYPE SIZE  OFFST IX   RELATES TO FILE.FIELD
+---  ---------------  ---- ----- ----- --   ---------------------------------
+  1  RPT              ASC    100     1  1   
+  2  FILE             ASC     20   101  1   
+
+
+INDEX# FIELDS          DES U/C    LENGTH LEVELS SEGMENTS MODE
+------ --------------- --- ---    ------ ------ -------- -------
+  1    RPT             NO  NO       0      0       2     ON-LINE
+       FILE            NO  NO 
+

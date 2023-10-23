@@ -1,0 +1,149 @@
+Use Dfspnent.pkg
+Use BPCoreBase.bp
+   
+//#IFDEF iDDO#
+//#ELSE
+//    Integer iDDO# iDDField# 
+//#ENDIF
+//#IFDEF iVisible# 
+//#ELSE
+//    Integer iVisible# 
+//#ENDIF
+//#IFDEF iServer#
+//#ELSE
+//    Integer iServer#
+//#ENDIF
+
+// Visual DataFlex 17.0 Migration Utility, added November 28, 2012: 09:32:50
+#IF (!@ >= 120)
+{ OverrideProperty=Form_Border InitialValue=Border_Normal }
+{ OverrideProperty=Form_Border EnumList="Border_Normal, Border_None, Border_Dialog, Border_Thick, Border_ClientEdge" }
+#ENDIF
+
+{ DesignerClass=cDTSpinForm }
+Class cDbSpinForm_SI is a dbSpinForm
+    Procedure Construct_Object        
+        Integer iColor iCorSeq iCorSel
+        String sLabelAnt sPrefixo sSufixo sCorSeq sCorSel
+        Forward Send Construct_Object
+        
+        Get Color to iColor
+        Get Label to sLabelAnt
+        
+        { Category="Appearance" } 
+        Property Boolean pbSequenciaAuto False
+        
+        { Visibility=Private }
+        Property Integer piColorAnt iColor
+        
+        { Visibility=Private }
+        Property String psLabelAnt sLabelAnt
+        
+        { Visibility=Private }
+        Property String psPrefixo ""
+        
+        { Visibility=Private }
+        Property String psSufixo ""
+        
+        { Visibility=Public }
+        Property Integer piColorSeq 
+        
+        { Visibility=Public }
+        Property Integer piColorSel 
+        
+        Get Server_Param of oBPCoreBase "P_PREFIXO_LABEL_SEL"       to sPrefixo
+        Get Server_Param of oBPCoreBase "P_SUFIXO_LABEL_SEL"        to sSufixo
+        Get Server_Param of oBPCoreBase "P_COR_PADRAO_SEQ_AUTO"     to sCorSeq
+        Get Server_Param of oBPCoreBase "P_COR_PADRAO_CAMPO_SEL"    to sCorSel
+        
+        Move (Eval(sCorSeq)) to iCorSeq
+        Move (Eval(sCorSel)) to iCorSel
+    
+        Set psPrefixo   to sPrefixo
+        Set psSufixo    to sSufixo
+        Set piColorSeq  to iCorSeq
+        Set piColorSel  to iCorSel
+        
+         
+        // Visual DataFlex 17.0 Migration Utility, added November 28, 2012: 09:32:51
+        #IF (!@ >= 120)
+        { InitialValue=0 }
+        #ENDIF
+        Property Integer Label_Col_Offset 0
+        // Visual DataFlex 17.0 Migration Utility, added November 28, 2012: 09:32:51
+        #IF (!@ >= 120)
+        { InitialValue=jMode_Top }
+        #ENDIF
+        Property Integer Label_Justification_Mode jMode_Top jMode_Top jMode_Left jMode_Right
+        ////Set Form_Border Item 0 to Border_Normal    
+    End_Procedure // Construct_Object
+    
+    Procedure End_Construct_Object
+        Boolean bSeqAuto
+        Integer iCorSeq
+        Forward Send End_Construct_Object   
+        
+        Get pbSequenciaAuto to bSeqAuto
+        
+        If (bSeqAuto) Begin 
+            Get piColorSeq to iCorSeq   //Pega a cor configurada no parametro para campos seq auto
+            Set Color to iCorSeq
+            Set piColorAnt to iCorSeq
+            Set FontWeight to FW_BOLD
+        End
+    End_Procedure // Construct_Object
+
+    Procedure Locate_Label
+        Forward Send Locate_Label
+        Set Transparent_state of (Label_Object(Self)) to True  //psdbspin
+    End_Procedure
+    
+    Procedure OnSetFocus
+        Integer iColorPad iCorSel
+        Boolean bSeqAuto
+        String sLabel sPrefixo sSufixo
+        
+        Forward Send OnSetFocus
+        
+        Get pbSequenciaAuto to bSeqAuto
+        
+        If (not(bSeqAuto)) Begin 
+            Get Color to iColorPad      //Pega cor padrao configurada para o componente
+            Set piColorAnt to iColorPad 
+            Get piColorSel to iCorSel   //Pega cor padrao configurada para componentes selecionados
+            Set Color to iCorSel
+        End
+        
+        Get psPrefixo to sPrefixo
+        Get psSufixo  to sSufixo
+        
+        Get Label to sLabel
+        Set psLabelAnt to sLabel
+        Set Label to (Trim(sPrefixo)+Trim(sLabel)+Trim(sSufixo))
+        Set Label_FontWeight to FW_BOLD
+        
+    End_Procedure
+
+    Procedure OnKillFocus
+        Integer iColorPad
+        Boolean bSeqAuto
+        String sLabel
+        
+        Forward Send OnKillFocus
+        
+        Get pbSequenciaAuto to bSeqAuto
+        
+        If (not(bSeqAuto)) Begin 
+            Get piColorAnt to iColorPad 
+            Set Color to iColorPad
+        End
+        
+        Get psLabelAnt to sLabel
+        Set Label to sLabel
+        
+        Set Label_FontWeight to FW_NORMAL
+    End_Procedure
+End_Class // vAppdbForm
+
+
+

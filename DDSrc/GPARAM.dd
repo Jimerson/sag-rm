@@ -1,0 +1,52 @@
+Use DataDict.pkg
+
+Open GPARAM
+
+Register_Object oSLGPARAM
+
+Class GPARAMDataDictionary is a DataDictionary
+    
+    Procedure Construct_Object
+        Forward Send Construct_Object
+        Set Main_File to GPARAM.File_Number
+
+        Set Foreign_Field_Option DD_KEYFIELD DD_NOPUT to True
+        Set Foreign_Field_Option DD_KEYFIELD DD_FINDREQ to True
+        Set Foreign_Field_Option DD_INDEXFIELD DD_NOPUT to True
+        Set Foreign_Field_Option DD_DEFAULT DD_DISPLAYONLY to True
+
+        Set Field_Option Field GPARAM.NOME DD_AUTOFIND to True
+        Set Field_Label_Long Field GPARAM.NOME to "Nome"
+        Set Field_Label_Short Field GPARAM.NOME to "Nome"
+        Set Field_Prompt_Object Field GPARAM.NOME to oSLGPARAM
+        Set Key_Field_State Field GPARAM.NOME to True
+
+        Set Field_Label_Long Field GPARAM.VALOR to "Valor"
+        Set Field_Label_Short Field GPARAM.VALOR to "Valor"
+
+        Set Field_Label_Long Field GPARAM.OBSERVACAO to "Observa‡Æo"
+        Set Field_Label_Short Field GPARAM.OBSERVACAO to "Observa‡Æo"
+
+        Set Field_Label_Long Field GPARAM.DATA_C to "Data de Cria‡Æo"
+        Set Field_Label_Short Field GPARAM.DATA_C to "Data Cria‡Æo"
+
+        Set Field_Label_Long Field GPARAM.DATA_M to "Data de Modifica‡Æo"
+        Set Field_Label_Short Field GPARAM.DATA_M to "Data Modifica‡Æo"
+
+    End_Procedure
+
+    Procedure Update
+        Forward Send Update
+        Move (CurrentDateTime()) to GPARAM.DATA_M
+        
+        If (Trim(GPARAM.DATA_C) = "") Move (CurrentDateTime()) to GPARAM.DATA_C
+        
+        Move (trim(GPARAM.OBSERVACAO)) to GPARAM.OBSERVACAO
+    End_Procedure
+
+End_Class
+
+#IFDEF Is$WebApp
+#ELSE
+Use SLGPARAM.sl
+#ENDIF

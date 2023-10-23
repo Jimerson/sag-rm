@@ -1,0 +1,576 @@
+#Include Base.pkg
+#Include VarGlobais.pkg
+
+Use ConBDDll.pkg // Cria conexao
+
+Define USE_APP
+
+#Replace CURRENT$WORKSPACE "sag-rm"
+
+Use DFAllEnt.pkg
+Use cCJStandardCommandBarSystem.pkg
+Use cCJCommandBarSystem.pkg
+Use cCJMenuItem_SI.pkg
+
+
+Object oHtmlHelp is a cHtmlHelp
+End_Object
+
+Object oApplication is a cApplication
+    Set peHelpType to htHtmlHelp
+    Set pbEnterKeyAsTabKey to True
+    
+        
+    Procedure OnCreate 
+        String sVersionMajor sVersionMinor sVersionRelease sVersionBuild
+        Send DoOpenWorkspace CURRENT$WORKSPACE
+        
+        Move False to gbTeste
+        If (gbTeste) Move 'M1A1' to gsCodUser
+        Else Move '' to gsCodUser
+        
+        #Include Conexao.pkg
+      
+        
+        Move "SourceIn - Gest∆o de Neg¢cios" to gsCompany
+        Move "SAG - Sistema Suxiliar de Gest∆o" to gsProduct
+        Set psCompany to gsCompany
+        Set psProduct to gsProduct
+        
+        Get phoVersionInfo to ghoVersionInfo
+        Get piVersionMajor of ghoVersionInfo to sVersionMajor
+        Get piVersionMinor of ghoVersionInfo to sVersionMinor
+        Get piVersionRelease of ghoVersionInfo to sVersionRelease
+        Get piVersionBuild of ghoVersionInfo to sVersionBuild
+        Move (sVersionMajor+'.'+sVersionMinor+'.'+sVersionRelease+'_'+sVersionBuild) to gsVersaoSys
+        
+    End_Procedure
+    
+End_Object
+
+// Aplicacao de skin (tema) no sistema
+Object oCJSkinFramework is a cCJSkinFramework
+    Set psSkinFile to "SourceIn.cjstyles"
+    Set psSkinIni to "NormalBlack.ini"
+
+    Procedure OnCreate
+        Send ComExcludeModule "ole32.dll"
+        Send ComExcludeModule "wininet.dll"
+        Send ComExcludeModule "msado15.dll"
+        Send ComExcludeModule "oledb32.dll"
+        Send ComExcludeModule "msadce.dll"
+        Send ComExcludeModule "msadcer.dll"
+        Send ComExcludeModule "ws2_32.dll"
+        Send ComExcludeModule "ws2help.dll"
+        Send ComExcludeModule "netapi32.dll"
+        Send ComExcludeModule "ws2_32.dll"
+        Send ComExcludeModule "ws2_32.dll"
+        
+        Send ComExcludeModule "FIDbg10.ocx"
+        Send ComExcludeModule "NPSWF32.dll"
+        
+        Send ComExcludeModule "msdard.dll"
+        Send ComExcludeModule "msjet40.dll"
+        Send ComExcludeModule "msjetoledb40.dll"
+        Send ComExcludeModule "msjiter40.dll"
+        Send ComExcludeModule "msjint40.dll"
+        
+        Send ComExcludeModule "RMPHTML.OCX"
+        Send ComExcludeModule "MSVBVM60.DLL"
+        
+        Send ComExcludeModule "secur32.dll"
+        Send ComExcludeModule "userenv.dll"
+        
+        Send ComExcludeModule "CRDB_ADOPLUS.DLL"
+        Send ComExcludeModule "crdb_odbc.dll"
+        Send ComExcludeModule "CRViewer.dll"
+        Send ComExcludeModule "craxddrt.dll"
+        Send ComExcludeModule "querybuilder.dll"
+        Send ComExcludeModule "crqe.dll"
+        Send ComExcludeModule "cslibu-2-1.dll"
+        Send ComExcludeModule "cxlib-3-1.dll"
+        Send ComExcludeModule "cxlibw-3-1.dll"
+        Send ComExcludeModule "querybuilder.dll"
+        
+        Send ComExcludeModule "RICHED32.DLL"
+        
+        Send ComExcludeModule "comctl32.ocx"
+        Send ComExcludeModule "comdlg32.ocx"
+        Send ComExcludeModule "comdlg32.dll"
+        Send ComExcludeModule "comctl32.dll"
+        Send ComExcludeModule "comct232.ocx"
+        Send ComExcludeModule "comct332.ocx"
+ 
+        Send ComExcludeModule "WRusr.dll"
+        Send ComExcludeModule "WRVSTR.dll"
+
+        Forward Send OnCreate
+
+        // Parametros necessarios para adequacao do tema
+        //Set ComAutoApplyNewThreads to True
+        Set ComAutoApplyNewWindows to False
+        Set ComApplyOptions to (xtpSkinApplyMenus)// + xtpSkinApplyFrame + xtpSkinApplyColors)
+    End_Procedure
+    
+    Procedure ApplySkin
+        Forward Send ApplySkin
+        Send EnableVisualStyles of Desktop True
+    End_Procedure
+End_Object
+
+
+Object oToolTipController is a cToolTipController
+    Move Self to ghoToolTipController
+End_Object
+
+Use oEditContextMenu.pkg
+Use oDEOEditContextMenu17.pkg
+
+Object oMain is a Panel
+    Set Label to ("SAG - Sistema Auxiliar de Gest∆o v."+gsVersaoSys+" - SourceIn")
+    Set Location to 4 3
+    Set Size to 300 526
+    Set Icon to "SourceInIcon.ico"
+
+    Object oCommandBarSystem is a cCJCommandBarSystem
+        Set pbTimerUpdate to True
+
+        Procedure OnCreateCommandBars
+            Handle hoOptions
+            Get OptionsObject to hoOptions
+            Forward Send OnCreateCommandBars
+        End_Procedure
+   
+        Object oMenuBar is a cCJMenuBar
+            
+            Object oFileMenu is a cCJMenuItem
+                Set peControlType to xtpControlPopup          
+                Set psCaption   to "&Arquivo"
+                Set psDescription to  "Localizar, gravar, excluir, limpar informaá∆o ou sair desta aplicaá∆o"
+                Set psCategory to "Menus"
+                
+                Object oLoginMenuItem is a cCJMenuItem
+                    Set psCaption to "Login"
+                    Set psTooltip to "Login"
+                    
+                    Procedure OnExecute Variant vCommandBarControl
+                        Set pbEnabled of (oIdleHandleDgLogin(oClientArea(Self))) to True
+                    End_Procedure
+                End_Object
+                
+                Object oConfigMenuItem is a cCJMenuItem
+                    //Set pbAddToDesignerMenu to True
+                    Set pbControlBeginGroup to True
+                    Set psImage to "Settings.ico"
+                    Set psCaption to "&Configurador"
+                    Set psShortcut to ""
+                    Set psDescription to "Configurador"
+                    Set psTooltip to "Configurador"
+                    Set psCategory to "Outros"
+                    //Set pbActiveUpdate to False
+                    Set peControlType to xtpControlPopup
+                
+//                    Procedure OnExecute Variant vCommandBarControl
+//                        Handle hoClient
+//                        Get Client_Id to hoClient
+//                        //Send Activate_oVWCADRDV of hoClient
+//                    End_Procedure
+
+                    Object oMenuItem1 is a cCJMenuItem_SI
+                        Set piCodigoView to 2
+
+//                        Set psCaption to "Cadastro de Views"
+//                        Set psTooltip to "Cadastro de Views"
+                    
+//                        Procedure OnExecute Variant vCommandBarControl
+//                            Handle hoClient
+//                            Get Client_Id to hoClient
+//                            Send Activate_oVWCADVIEW of hoClient
+//                        End_Procedure
+                    End_Object
+                    
+                    Object oMenuItem2 is a cCJMenuItem_SI
+                        Set piCodigoView to 3
+                    End_Object
+                    
+                    Object oMenuItem3 is a cCJMenuItem_SI
+                        Set piCodigoView to 4
+                    End_Object
+                     
+                    Object oMenuItem4 is a cCJMenuItem_SI
+                        Set piCodigoView to 5
+                    End_Object
+                    
+                    Object oMenuItem5 is a cCJMenuItem_SI
+                        Set piCodigoView to 6
+                    End_Object
+                    
+                    Object oMenuItem6 is a cCJMenuItem_SI
+                        Set piCodigoView to 8
+                    End_Object
+                    
+                    Object oMenuItem6 is a cCJMenuItem_SI
+                        Set piCodigoView to 10
+                    End_Object
+                End_Object
+    
+                Object oExitMenu is a cCJExitMenuItem
+                    Set pbControlBeginGroup to True
+                End_Object
+
+
+            End_Object
+            
+            Object oViewMenu is a cCJMenuItem
+                Set peControlType to xtpControlPopup
+                Set psCaption to "&Cadastros"
+                Set psToolTip to "Cadastros"
+                Set psDescription to "Views dispon°veis"
+
+                Object oMenuItem7 is a cCJMenuItem_SI
+                    Set piCodigoView to 7
+//                    Set psCaption to "Registro de Viagem"
+//                    Set psTooltip to "Registro de Viagem"
+//                
+//                    Procedure OnExecute Variant vCommandBarControl
+//                        Handle hoClient
+//                        Get Client_Id to hoClient
+//                        Send Activate_oVWCADRDV of hoClient
+//                    End_Procedure
+                End_Object
+
+                Object oMenuItem7 is a cCJMenuItem_SI
+                    Set piCodigoView to 11
+                    
+//                    Set psCaption to "VWGERACTEMDFE"
+//                    Set psTooltip to "VWGERACTEMDFE"
+//                
+//                    Procedure OnExecute Variant vCommandBarControl
+//                        Handle hoClient
+//                        Get Client_Id to hoClient
+//                        Send Activate_oVWGERACTEMDFE of hoClient
+//                    End_Procedure
+                End_Object
+
+//                Object oCadastrodeObjetosMenuItem is a cCJMenuItem
+//                    Set psCaption to "Cadastro de Objetos"
+//                    Set psTooltip to "Cadastro de Objetos"
+//                
+//                    Procedure OnExecute Variant vCommandBarControl
+//                        Handle hoClient
+//                        Get Client_Id to hoClient
+//                        Send Activate_oVWCADOBJETOS of hoClient
+//                    End_Procedure
+//                End_Object
+
+            End_Object
+            
+            Object oReportMenu is a cCJMenuItem
+                Set peControlType to xtpControlPopup
+                Set psCaption to "&Relat¢rio"
+                Set psToolTip to "Relat¢rio"
+                Set psDescription to "Relat¢rios dispon°veis"
+                
+                Object oMenuItem8 is a cCJMenuItem_SI
+                    Set piCodigoView to 9
+                End_Object
+
+//                Object oRelatriodeRegistrosdeViagensMenuItem is a cCJMenuItem
+//                    Set psCaption to "Relat†rio de Registros de Viagens"
+//                    Set psTooltip to "Relat†rio de Registros de Viagens"
+//                
+//                    Procedure OnExecute Variant vCommandBarControl
+//                        Handle hoClient
+//                        Get Client_Id to hoClient
+//                        Send Activate_oRVFRDVH of hoClient
+//                    End_Procedure
+//                End_Object
+            End_Object
+            
+            Object oNavigateMenu is a cCJMenuItem
+                Set peControlType to xtpControlPopup      
+                Set psCaption to "&Navegaá∆o"    
+                Set psTooltip to "Navegaá∆o"    
+                Set psDescription to "Posicionar em diferentes †reas da aplicaá∆o"
+                
+                Object oNextAreaMenu is a cCJNextAreaMenu
+                End_Object
+                
+                Object oPriorAreaMenu is a cCJPriorAreaMenu
+                End_Object
+                
+                Object oNextViewMenu is a cCJNextViewMenu
+                End_Object
+                
+                Object oPriorViewMenu is a cCJPriorViewMenu
+                End_Object
+    
+                Object oZoomMenu is a cCJZoomMenuItem
+                End_Object
+                
+                Object oClearMenuItem is a cCJClearMenuItem
+                    Set pbControlBeginGroup to True
+                    Set pbAddToDesignerMenu to True
+                End_Object
+    
+                Object oClearAllMenu is a cCJClearAllMenuItem
+                    Set pbAddToDesignerMenu to True
+                End_Object
+    
+                Object oPromptMenuItem is a cCJPromptMenuItem
+                    Set pbAddToDesignerMenu to True
+                    Set pbControlBeginGroup to True
+                End_Object
+    
+                Object oFindMenuItem is a cCJFindMenuItem
+                    Set pbAddToDesignerMenu to True
+                    Set pbControlBeginGroup to True
+                End_Object
+    
+                Object oFindNextMenu is a cCJFindNextMenuItem
+                    Set pbAddToDesignerMenu to True
+                End_Object
+    
+                Object oFindPreviousMenu is a cCJFindPreviousMenuItem
+                    Set pbAddToDesignerMenu to True
+                End_Object
+    
+                Object oFindFirstMenu is a cCJFindFirstMenuItem
+                    Set pbAddToDesignerMenu to True
+                End_Object
+    
+                Object oFindLastMenu is a cCJFindLastMenuItem
+                    Set pbAddToDesignerMenu to True
+                End_Object
+    
+                Object oSaveMenuItem is a cCJSaveMenuItem
+                    Set pbAddToDesignerMenu to True
+                    Set pbControlBeginGroup to True
+                End_Object
+    
+                Object oDeleteMenuItem is a cCJDeleteMenuItem
+                    Set pbAddToDesignerMenu to True
+                End_Object
+    
+            End_Object
+    
+            Object oWindowMenu is a cCJMDIWindowsMenuItem
+                Set peControlType to xtpControlPopup      
+                Set psCaption to "&Janela"
+                Set psToolTip to "Janela"
+                Set psDescription to "Mostrar views atuais e configurar outras opá‰es de apresentaá∆o"    
+                
+                // These are the static windows items. More will be created in onInitPopup 
+                Object oDisplayOptionsMenu is a cCJMenuItem
+                    Set peControlType to xtpControlPopup          
+                    Set psCaption to "Opá‰es de &apresentaá∆o"
+                    Set psToolTip to "Opá‰es de apresentaá∆o"
+                    Set psDescription to "Configurar modo de apresentaá∆o"
+    
+                    Object oStatusbarMenu is a cCJStatusbarMenuItem
+                    End_Object
+    
+                    Object oAutoArrangeIconsMenu is a cCJAutoArrangeIconsMenuItem
+                    End_Object
+    
+                    Object oRestoreMenusMenu is a cCJRestoreMenusMenuItem
+                        Set pbControlBeginGroup to True
+                    End_Object
+
+                End_Object
+    
+                Object oCascadeMenu is a cCJCascadeMenuItem
+                    Set pbControlBeginGroup to True
+                End_Object
+    
+                Object oHorizTile is a cCJTileHorizontally
+                End_Object
+    
+                Object oVertTile is a cCJTileVertically
+                End_Object
+    
+                Object oMinimizeMenuItem is a cCJMinimizeWindowsMenuItem
+                    Set pbControlBeginGroup to True
+                End_Object
+    
+                Object oRestoreMenuItem is a cCJRestoreWindowsMenuItem
+                End_Object
+    
+                Object oArrangeIconsMenuItem is a cCJAutoArrangeIconsMenuItem
+                    Set pbControlBeginGroup to True
+                End_Object
+    
+            End_Object
+            
+            Object oHelpMenu is a cCJMenuItem
+                Set peControlType to xtpControlPopup    
+                Set psCaption to "Aj&uda"
+                Set psDescription to "Acessar informaá∆o para aprendizado e uso desta aplicaá∆o DataFlex"
+                Set psToolTip to "Ajuda"
+                
+                Object oHelpMenuItem is a cCJHelpMenuItem 
+                End_Object
+    
+                Object oAboutMenuItem is a cCJAboutMenuItem
+                End_Object
+           
+            End_Object
+    
+        End_Object
+    
+        Object oFindToolBar is a cCJToolbar
+            Set psTitle to "Barra de ferramentas de busca"
+    
+            Object oFindFirstTool is a cCJFindFirstMenuItem
+            End_Object
+    
+            Object oFindPreviousTool is a cCJFindPreviousMenuItem
+            End_Object
+    
+            Object oFindMenuTool is a cCJFindMenuItem
+            End_Object
+    
+            Object oFindNextTool is a cCJFindNextMenuItem
+            End_Object
+    
+            Object oFindLastTool is a cCJFindLastMenuItem
+            End_Object
+    
+            Object oPromptToolItem is a cCJPromptMenuItem
+                Set pbControlBeginGroup to True
+            End_Object
+    
+        End_Object
+            
+        Object oFileToolBar is a cCJToolbar
+            Set psTitle to "Barra de ferramentas de entrada de dados"
+    
+            Object oClearToolItem is a cCJClearMenuItem
+                Set peControlStyle to xtpButtonIconAndCaption
+            End_Object
+            
+            Object oClearAllToolItem2 is a cCJClearAllMenuItem
+                Set peControlStyle to xtpButtonIconAndCaption
+            End_Object
+                
+            Object oSaveToolItem is a cCJSaveMenuItem
+                Set peControlStyle to xtpButtonIconAndCaption
+                Set pbControlBeginGroup to True
+            End_Object
+    
+            Object oDeleteToolItem is a cCJDeleteMenuItem
+                Set peControlStyle to xtpButtonIconAndCaption
+            End_Object
+    
+        End_Object
+    
+        Object oEditToolBar is a cCJToolbar
+            Set psTitle to "Barra de ferramentas de ediá∆o"
+            
+            Object oCutToolbarItem is a cCJCutMenuItem
+            End_Object
+    
+            Object oCopyToolbarItem is a cCJCopyMenuItem
+            End_Object
+    
+            Object oPasteToolbarItem is a cCJPasteMenuItem
+            End_Object
+    
+            Object oDeleteEditToolbarItem is a cCJDeleteEditMenuItem
+                Set pbControlBeginGroup to True
+            End_Object
+    
+        End_Object
+
+        Object oRememberToolbar is a cCJToolbar
+            Set psTitle to C_$Remember
+
+            Object oRememberItems is a cCJMenuItem
+
+                Set peControlType to xtpControlPopup
+                Set peControlStyle to xtpButtonCaption
+                Set psCaption to C_$Remember
+                
+                Object oMenuItem is a cCJRememberFieldMenuItem
+                    Set peControlStyle to xtpButtonIconAndCaption
+                End_Object
+                
+                Object oMenuItem is a cCJRememberLastFieldMenuItem
+                    Set peControlStyle to xtpButtonIconAndCaption
+                End_Object
+                
+                Object oMenuItem is a cCJUnRememberFieldMenuItem
+                    Set peControlStyle to xtpButtonIconAndCaption
+                End_Object
+                
+                Object oMenuItem is a cCJUnRememberFieldAllMenuItem
+                    Set peControlStyle to xtpButtonIconAndCaption
+                End_Object
+
+            End_Object
+            
+        End_Object
+        
+        Object oStatusBar is a cCJStatusBar
+            
+            Object oStatusPane1 is a cCJStatusBarPane
+                Set piID to sbpIDIdlePane
+                Set pbStyleStretch to True
+            End_Object
+    
+            Object oStatusPane2 is a cCJStatusBarPane
+                Set phoViewPane to Self
+                Set pbStyleStretch to True
+            End_Object
+
+        End_Object
+    
+    End_Object
+
+    Object oClientArea is a ClientArea
+        Use StdAbout.pkg
+        Use VWCADRDV.vw
+        Use BPCoreBase.bp
+        Use VWCADVIEW.vw
+        Use VWCADUSER.vw
+        Use VWConfigAcesso.vw
+        Use VWCADQUERIES.vw
+        Use VWCADPARAM.vw
+        Use DGLogin.dg
+        Use VWCADSEQ.vw
+        Use RVFRDVH.rv
+        Use VWCADOBJETOS.vw
+        Use DGLoginCfg.dg
+        Use VWGERACTEMDFE.vw
+        
+        Object oIdleHandleDgLogin is a cIdleHandler
+            Procedure OnIdle
+                String sResult
+                
+                Send Popup_Modal to oDGLogin
+                Set pbEnabled to False
+                
+                If (gsCodUser <> '') Send Sincroniza_Dados_PSGA of (oBPCoreBase(Self))
+            End_Procedure      
+        End_Object
+
+        Procedure Activate_About
+            
+            Send DoAbout gsProduct gsVersaoSys gsCompany "" "SourceInLogo.bmp"
+        End_Procedure
+
+        Procedure Entering_Scope Returns Integer
+            Integer iRetVal
+            Forward Get msg_Entering_Scope to iRetVal
+            
+            Set pbEnabled of oIdleHandleDgLogin to True
+            
+            Procedure_Return iRetVal
+        End_Procedure
+
+    End_Object
+
+
+End_Object
+
+Start_UI

@@ -1,0 +1,32 @@
+-----------------------------------------------------------------------------
+  DATE: 10/08/2021      TIME: 11:33                                  PAGE:  1
+  FILE DEFINITION FOR FILE: GCIDADES (# 13)
+-----------------------------------------------------------------------------
+  DRIVER NAME               : MSSQLDRV
+  FILE ROOT NAME            : GCIDADES.INT
+  USER DISPLAY NAME         : GCIDADES
+  DATAFLEX FILE NAME        : GCIDADES
+-----------------------------------------------------------------------------
+  RECORD LENGTH             : 51        ( USED: 51 )
+  MAX NUMBER OF RECORDS     : 2147483647  ( USED: 0 )
+  FILE COMPRESSION          : NONE
+  RE-USE DELETED SPACE      : YES
+  LOCKING TYPE              : RECORD
+  HEADER INTEGRITY CHECKING : NO 
+  TRANSACTION TYPE          : SERVER LOGGED
+  RECORD IDENTITY INDEX     : 0 ( 0 , 0 )
+  FILE LOGIN PARAMETER      : DFCONNID=SAGRM
+  SYSTEM FILE               : NO 
+-----------------------------------------------------------------------------
+
+NUM  FIELD NAME       TYPE SIZE  OFFST IX   RELATES TO FILE.FIELD
+---  ---------------  ---- ----- ----- --   ---------------------------------
+  1  CODIGO           ASC      8     1  1   
+  2  DESCRICAO        ASC     30     9      
+  3  ESTADO           ASC      2    39      
+
+
+INDEX# FIELDS          DES U/C    LENGTH LEVELS SEGMENTS MODE
+------ --------------- --- ---    ------ ------ -------- -------
+  1    CODIGO          NO  NO       0      0       1     ON-LINE
+

@@ -1,0 +1,40 @@
+Use UI
+
+Class cIdleEvent is a cIdleHandler
+    
+    Define C_EVENT_AFTERACTIVATING for 0
+    
+    Procedure Construct_Object
+        Forward Send Construct_Object
+        
+        { Category=Behavior } 
+        Property Handle phObjPai
+        
+        { Category=Behavior } 
+        Property Integer piEventType 0
+        
+        
+        
+    End_Procedure
+
+    Procedure End_Construct_Object
+        Forward Send End_Construct_Object
+        
+    End_Procedure
+    
+    Procedure OnIdle
+        Integer iEventType
+        Handle hObj
+        
+        Set pbEnabled to False
+        
+        Get piEventType to iEventType
+        If (iEventType = C_EVENT_AFTERACTIVATING) Begin
+            Get phObjPai to hObj
+            Send OnAfterActivating of hObj    
+        End
+        
+        
+    End_Procedure
+
+End_Class

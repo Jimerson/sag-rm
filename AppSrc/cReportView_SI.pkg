@@ -1,0 +1,486 @@
+Use DFRptVw.pkg
+Use GFILTREL.dd
+Use GCADREL.dd
+Use VerifyReport.pkg
+Use BPCoreBase.bp
+Use cFormFiltro_SI.pkg
+Use cComboFormFiltro_SI.pkg
+Use cCheckBox_SI.pkg
+Use DGFIELDREL.dg
+Use cIdleEvent.pkg
+
+Class cReportView_SI is a ReportView
+    
+    Procedure Construct_Object
+        Forward Send Construct_Object
+        
+        { Category=Behavior } 
+        Property String psChaveRel ""
+        
+        { Category=Behavior } 
+        Property String pbShowSelectionFormula False
+        
+        { Visibility=Public }
+        Property tFilterComponents[] ptFilterComponents
+        
+        Object oIdleEvent is a cIdleEvent
+        End_Object
+        
+        Send Open_File of (oBPCoreBase(Self)) GFILTREL.File_Number
+        Send Open_file of (oBPCoreBase(Self)) GCADREL.File_Number
+
+    End_Procedure
+
+    Procedure End_Construct_Object
+        Forward Send End_Construct_Object
+        
+        Set phObjPai of oIdleEvent to Self
+        
+        On_Key Key_Ctrl+Key_F Send CallConfigRV
+        On_Key Key_Ctrl+Key_R Send ChamaLoadReports
+    End_Procedure
+    
+    { MethodType=Event  NoDoc=True }
+    Procedure OnAfterActivating
+        Send Monta_Campos (Eval("(oGroupFiltros(Self))"))
+        Send LoadFieldsByReport (trim(GCADREL.NOME_ARQ))
+    End_Procedure
+    
+    Function Get_ArrayFilterComponents Returns tFilterComponents[]
+        tFilterComponents[] hArray
+        
+        Get ptFilterComponents to hArray
+        Function_Return hArray
+    End_Function
+    
+    Procedure AppendObjArrayFilterComponents Handle hObj Integer iGroupFilter Integer iObjectType Integer iFilterType Integer iDataType
+        tFilterComponents[] hoEnabledComp
+        Integer iCountArray
+        
+        Get Get_ArrayFilterComponents to hoEnabledComp 
+        Move (SizeOfArray(hoEnabledComp)) to iCountArray
+        Move hObj to hoEnabledComp[iCountArray].hObject
+        Move iGroupFilter to hoEnabledComp[iCountArray].iGroupFilter
+        Move iObjectType to hoEnabledComp[iCountArray].iObjectType
+        Move iFilterType to hoEnabledComp[iCountArray].iFilterType
+        Move iDataType to hoEnabledComp[iCountArray].iDataType
+        Set ptFilterComponents to hoEnabledComp
+    End_Procedure
+    
+    //iTipo: 0 - Character; 1 - Numeric; 2 - Date
+    //iFilterType: C_FILTERTYPE_EQ; C_FILTERTYPE_GE; C_FILTERTYPE_LE
+    Function Cria_Componentes String sLabel Integer iX Integer iY Integer iSize Integer iPrecision Integer iTipoDados ;
+        String sFormDataType String sMask Handle hObjSL Integer iTypeObjectControl String sTable String sField String sVTName ;
+        Integer iSeq Integer iFilterType Integer iDataType Integer iObjPai Returns Handle
+        
+        Handle hoObj 
+        Handle[] hoEnabledComp
+        Integer iLoop iCount
+        String sValue
+        
+        If (iTypeObjectControl = C_VISUALCONTROL_FORM) Begin
+            Get CreateNamed of iObjPai (RefClass(cFormFiltro_SI)) ("o"+(Trim(sTable)+"_"+Trim(sField))) to hoObj
+            Move (trim(sLabel))                     to sLabel
+            Set Label of hoObj                      to sLabel
+            Set Location of hoObj                   to iX iY
+            Set Size of hoObj                       to 13 70
+            Set Label_Col_Offset of hoObj           to 0
+            Set Label_Justification_Mode of hoObj   to JMode_Top
+            Set psTableName     of hoObj            to sTable
+            Set psFieldName     of hoObj            to sField
+            
+            If (iTipoDados = C_FORMTYPE_CHAR) Begin
+                If (Trim(sFormDataType) <> '')  Set Form_Datatype of hoObj to sFormDataType
+                If (Trim(sMask) <> '')          Set Form_Mask of hoObj to sMask
+            End
+            
+            If (iTipoDados = C_FORMTYPE_NUMBER) Begin
+                Set Form_Datatype of hoObj item 0 to Mask_Numeric_Window
+                Set Numeric_Mask  of hoObj item 0 to iSize iPrecision    
+            End
+            
+            If (iTipoDados = C_FORMTYPE_DATE) Set Form_Datatype of hoObj item 0 to Mask_Date_Window
+            
+            If (hObjSL <> 0) Begin
+                Set Prompt_Button_Mode of hoObj to pb_PromptOn
+                Set Prompt_Object of hoObj to hObjSL
+            End
+            
+        End
+            
+        If (iTypeObjectControl = C_VISUALCONTROL_COMBO) Begin
+            Get CreateNamed of iObjPai (RefClass(cComboFormFiltro_SI)) ("o"+(Trim(sTable)+"_"+Trim(sField))) to hoObj
+            
+            Move (trim(sLabel))                     to sLabel
+            Set Label of hoObj                      to sLabel
+            Set Location of hoObj                   to iX iY
+            Set Size of hoObj                       to 13 70
+            Set Label_Col_Offset of hoObj           to 0
+            Set Label_Justification_Mode of hoObj   to JMode_Top
+            Set Combo_Sort_State of hoObj           to False
+            Set Allow_Blank_State of hoObj          to True
+            
+            Set psTableName     of hoObj to sTable
+            Set psFieldName     of hoObj to sField
+            
+            Send Combo_Fill_List of hoObj
+        End
+        If (iTypeObjectControl = C_VISUALCONTROL_CHECK) Begin
+            Get CreateNamed of iObjPai (RefClass(cCheckBox_SI)) ("o"+(Trim(sTable)+"_"+Trim(sField))) to hoObj
+            
+            Move (trim(sLabel))                     to sLabel
+            Set Label of hoObj                      to sLabel
+            Set Location of hoObj                   to iX iY
+            Set Size of hoObj                       to 13 70
+            
+            Set psTableName     of hoObj to sTable
+            Set psFieldName     of hoObj to sField
+        End
+        
+        Send AppendObjArrayFilterComponents hoObj iSeq iTypeObjectControl iFilterType iDataType
+        
+        Send Activate to hoObj
+        
+        Function_Return hoObj
+    End_Function
+    
+    Procedure Monta_Campos Integer iObjPai
+        String sChave sTable sLabel sField
+        tDadosField oDados
+        Integer iLinhaIni iLinhaFin iColIni iColFin iContElementos iFilterType iCountArray iDataTypeForm
+        Handle hRet hObjSL
+        Boolean bHabField
+        tFilterComponents[] hComps
+        
+        Get Get_ArrayFilterComponents to hComps
+        
+        Move (SizeOfArray(hComps)) to iCountArray
+        If (iCountArray = 0) Begin
+            Move 1 to iContElementos
+            Get psChaveRel to sChave
+            Clear GFILTREL
+            Move (Trim(sChave)) to GFILTREL.CHAVE
+            Repeat
+                Find gt GFILTREL by Index.1
+                If ((Found) and (Trim(sChave)) = Trim(GFILTREL.CHAVE)) Begin
+                    
+                    Move (Left(Trim(GFILTREL.OBJETO),Pos('.',Trim(GFILTREL.OBJETO))-1)) to sTable
+                    Move (Right(Trim(GFILTREL.OBJETO),Length(Trim(GFILTREL.OBJETO))-Pos('.',Trim(GFILTREL.OBJETO)))) to sField
+                    
+                    //Pega dados do objeto pelo DataFlex
+                    Get Get_Dados_DD sTable sField to oDados
+                    
+                    If (oDados.iTipo = DF_BCD)                                  Move C_FORMTYPE_NUMBER  to iDataTypeForm
+                    If (oDados.iTipo = DF_DATE or oDados.iTipo = DF_DATETIME)   Move C_FORMTYPE_DATE    to iDataTypeForm
+                    If (oDados.iTipo = DF_ASCII or oDados.iTipo = DF_TEXT)      Move C_FORMTYPE_CHAR    to iDataTypeForm
+                    
+                    //
+                    If (iContElementos = 1) Begin
+                        Move 18 to iLinhaIni
+                        Move 8 to iColIni
+                    End
+                    Else Begin
+                        Move (iLinhaIni+24) to iLinhaIni
+                        //Move 8 to iColIni
+                        If (iLinhaIni > 149) Begin
+                            Move 18 to iLinhaIni
+                            Move (iColIni+154) to iColIni
+                        End
+                    End
+                    
+                    If (oDados.sNome <> "<<NONE>>") Begin
+                        If (GFILTREL.TIPO = C_TIPOFILT_INI_FIN) Move (Trim(GFILTREL.LABEL)+" Inicial") to sLabel
+                        Else Move (Trim(GFILTREL.LABEL)) to sLabel
+                    End
+                    Else Move "<<NONE>>" to sLabel
+                    
+                    If (Trim(GFILTREL.OBJETO_SL) <> "") Move (Eval(Trim(GFILTREL.OBJETO_SL))) to hObjSL
+                    Else Move 0 to hObjSL
+    
+                    If (GFILTREL.TIPO = C_TIPOFILT_INI_FIN) Move C_FILTERTYPE_GE to iFilterType
+                    Else Move C_FILTERTYPE_EQ to iFilterType
+                    
+                    Get Cria_Componentes sLabel iLinhaIni iColIni oDados.iSize oDados.iPrecision iDataTypeForm "" "" ;
+                        hObjSL GFILTREL.TIPO_CONTROLE sTable sField "" iContElementos iFilterType oDados.iTipo iObjPai to hRet
+                    
+                    Set psKeyName       of hRet to sChave
+                    Set pbForceEnabled  of hRet to GFILTREL.FORCE_ENABLED
+                    
+                    If (GFILTREL.TIPO = C_TIPOFILT_INI_FIN) Begin
+                        If (sLabel <> "<<NONE>>") Move (Trim(GFILTREL.LABEL)+" Final") to sLabel
+                        Move iLinhaIni to iLinhaFin
+                        Move (iColIni+73) to iColFin
+                        Move C_FILTERTYPE_LE to iFilterType
+                        
+                        Get Cria_Componentes sLabel iLinhaFin iColFin oDados.iSize oDados.iPrecision iDataTypeForm "" "" ;
+                            hObjSL GFILTREL.TIPO_CONTROLE sTable sField "" iContElementos iFilterType oDados.iTipo iObjPai to hRet
+                            
+                        Set psTableName of hRet to sTable
+                        Set psFieldName of hRet to sField
+                        Set psKeyName   of hRet to sChave
+                        Set pbForceEnabled  of hRet to GFILTREL.FORCE_ENABLED
+                    End
+                    
+                    Increment iContElementos
+                End
+                Else Break
+            Loop
+        End
+        //Else Send DestroyCamposFiltros
+
+    End_Procedure
+    
+    Function Get_Dados_DD String sArquivo String sField Returns tDadosField
+        tDadosField oDados
+        Handle hoFile
+        Integer iFields iType iFieldNumber iSize iPrecision iCont iClassId
+        String sCampo sClassName
+        
+        If (Trim(sArquivo) <> "") Begin
+            Get Open_File of (oBPCoreBase(Self)) (Eval(Trim(sArquivo)+".File_number")) to hoFile
+            
+            //Open sArquivo as hoFile
+            Get_Attribute DF_FILE_NUMBER_FIELDS of hoFile to iFields
+            
+            For iCont from 1 to iFields
+                Get_Attribute DF_FIELD_NAME         of hoFile iCont to sCampo
+                
+                If (Trim(sCampo) = Trim(sField)) Begin
+                    Get_Attribute DF_FIELD_TYPE         of hoFile iCont to iType
+                    Get_Attribute DF_FIELD_NUMBER       of hoFile iCont to iFieldNumber
+                    Get_Attribute DF_FIELD_LENGTH       of hoFile iCont to iSize
+                    Get_Attribute DF_FIELD_PRECISION    of hoFile iCont to iPrecision
+                    
+
+                    If (iType <> DF_OVERLAP) Begin
+                        Move (trim(sArquivo)+'.'+trim(sCampo))  to oDados.sNome
+                        Move iType                              to oDados.iTipo
+                        Move iFieldNumber                       to oDados.iSeq
+                        Move iSize                              to oDados.iSize
+                        Move iPrecision                         to oDados.iPrecision
+                    End
+  
+                    Function_Return oDados
+                End
+            Loop 
+            
+        End
+        
+        Move "<<NONE>>" to oDados.sNome
+        Move 0          to oDados.iTipo
+        Move 0          to oDados.iSeq
+        Move 0          to oDados.iSize
+        Move 0          to oDados.iPrecision
+        
+        //Close hoFile
+        Function_Return oDados
+    End_Function
+
+    //Atentar para pegar o RowId da Grid da GCADREL e voltar depois que rodar a rotina
+    Procedure LoadReports
+        String sChave sPath sReportName
+        Boolean bFileExist bOk
+        
+        Get psChaveRel to sChave
+        
+        Clear GCADREL
+        Move (Trim(sChave)) to GCADREL.CHAVE
+        Repeat
+            Find gt GCADREL by Index.1
+            If ((Found) and (Trim(sChave)) = Trim(GCADREL.CHAVE)) Begin
+                
+                Move (Trim(GCADREL.NOME_ARQ)) to sReportName
+                
+                Get GetPath_WS of (oBPCoreBase(Self)) "PERSONALIZADO" to sPath
+                File_Exist (sPath + "\" + Trim(sReportName)) bFileExist
+            
+                If ((GCADREL.CUSTOM = 1) or (bFileExist)) Begin
+                    Get GetPath_WS of (oBPCoreBase(Self)) "PERSONALIZADO" to sPath
+                End
+                Else Begin
+                    Get GetPath_WS of (oBPCoreBase(Self)) "DATA" to sPath
+                End
+                Set psReportNameShort of oCrystalReportReadInfo to (Trim(sReportName))
+                Set psReportName of oCrystalReportReadInfo to (Trim(sPath) + '\' + Trim(sReportName))
+                Get OpenReport of oCrystalReportReadInfo to bOk
+
+                Send CloseReport of oCrystalReportReadInfo
+            End
+            Else Break
+        Loop
+        
+        Send Info_Box "Processamento Conclu¡do"
+    End_Procedure
+    
+    Function VerifyEnabledField String sRpt String sTable Returns Boolean
+        Clear GFILEREL
+        Move (Trim(sRpt)) to GFILEREL.RPT
+        Repeat
+            Find gt GFILEREL by Index.1
+            If ((Found) and (Uppercase(Trim(sRpt))) = (Uppercase(Trim(GFILEREL.RPT)))) Begin
+                If (Uppercase(Trim(sTable)) = Uppercase(Trim(GFILEREL.FILE))) Function_Return True
+            End
+            Else Break
+        Loop
+        Function_Return False
+    End_Function
+    
+    Procedure LoadFieldsByReport String sRpt
+        Boolean bHabField
+        Integer iCountArray iLoop 
+        String sTable
+        tFilterComponents[] hArrayComp
+        Handle hObj
+        
+        Get ptFilterComponents to hArrayComp
+        Move (SizeOfArray(hArrayComp)) to iCountArray
+        For iLoop  from 0 to (iCountArray-1)
+            Move hArrayComp[iLoop].hObject to hObj
+            Get psTableName of hObj to sTable
+            Get VerifyEnabledField sRpt sTable to bHabField
+            Set Enabled_State of hObj to bHabField
+        Loop
+
+    End_Procedure
+    
+    Procedure CallConfigRV
+        String sChave
+        Get psChaveRel to sChave
+        Set psChaveRel of (oDGFIELDREL(Self)) to sChave
+        Set phReportViewPai of (oDGFIELDREL(Self)) to Self
+        Send Popup_Modal to (oDGFIELDREL(Self))
+        Send Rebuild_Constraints of (Eval("(oGCADREL_DD(oDbTabDialogView1(Self)))"))
+        Send MoveToFirstRow of (Eval("(oDbCJGrid1(oDbTVRelatorios(oDbTabDialogView1(Self))))"))
+    End_Procedure
+    
+    Procedure ChamaLoadReports
+        Integer eResponse
+        
+        Move (YesNo_Box("Deseja carregar os relat¢rios?", "Questionamento", MBR_YES)) to eResponse
+        If (eResponse = MBR_YES) Send LoadReports
+
+    End_Procedure
+    
+    Function Monta_Filtro Returns String
+        String sValue sFileField sTable sField sFilter sSinal sFilterLocal
+        tFilterComponents[] hComps
+        Handle hComp
+        Integer iLoop iCountArray
+        Boolean bShowFilter
+        
+        Get Get_ArrayFilterComponents to hComps
+        Move (SizeOfArray(hComps)) to iCountArray
+        
+        For iLoop from 0 to (iCountArray-1)
+            Move hComps[iLoop].hObject to hComp
+            If (hComps[iLoop].iObjectType = C_VISUALCONTROL_FORM) Begin
+                Get Value of hComp to sValue
+                If (Trim(sValue) <> "") Begin
+                    Get psTableName of hComp to sTable
+                    Get psFieldName of hComp to sField
+                    Move (Trim(sTable)+'.'+Trim(sField)) to sFileField
+                    Get MontaStringFiltroComp sFileField sValue hComps[iLoop].iFilterType hComps[iLoop].iDataType to sFilterLocal
+                    If (Trim(sFilterLocal) <> "") Begin
+                        If (trim(sFilter) <> "") Move (Append(sFilter," AND ")) to sFilter
+                        Move (Append(sFilter,sFilterLocal)) to sFilter                   
+                    End
+                End
+            End
+            
+            If (hComps[iLoop].iObjectType = C_VISUALCONTROL_COMBO) Begin
+                Get Value of hComp to sValue
+                If (Trim(sValue) <> "") Begin
+                    Get psTableName of hComp to sTable
+                    Get psFieldName of hComp to sField
+                    Move (Trim(sTable)+'.'+Trim(sField)) to sFileField
+                    Get Get_Description_Items of (oBPCoreBase(Self)) sFileField sValue ; 
+                        C_FINDTYPE_DESCRIPTIONITENS_BOTH C_RETURNTYPE_DESCRIPTIONITENS_SEQ to sValue
+                    Get MontaStringFiltroComp sFileField sValue hComps[iLoop].iFilterType hComps[iLoop].iDataType to sFilterLocal
+                    If (Trim(sFilterLocal) <> "") Begin
+                        If (trim(sFilter) <> "") Move (Append(sFilter," AND ")) to sFilter
+                        Move (Append(sFilter,sFilterLocal)) to sFilter                   
+                    End
+                End
+            End 
+            
+            If (hComps[iLoop].iObjectType = C_VISUALCONTROL_CHECK) Begin
+                Get Checked_State of hComp to sValue
+                If (Trim(sValue) <> "") Begin
+                    Get psTableName of hComp to sTable
+                    Get psFieldName of hComp to sField
+                    Move (Trim(sTable)+'.'+Trim(sField)) to sFileField
+                    Get Get_Description_Items of (oBPCoreBase(Self)) sFileField sValue ; 
+                        C_FINDTYPE_DESCRIPTIONITENS_BOTH C_RETURNTYPE_DESCRIPTIONITENS_SEQ to sValue
+                    Get MontaStringFiltroComp sFileField sValue hComps[iLoop].iFilterType hComps[iLoop].iDataType to sFilterLocal
+                    If (Trim(sFilterLocal) <> "") Begin
+                        If (trim(sFilter) <> "") Move (Append(sFilter," AND ")) to sFilter
+                        Move (Append(sFilter,sFilterLocal)) to sFilter                   
+                    End
+                End
+            End
+        Loop 
+        Get pbShowSelectionFormula to bShowFilter
+        If (bShowFilter) Showln sFilter
+        
+        Function_Return sFilter
+    End_Procedure 
+    
+    Procedure DestroyCamposFiltros
+        tFilterComponents[] hComps
+        Handle hComp
+        Integer iLoop iCountArray
+        
+        Get ptFilterComponents to hComps
+        Move (SizeOfArray(hComps)) to iCountArray
+        For iLoop from 0 to (iCountArray-1)
+            Move hComps[iLoop].hObject to hComp
+            Send Destroy_Object of hComp
+        Loop
+        
+        Move (ResizeArray(hComps,0)) to hComps
+        Set ptFilterComponents to hComps
+        
+    End_Procedure
+    
+    Procedure ActivateComponentsFilters
+        tFilterComponents[] hComps
+        Handle hComp
+        Integer iLoop iCountArray
+        
+        Get ptFilterComponents to hComps
+        Move (SizeOfArray(hComps)) to iCountArray
+        For iLoop from 0 to (iCountArray-1)
+            Move hComps[iLoop].hObject to hComp
+            Send Activate to hComp
+        Loop
+    End_Procedure
+   
+    
+    Function MontaStringFiltroComp String sFileField String sValue Integer iFilterType Integer iDataType Returns String
+        String sFilterLocal sSinal
+
+        If (Trim(sValue) <> "") Begin
+            Move (Append(sFilterLocal,("{"+sFileField+"}"))) to sFilterLocal
+            Get RetornaSinalFiltro of (oBPCoreBase(Self)) iFilterType to sSinal
+            Move (Append(sFilterLocal,sSinal)) to sFilterLocal
+            Move (Append(sFilterLocal,(" #"+Trim(sValue)+"#"))) to sFilterLocal
+            If (iDataType = DF_ASCII or iDataType = DF_DATE or iDataType = DF_DATETIME or iDataType = DF_TEXT) Begin 
+                   Move (Replaces("#",sFilterLocal,"'")) to sFilterLocal
+            End
+            Else Move (Replaces("#",sFilterLocal,"")) to sFilterLocal
+        End
+        Function_Return sFilterLocal
+    End_Function
+   
+    Procedure Activating
+        Forward Send Activating
+        Set piEventType of oIdleEvent to C_EVENT_AFTERACTIVATING
+        Set pbEnabled of oIdleEvent to True
+    End_Procedure
+    
+    Procedure Deactivating
+        Forward Send Deactivating
+        
+        Send DestroyCamposFiltros
+    End_Procedure
+End_Class

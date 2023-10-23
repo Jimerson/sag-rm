@@ -1,0 +1,149 @@
+Use cDbCJGrid.pkg
+Use cCJGridColumn.pkg
+
+{ DataAware=True }
+{ DesignerClass=cDTCJGrid }
+{ CompositeClass=psdbCJGridColumn }
+{ HelpTopic=cDbCJGrid }
+Class cDbCJGrid_SI is a cDbCJGrid
+    Procedure Construct_Object     
+        Forward Send Construct_Object
+
+        Property Boolean pbDisableChanged False
+        Property Boolean pbOriginalState True
+        Property Boolean pbIdleState False
+        Property Boolean pbActivated False
+        Property Boolean pbRefreshOnActivate False
+        Property String psRegKeySufix ""
+
+        On_Key Key_F7         Send NONE 
+        On_Key Key_F8         Send NONE 
+
+        // TODO: Verificar questoes de duplicidade
+        //String sLabel
+        //Get Object_Label to sLabel
+        //Set pbRestoreLayout to False
+        //Set psLayoutSection to sLabel
+        //Set piLayoutBuild to 6
+        //Set pbHeaderPrompts to True
+        Set pbHeaderReorders to True
+        Set pbHeaderTogglesDirection to True
+        Set pbAutoColumnSizing to False
+        Set pbFullColumnScrolling to True // Resolve problema de scroll
+        // Atributos para estilo antigo de edicao
+        Set pbAllowInsertRow to False
+        //Set pbEditOnKeyNavigation to True
+        //Set pbEditOnClick to True
+        Set peRequestFindMode to rfmFindMainSuper
+    End_Procedure
+
+    Procedure End_Construct_Object
+        Forward Send End_Construct_Object
+
+        If (pbSelectionEnable(Self)) Begin
+            // Compatibilidade com psdbGrid
+            Set piSelectedRowBackColor to 16448949
+            Set piSelectedRowForeColor to clBlack
+            Set piFocusCellBackColor to clAqua
+            Set piFocusCellForeColor to clBlack
+            Set piHighlightBackColor to 16448949
+            Set piHighlightForeColor to clBlack
+        End
+    End_Procedure // Construct_Object
+    
+    Procedure OnCreateGridControl
+        Forward Send OnCreateGridControl		
+    
+    End_Procedure
+
+    Procedure Activating
+        Forward Send Activating
+        
+        Set pbActivated to True
+
+        If ((pbRefreshOnActivate(Self))) Begin
+            Send MovetoFirstRow
+            Set pbRefreshOnActivate to False
+        End        
+    End_Procedure
+
+    Procedure Deactivating
+        Forward Send Deactivating
+
+        Set pbActivated to False
+    End_Procedure
+
+    // Necess rio para gravar estado anterior
+    Procedure Set pbAllowEdit Boolean bValue
+        If (not(pbIdleState(Self))) Set pbOriginalState to bValue
+        Move (bValue and pbOriginalState(Self)) to bValue
+
+        Set private_pbAllowEdit to bValue
+        If (IsComObjectCreated(Self)) Begin
+            Set ComAllowEdit to bValue
+        End
+    End_Procedure
+
+    // Verifica‡Æo para desativar grid caso header seja modificado
+    Procedure OnIdle
+        Forward Send OnIdle
+        
+        Handle hoSrvr
+        Boolean bChanged bRec
+
+        If (pbDisableChanged(Self)) Begin
+            Delegate Get Server to hoSrvr // O DDO do Header.
+            Get Should_Save of hoSrvr to bChanged // Header foi modificado?
+            Get HasRecord of hoSrvr to bRec // Existe registro posicionado?
+            
+            Set pbIdleState to True
+            Set pbAllowEdit to (not(bChanged) and bRec)
+            Set pbIdleState to False
+        End
+    End_Procedure
+
+    // Ativar o OnPostEntering somente em determiandas circunstƒncias
+    Procedure OnEntering
+        Handle hoSrvr
+        Boolean bChanged
+        Integer iRecord
+        Delegate Get Server to hoSrvr // O DDO do Header.
+        Get Should_Save of hoSrvr to bChanged // Header foi modificado?
+        Get Current_Record of hoSrvr to iRecord // Existe registro posicionado?
+        If (bChanged or (iRecord = 0)) Begin
+            Set pbNeedPostEntering to True
+        End
+    End_Procedure
+    
+    // Entrada para customiza‡Æo das colunas por grid e nÆo por coluna (Usar classe psdbCJGridColumnCustom nas colunas)
+    { MethodType=Event }
+    Procedure OnSetColumnMetrics Handle hoGridItemMetrics Integer iRow String ByRef sValue
+    End_Procedure
+
+    Procedure MovetoFirstRow
+        If ((pbActivated(Self))) Forward Send MovetoFirstRow
+        Else Set pbRefreshOnActivate to True
+    End_Procedure
+
+    Procedure MovetoLastRow
+        If ((pbActivated(Self))) Forward Send MovetoLastRow
+        Else Set pbRefreshOnActivate to True
+    End_Procedure
+    
+    //JCO - Captura o evento Exit das colunas
+    { MethodType=Event }
+    Procedure OnColumnExit Handle hoColumn Integer iRow
+    End_Procedure
+    
+    Function OnPostEntering Returns Boolean
+        Boolean bRetVal
+        Integer rval
+        Forward Get OnPostEntering to bRetVal
+        
+        Get Salva_Header_Geral of (oBPCoreBase(Self)) (main_dd(Self))  to rval
+        If (rval = 0) Get Should_Save of (main_dd(Self)) to bRetVal
+        Else Move rval to bRetVal
+        Function_Return bRetVal
+    End_Function
+    
+End_Class

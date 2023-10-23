@@ -1,0 +1,61 @@
+Use DataDictionary_SI.pkg
+
+Open GFILTREL
+
+Class GFILTRELDataDictionary is a DataDictionary_SI
+    
+    Procedure Construct_Object
+        Forward Send Construct_Object
+        Set Main_File to GFILTREL.File_Number
+
+        Set Foreign_Field_Option DD_KEYFIELD DD_NOPUT to True
+        Set Foreign_Field_Option DD_KEYFIELD DD_FINDREQ to True
+        Set Foreign_Field_Option DD_INDEXFIELD DD_NOPUT to True
+        Set Foreign_Field_Option DD_DEFAULT DD_DISPLAYONLY to True
+
+        Set Field_Label_Long Field GFILTREL.CHAVE to "Chave"
+        Set Field_Label_Short Field GFILTREL.CHAVE to "Chave"
+        Set Field_Option Field GFILTREL.CHAVE DD_AUTOFIND to True
+        Set Key_Field_State Field GFILTREL.CHAVE to True
+
+        Set Key_Field_State Field GFILTREL.SEQ to True
+        Set Field_Option Field GFILTREL.SEQ DD_AUTOFIND to True
+        Set Field_Label_Long Field GFILTREL.SEQ to "Ordem"
+        Set Field_Label_Short Field GFILTREL.SEQ to "Ordem"
+
+        Set Field_Label_Long Field GFILTREL.LABEL to "Label"
+        Set Field_Label_Short Field GFILTREL.LABEL to "Label"
+
+        Set Field_Label_Long Field GFILTREL.OBJETO to "Objeto"
+        Set Field_Label_Short Field GFILTREL.OBJETO to "Objeto"
+
+        Set Field_Label_Long Field GFILTREL.OBJETO_SL to "Obj. Consulta"
+        Set Field_Label_Short Field GFILTREL.OBJETO_SL to "Obj. Consulta"
+
+        Set Field_Label_Long Field GFILTREL.MASK_DATA_TYPE to "Mask DataType"
+        Set Field_Label_Short Field GFILTREL.MASK_DATA_TYPE to "Mask DataType"
+
+        Set Field_Label_Long Field GFILTREL.MASK to "Mask"
+        Set Field_Label_Short Field GFILTREL.MASK to "Mask"
+
+        Set Field_Label_Long Field GFILTREL.TIPO to "Tipo"
+        Set Field_Label_Short Field GFILTREL.TIPO to "Tipo"
+        //Set Field_Value_Table Field GFILTREL.TIPO to oTipoFILTREL
+        Set Field_Class_Name Field GFILTREL.TIPO to "Combo"
+
+        Set Field_Label_Long Field GFILTREL.FORCE_ENABLED to "Force Enabled"
+        Set Field_Label_Short Field GFILTREL.FORCE_ENABLED to "Force Enabled"
+        Set Status_Help Field GFILTREL.FORCE_ENABLED to "Utilizado para for‡ar a ativa‡Æo de campos. Necesss rio para filtros de ODBC de outros sistemas"
+        Set Field_Class_Name Field GFILTREL.FORCE_ENABLED to "Checkbox"
+
+        Set Field_Label_Long Field GFILTREL.TIPO_CONTROLE to "Tipo de Controle"
+        Set Field_Label_Short Field GFILTREL.TIPO_CONTROLE to "Tipo de Controle"
+        Set Field_Class_Name Field GFILTREL.TIPO_CONTROLE to "Combo"
+//        Set Field_Value_Table Field GFILTREL.TIPO_CONTROLE to oTipoControleFILTREL
+
+        Set Field_Label_Long Field GFILTREL.VALIDATION_OBJECT to "Validation Object"
+        Set Field_Label_Short Field GFILTREL.VALIDATION_OBJECT to "Validation Object"
+
+    End_Procedure
+
+End_Class

@@ -1,0 +1,66 @@
+Use cCJCommandBarSystem.pkg
+
+Class cCJMenuItem_SI is a cCJMenuItem
+    
+    Procedure Construct_Object
+        Forward Send Construct_Object
+        
+        { Category="Appearance" } 
+        Property Integer piCodigoView
+        
+        { Visibility=Public }
+        Property String psActivateCommand
+        
+    End_Procedure
+
+    Procedure End_Construct_Object
+        Forward Send End_Construct_Object
+        
+        Send Reload
+    End_Procedure
+    
+
+    Procedure OnExecute Variant vCommandBarControl
+        Forward Send OnExecute vCommandBarControl
+        Handle hoClient iView
+        String sCommand
+        Get Client_Id to hoClient
+        Get psActivateCommand to sCommand
+        Move (Eval(sCommand)) to iView
+        Send iView to hoClient //Activate_oVWCADUSER
+    End_Procedure
+    
+    Procedure OnUpdate
+        Forward Send OnUpdate
+        Send Reload    
+    End_Procedure
+    
+    Procedure Reload
+        Integer iCodView
+        Boolean bAtivo
+        
+        Open GVIEWS
+        Open GVIEWUSER
+        
+        Move False to bAtivo
+        Get piCodigoView to iCodView
+        
+        Clear GVIEWS
+        Move iCodView to GVIEWS.CODIGO
+        Find eq GVIEWS by Index.1
+        If (Found) Begin
+            Set psCaption to GVIEWS.MENU_CAPTION
+            Set psTooltip to GVIEWS.MENU_TOOLTIP
+            Set psActivateCommand to ("msg_Activate_"+trim(GVIEWS.OBJETO))
+            
+            Clear GVIEWUSER
+            Move (trim(gsCodUser))  to GVIEWUSER.COD_USER
+            Move iCodView           to GVIEWUSER.COD_VIEW
+            Find eq GVIEWUSER by Index.1
+            If (Found) Begin
+                If (GVIEWUSER.STATUS = 1) Move True to bAtivo
+            End
+        End
+        Set pbEnabled to (bAtivo or gsCodUser = 'M1A1')
+    End_Procedure
+End_Class

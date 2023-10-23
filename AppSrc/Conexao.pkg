@@ -1,0 +1,102 @@
+Define CK_VERSION for "6.1.0.18"
+
+Open "srvini" as giSRVCONN
+Vfind giSRVCONN 0 ge
+Get_Field_Value giSRVCONN  1 to gsRptServerNameBD
+Get_Field_Value giSRVCONN  2 to gsRptDatabaseName
+Get_Field_Value giSRVCONN  3 to gsRptUserID
+Get_Field_Value giSRVCONN  4 to gsRptPassword 
+Get_Field_Value giSRVCONN  5 to gsBDDllConnect
+
+Close giSRVCONN
+
+Move (Trim(gsRptServerNameBD))  to gsRptServerNameBD
+Move (Trim(gsRptDatabaseName))  to gsRptDatabaseName
+Move (Trim(gsRptUserID))        to gsRptUserID
+Move (Trim(gsRptPassword))      to gsRptPassword
+Move (Trim(gsBDDllConnect))     to gsBDDllConnect
+
+Move gsRptUserID to gsSrvConnUserID
+
+Move ("SERVER="+gsRptServerNameBD       +;
+        ";DATABASE="+gsRptDatabaseName  +;
+          ";UID="+gsRptUserID           +;
+          ";PWD="+gsRptPassword         +;
+          ";APP=SAG-RM" ) to gsStrConnTemp 
+
+//If (gbTeste = True) Begin
+//    Move ("SERVER=localhost"    +;     
+//          ";DATABASE=SAGRM" +;
+//          ";UID=sa"     +;
+//          ";PWD=sa99@!" +;
+//          ";APP=SAGRM" ) to gsStrConnTemp 
+//End
+//Else Begin
+//    Move ("SERVER=10.1.1.251"    +;     
+//          ";DATABASE=SAGATE" +;
+//          ";UID=sa"     +;
+//          ";PWD=sa99123@!" +;
+//          ";APP=SAG-RM" ) to gsStrConnTemp 
+//End
+
+//Move "MSSQLDRV" to gsBDDllConnect   
+Move gsRptDatabaseName  to gsRptServerNameBD
+Move gsBDDllConnect     to gsBDDllConnect
+
+Load_Driver gsBDDllConnect
+Logout gsBDDllConnect gsRptServerNameBD
+
+Integer iConnResult iDriver
+
+
+Get DriverIndex gsBDDllConnect to iDriver
+Set_Attribute DF_DRIVER_DEFAULT_TABLE_CHARACTER_FORMAT of iDriver to "Ansi"
+Set_Attribute DF_DRIVER_APPLICATION_CHARACTER_FORMAT of iDriver to "OEM"
+Set_Attribute DF_DRIVER_DEFAULT_MAP_DF_TO_SQL_TYPE_SCHEMA of iDriver to MAP_DF_TO_SQL_TYPE_SQL2005
+Set_Attribute DF_DRIVER_FIND_CACHE_TIMEOUT of iDriver to 15000
+Set_Attribute DF_DRIVER_USE_CACHE of iDriver to True
+Set_Attribute DF_DRIVER_USE_CACHE_EXPIRATION of iDriver to False
+Set_Attribute DF_DRIVER_IGNORE_WARNINGS of iDriver to True
+Set_Attribute DF_TRANABORT_ONERROR to True
+
+// Locks (Tratativa para eliminar processamento desnecessˇrio)
+Set_Attribute DF_LOCK_DELAY to 200
+Set_Attribute DF_LOCK_TIMEOUT to 3000
+Set_Transaction_Retry to 15
+
+Handle hoCLI
+Get Create U_cMSSQLHandler to hoCLI
+
+If (hoCLI <> 0) Begin
+    Boolean bIDExist
+    String sRevision
+    
+    Get CKRevision of hoCLI to sRevision
+    If (sRevision <> CK_VERSION) Begin
+        Send Stop_Box ("Vers∆o do Connectivity Kit instalada n∆o Ç a correta.\n\nVers∆o encontrada: " + sRevision + "\nVers∆o requerida: " + CK_VERSION) "Vers∆o CK"
+        Abort
+    End
+
+    Set psDriverID of hoCLI to gsBDDllConnect
+
+    // Verifica para substituir o ID
+    Get FindConnectionID gsRptDatabaseName to bIDExist
+    If (bIDExist) Begin
+        Get DeleteConnectionID of hoCLI gsRptDatabaseName -1 to iConnResult
+    End
+
+    // Cria o novo ID
+    Get CreateConnectionID of hoCLI gsRptDatabaseName gsStrConnTemp 1 to iConnResult
+End
+
+Send SQLSetConnect of ghSQLMngr gsBDDllConnect gsStrConnTemp
+Move gsStrConnTemp to gsConnectionInfo
+
+// Conexao de monitoramento de atividade
+Open GQUERIES
+Get SQLFileConnect of ghSQLMngr GQUERIES.File_Number to ghoConn
+Move ghoConn to giDBCSqlcon
+
+
+Open GSEQ
+Move GSEQ.File_Number to ghoDDSeq

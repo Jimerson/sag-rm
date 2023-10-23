@@ -1,0 +1,191 @@
+//
+//Faz a conexÆo ao BD de informa‡äes do servidor e preenche as String globais
+//
+
+Use sql.pkg
+Use MsSqlDrv.pkg
+
+String gsSrvConnUserID
+
+#IFNDEF giDBCSqlcon
+    Integer giDBCSqlcon                             // Handle de conexao global
+#ENDIF
+
+#IFDEF gsRptServerNameBD
+#ELSE
+    Integer giSRVCONN 
+    String gsRptDatabaseName
+    String gsRptUserID
+    String gsRptPassword
+    
+    String gsRptServerNameBD
+    String gsBDDllConnect
+    String gsStrConnTemp 1000
+    String gsConnectionInfo 1000
+    
+    Get_Attribute DF_FILE_NEXT_EMPTY of giSRVCONN to giSRVCONN
+
+    Define MIN_ASC_BD for 32
+    Define MAX_ASC_BD For 126
+    Define NUM_ASC_BD For (MAX_ASC_BD - MIN_ASC_BD + 1)
+    Define NUM_PWD_BD For 9753
+
+    Function NumPwdBD Global String sPassword Returns Number
+        Number  nch
+        Number  nshift2
+        Integer iTemp
+        Integer istr_len
+        Number  nValue
+    
+        Move (Length(sPassword)) to iStr_len
+        For iTemp From 1 to iStr_len
+            Move (Ascii(Mid(sPassword, 1, iTemp))) to nCh
+            Move (nch ^ 3 * nShift2) to nValue
+            Move ( Mod((nshift2 + 13), 23)) to nshift2
+        Loop
+        Function_Return nValue
+    End_Function
+
+    Function ClearPwdBD Global String sPassword Returns String
+        UChar[] sChars
+        Integer iCount iSize
+        String sResult
+        
+        Move (StringToUCharArray("[]{}(),;?*!@ ")) to sChars
+        Move (SizeOfArray(sChars)) to iSize
+        Move sPassword to sResult
+        
+        For iCount from 0 to (iSize - 1)
+            Move (Replaces(Character(sChars[iCount]), sResult, "")) to sResult
+        Loop
+        
+        Function_Return sResult
+    End_Function
+
+    Function DeCriptPwdBD Global String Psenha Integer iKeyPass Returns String
+        String sRet
+        Number nOffset nTemp
+        Integer iStr_lenght
+        Integer iTemp
+        Integer ich
+        
+        Move (Rtrim(pSenha)) to pSenha
+        
+        If iKeyPass gt 1000 Begin
+            Move iKeyPass to nOffset
+        End
+        Else Move (NumPwdBD(NUM_PWD_BD)) to nOffset
+    
+        Move (Length(Psenha)) to iStr_lenght
+        Move "" to sRet
+    
+        For iTemp From 1 to iStr_lenght
+            Move (Ascii(Mid(Psenha, 1, iTemp))) to ich
+            If (ich = 134) Move 32 to ich
+            If ((ich >= MIN_ASC_BD) and (ich <= MAX_ASC_BD)) Begin
+                Move (iCh - MIN_ASC_BD) to ich
+                Move (Integer((NUM_ASC_BD + 1) * (nOffset+(1.5*iTemp)))) to nTemp
+    
+                Move (Mod((ich - nTemp),NUM_ASC_BD )) to ich
+            End
+            If (ich < 0) Begin
+                Move (ich + NUM_ASC_BD) to iCh
+            End
+            Move (ich + MIN_ASC_BD) to iCh
+            Move (sRet + Character(ich)) to sRet
+        Loop
+        Function_Return sRet
+    End_Function      
+
+    
+    Function CriptpwdBD Global String Psenha Integer iKeyPass Returns String
+        String sRet
+        Number nOffset nTemp
+        Integer iStr_lenght
+        Integer iTemp
+        Integer ich
+        
+        Move (Trim(pSenha)) to pSenha
+        
+        If iKeyPass gt 1000 Begin
+            Move iKeyPass to nOffset
+        End
+        Else Move (NumPwdBD(NUM_PWD_BD)) to nOffset
+    
+        Move (Length(Psenha)) to iStr_lenght
+        Move "" to sRet
+        For iTemp From 1 to iStr_lenght
+            Move (Ascii(Mid(Psenha, 1, iTemp))) to ich
+    
+            If ((ich >= MIN_ASC_BD)and(iCh<=MAX_ASC_BD)) Begin
+                Move (ich - MIN_ASC_BD) to iCh
+                Move (Integer((NUM_ASC_BD + 1) * (nOffset+(1.5*iTemp)))) to nTemp
+                Move (Mod((ich + nTemp),NUM_ASC_BD )) to ich
+                Move (ich + MIN_ASC_BD) to ich
+                If (ich = 32) Move 134 to ich
+                Move ( sRet + Character(ich) ) to sRet
+            End
+            Else Begin
+                Move ( (Trim(sRet))+  (Mid(Psenha, 1, iTemp)) ) to sRet
+            End
+       Loop
+       Function_Return sRet
+    End_Function
+
+    #IFNDEF ghSQLMngr
+        Handle  ghSQLMngr
+    #ENDIF
+
+    #IFNDEF giDBCSqlcon
+        Integer giDBCSqlcon
+    #ENDIF
+    
+    Object oSQLHandlerGeral is a cSQLHandleManager
+        Move Self to ghSQLMngr
+    End_Object
+    
+    // Indica a conexao de monitoramento (KeepAlive nÆo pode estar configurado para um valor muito grande)
+    #IFDEF ghoConn
+    #ELSE
+        Handle ghoConn
+    #ENDIF
+#ENDIF
+
+Function DriverIndex String sDriver Returns Integer
+    String sCurrentDriver
+    Integer iDriver iNumDrivers
+
+    Get_Attribute DF_NUMBER_DRIVERS to iNumDrivers
+
+    For iDriver from 1 to iNumDrivers
+        Get_Attribute DF_DRIVER_NAME of iDriver to sCurrentDriver
+        If (Uppercase(sDriver) = Uppercase(sCurrentDriver)) Begin
+            Function_Return iDriver
+        End
+    Loop
+
+    Function_Return 0
+End_Function
+
+Function FindConnectionID String sConnID Returns Boolean
+    Integer iDriver iNumConn iConn iConnOptions
+    String sConnString sID
+
+    Get DriverIndex gsBDDllConnect to iDriver
+
+    If (iDriver = 0) Begin
+        Function_Return False
+    End
+
+    Get_Attribute DF_DRIVER_NUMBER_CONNECTION_IDS of iDriver to iNumConn
+
+    For iConn from 0 to (iNumConn - 1)
+        Get_Attribute DF_DRIVER_CONNECTION_ID of iDriver iConn to sID
+        Get_Attribute DF_DRIVER_CONNECTION_ID_STRING of iDriver iConn to sConnString
+        Get_Attribute DF_DRIVER_CONNECTION_ID_OPTIONS of iDriver iConn to iConnOptions
+
+        If (Trim(Uppercase(sConnID)) = Trim(Uppercase(sID))) Function_Return True
+    Loop
+
+    Function_Return False
+End_Function

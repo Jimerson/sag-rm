@@ -1,0 +1,3741 @@
+// Visual DataFlex COM proxy classes generated from C:\windows\System32\capicom.dll
+Use FlexCom20.pkg
+
+
+Define OLECAPICOM_ERROR_CODE for Integer
+    Define OLECAPICOM_E_ENCODE_INVALID_TYPE for -2138570496
+    Define OLECAPICOM_E_EKU_INVALID_OID for -2138570240
+    Define OLECAPICOM_E_EKU_OID_NOT_INITIALIZED for -2138570239
+    Define OLECAPICOM_E_CERTIFICATE_NOT_INITIALIZED for -2138570224
+    Define OLECAPICOM_E_CERTIFICATE_NO_PRIVATE_KEY for -2138570223
+    Define OLECAPICOM_E_CHAIN_NOT_BUILT for -2138570208
+    Define OLECAPICOM_E_STORE_NOT_OPENED for -2138570192
+    Define OLECAPICOM_E_STORE_EMPTY for -2138570191
+    Define OLECAPICOM_E_STORE_INVALID_OPEN_MODE for -2138570190
+    Define OLECAPICOM_E_STORE_INVALID_SAVE_AS_TYPE for -2138570189
+    Define OLECAPICOM_E_ATTRIBUTE_NAME_NOT_INITIALIZED for -2138570176
+    Define OLECAPICOM_E_ATTRIBUTE_VALUE_NOT_INITIALIZED for -2138570175
+    Define OLECAPICOM_E_ATTRIBUTE_INVALID_NAME for -2138570174
+    Define OLECAPICOM_E_ATTRIBUTE_INVALID_VALUE for -2138570173
+    Define OLECAPICOM_E_SIGNER_NOT_INITIALIZED for -2138570160
+    Define OLECAPICOM_E_SIGNER_NOT_FOUND for -2138570159
+    Define OLECAPICOM_E_SIGNER_NO_CHAIN for -2138570158
+    Define OLECAPICOM_E_SIGNER_INVALID_USAGE for -2138570157
+    Define OLECAPICOM_E_SIGN_NOT_INITIALIZED for -2138570144
+    Define OLECAPICOM_E_SIGN_INVALID_TYPE for -2138570143
+    Define OLECAPICOM_E_SIGN_NOT_SIGNED for -2138570142
+    Define OLECAPICOM_E_INVALID_ALGORITHM for -2138570128
+    Define OLECAPICOM_E_INVALID_KEY_LENGTH for -2138570127
+    Define OLECAPICOM_E_ENVELOP_NOT_INITIALIZED for -2138570112
+    Define OLECAPICOM_E_ENVELOP_INVALID_TYPE for -2138570111
+    Define OLECAPICOM_E_ENVELOP_NO_RECIPIENT for -2138570110
+    Define OLECAPICOM_E_ENVELOP_RECIPIENT_NOT_FOUND for -2138570109
+    Define OLECAPICOM_E_ENCRYPT_NOT_INITIALIZED for -2138570096
+    Define OLECAPICOM_E_ENCRYPT_INVALID_TYPE for -2138570095
+    Define OLECAPICOM_E_ENCRYPT_NO_SECRET for -2138570094
+    Define OLECAPICOM_E_NOT_SUPPORTED for -2138568448
+    Define OLECAPICOM_E_UI_DISABLED for -2138568447
+    Define OLECAPICOM_E_CANCELLED for -2138568446
+    Define OLECAPICOM_E_NOT_ALLOWED for -2138568445
+    Define OLECAPICOM_E_OUT_OF_RESOURCE for -2138568444
+    Define OLECAPICOM_E_INTERNAL for -2138568431
+    Define OLECAPICOM_E_UNKNOWN for -2138568295
+    Define OLECAPICOM_E_PRIVATE_KEY_NOT_INITIALIZED for -2138569984
+    Define OLECAPICOM_E_PRIVATE_KEY_NOT_EXPORTABLE for -2138569983
+    Define OLECAPICOM_E_ENCODE_NOT_INITIALIZED for -2138569952
+    Define OLECAPICOM_E_EXTENSION_NOT_INITIALIZED for -2138569936
+    Define OLECAPICOM_E_PROPERTY_NOT_INITIALIZED for -2138569920
+    Define OLECAPICOM_E_FIND_INVALID_TYPE for -2138569904
+    Define OLECAPICOM_E_FIND_INVALID_PREDEFINED_POLICY for -2138569903
+    Define OLECAPICOM_E_CODE_NOT_INITIALIZED for -2138569888
+    Define OLECAPICOM_E_CODE_NOT_SIGNED for -2138569887
+    Define OLECAPICOM_E_CODE_DESCRIPTION_NOT_INITIALIZED for -2138569886
+    Define OLECAPICOM_E_CODE_DESCRIPTION_URL_NOT_INITIALIZED for -2138569885
+    Define OLECAPICOM_E_CODE_INVALID_TIMESTAMP_URL for -2138569884
+    Define OLECAPICOM_E_HASH_NO_DATA for -2138569872
+    Define OLECAPICOM_E_INVALID_CONVERT_TYPE for -2138569856
+
+Define OLECAPICOM_ENCODING_TYPE for Integer
+    Define OLECAPICOM_ENCODE_BASE64 for 0
+    Define OLECAPICOM_ENCODE_BINARY for 1
+    Define OLECAPICOM_ENCODE_ANY for -1
+
+Define OLECAPICOM_EKU for Integer
+    Define OLECAPICOM_EKU_OTHER for 0
+    Define OLECAPICOM_EKU_SERVER_AUTH for 1
+    Define OLECAPICOM_EKU_CLIENT_AUTH for 2
+    Define OLECAPICOM_EKU_CODE_SIGNING for 3
+    Define OLECAPICOM_EKU_EMAIL_PROTECTION for 4
+    Define OLECAPICOM_EKU_SMARTCARD_LOGON for 5
+    Define OLECAPICOM_EKU_ENCRYPTING_FILE_SYSTEM for 6
+
+Define OLECAPICOM_CHECK_FLAG for Integer
+    Define OLECAPICOM_CHECK_NONE for 0
+    Define OLECAPICOM_CHECK_TRUSTED_ROOT for 1
+    Define OLECAPICOM_CHECK_TIME_VALIDITY for 2
+    Define OLECAPICOM_CHECK_SIGNATURE_VALIDITY for 4
+    Define OLECAPICOM_CHECK_ONLINE_REVOCATION_STATUS for 8
+    Define OLECAPICOM_CHECK_OFFLINE_REVOCATION_STATUS for 16
+    Define OLECAPICOM_CHECK_COMPLETE_CHAIN for 32
+    Define OLECAPICOM_CHECK_NAME_CONSTRAINTS for 64
+    Define OLECAPICOM_CHECK_BASIC_CONSTRAINTS for 128
+    Define OLECAPICOM_CHECK_NESTED_VALIDITY_PERIOD for 256
+    Define OLECAPICOM_CHECK_ONLINE_ALL for 495
+    Define OLECAPICOM_CHECK_OFFLINE_ALL for 503
+
+Define OLECAPICOM_CERT_INFO_TYPE for Integer
+    Define OLECAPICOM_CERT_INFO_SUBJECT_SIMPLE_NAME for 0
+    Define OLECAPICOM_CERT_INFO_ISSUER_SIMPLE_NAME for 1
+    Define OLECAPICOM_CERT_INFO_SUBJECT_EMAIL_NAME for 2
+    Define OLECAPICOM_CERT_INFO_ISSUER_EMAIL_NAME for 3
+    Define OLECAPICOM_CERT_INFO_SUBJECT_UPN for 4
+    Define OLECAPICOM_CERT_INFO_ISSUER_UPN for 5
+    Define OLECAPICOM_CERT_INFO_SUBJECT_DNS_NAME for 6
+    Define OLECAPICOM_CERT_INFO_ISSUER_DNS_NAME for 7
+
+Define OLECAPICOM_STORE_LOCATION for Integer
+    Define OLECAPICOM_MEMORY_STORE for 0
+    Define OLECAPICOM_LOCAL_MACHINE_STORE for 1
+    Define OLECAPICOM_CURRENT_USER_STORE for 2
+    Define OLECAPICOM_ACTIVE_DIRECTORY_USER_STORE for 3
+    Define OLECAPICOM_SMART_CARD_USER_STORE for 4
+
+Define OLECAPICOM_STORE_OPEN_MODE for Integer
+    Define OLECAPICOM_STORE_OPEN_READ_ONLY for 0
+    Define OLECAPICOM_STORE_OPEN_READ_WRITE for 1
+    Define OLECAPICOM_STORE_OPEN_MAXIMUM_ALLOWED for 2
+    Define OLECAPICOM_STORE_OPEN_EXISTING_ONLY for 128
+    Define OLECAPICOM_STORE_OPEN_INCLUDE_ARCHIVED for 256
+
+Define OLECAPICOM_ACTIVE_DIRECTORY_SEARCH_LOCATION for Integer
+    Define OLECAPICOM_SEARCH_ANY for 0
+    Define OLECAPICOM_SEARCH_GLOBAL_CATALOG for 1
+    Define OLECAPICOM_SEARCH_DEFAULT_DOMAIN for 2
+
+Define OLECAPICOM_STORE_SAVE_AS_TYPE for Integer
+    Define OLECAPICOM_STORE_SAVE_AS_SERIALIZED for 0
+    Define OLECAPICOM_STORE_SAVE_AS_PKCS7 for 1
+
+Define OLECAPICOM_ATTRIBUTE for Integer
+    Define OLECAPICOM_AUTHENTICATED_ATTRIBUTE_SIGNING_TIME for 0
+    Define OLECAPICOM_AUTHENTICATED_ATTRIBUTE_DOCUMENT_NAME for 1
+    Define OLECAPICOM_AUTHENTICATED_ATTRIBUTE_DOCUMENT_DESCRIPTION for 2
+
+Define OLECAPICOM_SIGNED_DATA_VERIFY_FLAG for Integer
+    Define OLECAPICOM_VERIFY_SIGNATURE_ONLY for 0
+    Define OLECAPICOM_VERIFY_SIGNATURE_AND_CERTIFICATE for 1
+
+Define OLECAPICOM_ENCRYPTION_ALGORITHM for Integer
+    Define OLECAPICOM_ENCRYPTION_ALGORITHM_RC2 for 0
+    Define OLECAPICOM_ENCRYPTION_ALGORITHM_RC4 for 1
+    Define OLECAPICOM_ENCRYPTION_ALGORITHM_DES for 2
+    Define OLECAPICOM_ENCRYPTION_ALGORITHM_3DES for 3
+    Define OLECAPICOM_ENCRYPTION_ALGORITHM_AES for 4
+
+Define OLECAPICOM_ENCRYPTION_KEY_LENGTH for Integer
+    Define OLECAPICOM_ENCRYPTION_KEY_LENGTH_MAXIMUM for 0
+    Define OLECAPICOM_ENCRYPTION_KEY_LENGTH_40_BITS for 1
+    Define OLECAPICOM_ENCRYPTION_KEY_LENGTH_56_BITS for 2
+    Define OLECAPICOM_ENCRYPTION_KEY_LENGTH_128_BITS for 3
+    Define OLECAPICOM_ENCRYPTION_KEY_LENGTH_192_BITS for 4
+    Define OLECAPICOM_ENCRYPTION_KEY_LENGTH_256_BITS for 5
+
+Define OLECAPICOM_SECRET_TYPE for Integer
+    Define OLECAPICOM_SECRET_PASSWORD for 0
+
+Define OLECAPICOM_KEY_ALGORITHM for Integer
+    Define OLECAPICOM_KEY_ALGORITHM_OTHER for 0
+    Define OLECAPICOM_KEY_ALGORITHM_RSA for 1
+    Define OLECAPICOM_KEY_ALGORITHM_DSS for 2
+
+Define OLECAPICOM_OID for Integer
+    Define OLECAPICOM_OID_OTHER for 0
+    Define OLECAPICOM_OID_AUTHORITY_KEY_IDENTIFIER_EXTENSION for 1
+    Define OLECAPICOM_OID_KEY_ATTRIBUTES_EXTENSION for 2
+    Define OLECAPICOM_OID_CERT_POLICIES_95_EXTENSION for 3
+    Define OLECAPICOM_OID_KEY_USAGE_RESTRICTION_EXTENSION for 4
+    Define OLECAPICOM_OID_LEGACY_POLICY_MAPPINGS_EXTENSION for 5
+    Define OLECAPICOM_OID_SUBJECT_ALT_NAME_EXTENSION for 6
+    Define OLECAPICOM_OID_ISSUER_ALT_NAME_EXTENSION for 7
+    Define OLECAPICOM_OID_BASIC_CONSTRAINTS_EXTENSION for 8
+    Define OLECAPICOM_OID_SUBJECT_KEY_IDENTIFIER_EXTENSION for 9
+    Define OLECAPICOM_OID_KEY_USAGE_EXTENSION for 10
+    Define OLECAPICOM_OID_PRIVATEKEY_USAGE_PERIOD_EXTENSION for 11
+    Define OLECAPICOM_OID_SUBJECT_ALT_NAME2_EXTENSION for 12
+    Define OLECAPICOM_OID_ISSUER_ALT_NAME2_EXTENSION for 13
+    Define OLECAPICOM_OID_BASIC_CONSTRAINTS2_EXTENSION for 14
+    Define OLECAPICOM_OID_NAME_CONSTRAINTS_EXTENSION for 15
+    Define OLECAPICOM_OID_CRL_DIST_POINTS_EXTENSION for 16
+    Define OLECAPICOM_OID_CERT_POLICIES_EXTENSION for 17
+    Define OLECAPICOM_OID_POLICY_MAPPINGS_EXTENSION for 18
+    Define OLECAPICOM_OID_AUTHORITY_KEY_IDENTIFIER2_EXTENSION for 19
+    Define OLECAPICOM_OID_POLICY_CONSTRAINTS_EXTENSION for 20
+    Define OLECAPICOM_OID_ENHANCED_KEY_USAGE_EXTENSION for 21
+    Define OLECAPICOM_OID_CERTIFICATE_TEMPLATE_EXTENSION for 22
+    Define OLECAPICOM_OID_APPLICATION_CERT_POLICIES_EXTENSION for 23
+    Define OLECAPICOM_OID_APPLICATION_POLICY_MAPPINGS_EXTENSION for 24
+    Define OLECAPICOM_OID_APPLICATION_POLICY_CONSTRAINTS_EXTENSION for 25
+    Define OLECAPICOM_OID_AUTHORITY_INFO_ACCESS_EXTENSION for 26
+    Define OLECAPICOM_OID_SERVER_AUTH_EKU for 100
+    Define OLECAPICOM_OID_CLIENT_AUTH_EKU for 101
+    Define OLECAPICOM_OID_CODE_SIGNING_EKU for 102
+    Define OLECAPICOM_OID_EMAIL_PROTECTION_EKU for 103
+    Define OLECAPICOM_OID_IPSEC_END_SYSTEM_EKU for 104
+    Define OLECAPICOM_OID_IPSEC_TUNNEL_EKU for 105
+    Define OLECAPICOM_OID_IPSEC_USER_EKU for 106
+    Define OLECAPICOM_OID_TIME_STAMPING_EKU for 107
+    Define OLECAPICOM_OID_CTL_USAGE_SIGNING_EKU for 108
+    Define OLECAPICOM_OID_TIME_STAMP_SIGNING_EKU for 109
+    Define OLECAPICOM_OID_SERVER_GATED_CRYPTO_EKU for 110
+    Define OLECAPICOM_OID_ENCRYPTING_FILE_SYSTEM_EKU for 111
+    Define OLECAPICOM_OID_EFS_RECOVERY_EKU for 112
+    Define OLECAPICOM_OID_WHQL_CRYPTO_EKU for 113
+    Define OLECAPICOM_OID_NT5_CRYPTO_EKU for 114
+    Define OLECAPICOM_OID_OEM_WHQL_CRYPTO_EKU for 115
+    Define OLECAPICOM_OID_EMBEDED_NT_CRYPTO_EKU for 116
+    Define OLECAPICOM_OID_ROOT_LIST_SIGNER_EKU for 117
+    Define OLECAPICOM_OID_QUALIFIED_SUBORDINATION_EKU for 118
+    Define OLECAPICOM_OID_KEY_RECOVERY_EKU for 119
+    Define OLECAPICOM_OID_DIGITAL_RIGHTS_EKU for 120
+    Define OLECAPICOM_OID_LICENSES_EKU for 121
+    Define OLECAPICOM_OID_LICENSE_SERVER_EKU for 122
+    Define OLECAPICOM_OID_SMART_CARD_LOGON_EKU for 123
+    Define OLECAPICOM_OID_PKIX_POLICY_QUALIFIER_CPS for 124
+    Define OLECAPICOM_OID_PKIX_POLICY_QUALIFIER_USERNOTICE for 125
+
+Define OLECAPICOM_PROPID for Integer
+    Define OLECAPICOM_PROPID_UNKNOWN for 0
+    Define OLECAPICOM_PROPID_KEY_PROV_HANDLE for 1
+    Define OLECAPICOM_PROPID_KEY_PROV_INFO for 2
+    Define OLECAPICOM_PROPID_SHA1_HASH for 3
+    Define OLECAPICOM_PROPID_HASH_PROP for 3
+    Define OLECAPICOM_PROPID_MD5_HASH for 4
+    Define OLECAPICOM_PROPID_KEY_CONTEXT for 5
+    Define OLECAPICOM_PROPID_KEY_SPEC for 6
+    Define OLECAPICOM_PROPID_IE30_RESERVED for 7
+    Define OLECAPICOM_PROPID_PUBKEY_HASH_RESERVED for 8
+    Define OLECAPICOM_PROPID_ENHKEY_USAGE for 9
+    Define OLECAPICOM_PROPID_CTL_USAGE for 9
+    Define OLECAPICOM_PROPID_NEXT_UPDATE_LOCATION for 10
+    Define OLECAPICOM_PROPID_FRIENDLY_NAME for 11
+    Define OLECAPICOM_PROPID_PVK_FILE for 12
+    Define OLECAPICOM_PROPID_DESCRIPTION for 13
+    Define OLECAPICOM_PROPID_ACCESS_STATE for 14
+    Define OLECAPICOM_PROPID_SIGNATURE_HASH for 15
+    Define OLECAPICOM_PROPID_SMART_CARD_DATA for 16
+    Define OLECAPICOM_PROPID_EFS for 17
+    Define OLECAPICOM_PROPID_FORTEZZA_DATA for 18
+    Define OLECAPICOM_PROPID_ARCHIVED for 19
+    Define OLECAPICOM_PROPID_KEY_IDENTIFIER for 20
+    Define OLECAPICOM_PROPID_AUTO_ENROLL for 21
+    Define OLECAPICOM_PROPID_PUBKEY_ALG_PARA for 22
+    Define OLECAPICOM_PROPID_CROSS_CERT_DIST_POINTS for 23
+    Define OLECAPICOM_PROPID_ISSUER_PUBLIC_KEY_MD5_HASH for 24
+    Define OLECAPICOM_PROPID_SUBJECT_PUBLIC_KEY_MD5_HASH for 25
+    Define OLECAPICOM_PROPID_ENROLLMENT for 26
+    Define OLECAPICOM_PROPID_DATE_STAMP for 27
+    Define OLECAPICOM_PROPID_ISSUER_SERIAL_NUMBER_MD5_HASH for 28
+    Define OLECAPICOM_PROPID_SUBJECT_NAME_MD5_HASH for 29
+    Define OLECAPICOM_PROPID_EXTENDED_ERROR_INFO for 30
+    Define OLECAPICOM_PROPID_RENEWAL for 64
+    Define OLECAPICOM_PROPID_ARCHIVED_KEY_HASH for 65
+    Define OLECAPICOM_PROPID_FIRST_RESERVED for 66
+    Define OLECAPICOM_PROPID_LAST_RESERVED for 32767
+    Define OLECAPICOM_PROPID_FIRST_USER for 32768
+    Define OLECAPICOM_PROPID_LAST_USER for 65535
+
+Define OLECAPICOM_PROV_TYPE for Integer
+    Define OLECAPICOM_PROV_RSA_FULL for 1
+    Define OLECAPICOM_PROV_RSA_SIG for 2
+    Define OLECAPICOM_PROV_DSS for 3
+    Define OLECAPICOM_PROV_FORTEZZA for 4
+    Define OLECAPICOM_PROV_MS_EXCHANGE for 5
+    Define OLECAPICOM_PROV_SSL for 6
+    Define OLECAPICOM_PROV_RSA_SCHANNEL for 12
+    Define OLECAPICOM_PROV_DSS_DH for 13
+    Define OLECAPICOM_PROV_EC_ECDSA_SIG for 14
+    Define OLECAPICOM_PROV_EC_ECNRA_SIG for 15
+    Define OLECAPICOM_PROV_EC_ECDSA_FULL for 16
+    Define OLECAPICOM_PROV_EC_ECNRA_FULL for 17
+    Define OLECAPICOM_PROV_DH_SCHANNEL for 18
+    Define OLECAPICOM_PROV_SPYRUS_LYNKS for 20
+    Define OLECAPICOM_PROV_RNG for 21
+    Define OLECAPICOM_PROV_INTEL_SEC for 22
+    Define OLECAPICOM_PROV_REPLACE_OWF for 23
+    Define OLECAPICOM_PROV_RSA_AES for 24
+
+Define OLECAPICOM_CERTIFICATE_SAVE_AS_TYPE for Integer
+    Define OLECAPICOM_CERTIFICATE_SAVE_AS_PFX for 0
+    Define OLECAPICOM_CERTIFICATE_SAVE_AS_CER for 1
+
+Define OLECAPICOM_CERTIFICATES_SAVE_AS_TYPE for Integer
+    Define OLECAPICOM_CERTIFICATES_SAVE_AS_SERIALIZED for 0
+    Define OLECAPICOM_CERTIFICATES_SAVE_AS_PKCS7 for 1
+    Define OLECAPICOM_CERTIFICATES_SAVE_AS_PFX for 2
+
+Define OLECAPICOM_CERTIFICATE_INCLUDE_OPTION for Integer
+    Define OLECAPICOM_CERTIFICATE_INCLUDE_CHAIN_EXCEPT_ROOT for 0
+    Define OLECAPICOM_CERTIFICATE_INCLUDE_WHOLE_CHAIN for 1
+    Define OLECAPICOM_CERTIFICATE_INCLUDE_END_ENTITY_ONLY for 2
+
+Define OLECAPICOM_KEY_SPEC for Integer
+    Define OLECAPICOM_KEY_SPEC_KEYEXCHANGE for 1
+    Define OLECAPICOM_KEY_SPEC_SIGNATURE for 2
+
+Define OLECAPICOM_KEY_LOCATION for Integer
+    Define OLECAPICOM_CURRENT_USER_KEY for 0
+    Define OLECAPICOM_LOCAL_MACHINE_KEY for 1
+
+Define OLECAPICOM_KEY_STORAGE_FLAG for Integer
+    Define OLECAPICOM_KEY_STORAGE_DEFAULT for 0
+    Define OLECAPICOM_KEY_STORAGE_EXPORTABLE for 1
+    Define OLECAPICOM_KEY_STORAGE_USER_PROTECTED for 2
+
+Define OLECAPICOM_EXPORT_FLAG for Integer
+    Define OLECAPICOM_EXPORT_DEFAULT for 0
+    Define OLECAPICOM_EXPORT_IGNORE_PRIVATE_KEY_NOT_EXPORTABLE_ERROR for 1
+
+Define OLECAPICOM_KEY_USAGE for Integer
+    Define OLECAPICOM_DIGITAL_SIGNATURE_KEY_USAGE for 128
+    Define OLECAPICOM_NON_REPUDIATION_KEY_USAGE for 64
+    Define OLECAPICOM_KEY_ENCIPHERMENT_KEY_USAGE for 32
+    Define OLECAPICOM_DATA_ENCIPHERMENT_KEY_USAGE for 16
+    Define OLECAPICOM_KEY_AGREEMENT_KEY_USAGE for 8
+    Define OLECAPICOM_KEY_CERT_SIGN_KEY_USAGE for 4
+    Define OLECAPICOM_OFFLINE_CRL_SIGN_KEY_USAGE for 2
+    Define OLECAPICOM_CRL_SIGN_KEY_USAGE for 2
+    Define OLECAPICOM_ENCIPHER_ONLY_KEY_USAGE for 1
+    Define OLECAPICOM_DECIPHER_ONLY_KEY_USAGE for 32768
+
+Define OLECAPICOM_CERTIFICATE_FIND_TYPE for Integer
+    Define OLECAPICOM_CERTIFICATE_FIND_SHA1_HASH for 0
+    Define OLECAPICOM_CERTIFICATE_FIND_SUBJECT_NAME for 1
+    Define OLECAPICOM_CERTIFICATE_FIND_ISSUER_NAME for 2
+    Define OLECAPICOM_CERTIFICATE_FIND_ROOT_NAME for 3
+    Define OLECAPICOM_CERTIFICATE_FIND_TEMPLATE_NAME for 4
+    Define OLECAPICOM_CERTIFICATE_FIND_EXTENSION for 5
+    Define OLECAPICOM_CERTIFICATE_FIND_EXTENDED_PROPERTY for 6
+    Define OLECAPICOM_CERTIFICATE_FIND_APPLICATION_POLICY for 7
+    Define OLECAPICOM_CERTIFICATE_FIND_CERTIFICATE_POLICY for 8
+    Define OLECAPICOM_CERTIFICATE_FIND_TIME_VALID for 9
+    Define OLECAPICOM_CERTIFICATE_FIND_TIME_NOT_YET_VALID for 10
+    Define OLECAPICOM_CERTIFICATE_FIND_TIME_EXPIRED for 11
+    Define OLECAPICOM_CERTIFICATE_FIND_KEY_USAGE for 12
+
+Define OLECAPICOM_HASH_ALGORITHM for Integer
+    Define OLECAPICOM_HASH_ALGORITHM_SHA1 for 0
+    Define OLECAPICOM_HASH_ALGORITHM_MD2 for 1
+    Define OLECAPICOM_HASH_ALGORITHM_MD4 for 2
+    Define OLECAPICOM_HASH_ALGORITHM_MD5 for 3
+    Define OLECAPICOM_HASH_ALGORITHM_SHA_256 for 4
+    Define OLECAPICOM_HASH_ALGORITHM_SHA_384 for 5
+    Define OLECAPICOM_HASH_ALGORITHM_SHA_512 for 6
+
+//Struct _CRYPT_KEY_PROV_INFO
+    // pwszContainerName  // Bad type member
+    // pwszProvName  // Bad type member
+    //UInteger dwProvType
+    //UInteger dwFlags
+    //UInteger cProvParam
+    // rgProvParam  // Bad type member
+    //UInteger dwKeySpec
+//End_Struct
+
+//Struct _CRYPT_KEY_PROV_PARAM
+    //UInteger dwParam
+    // pbData  // Bad type member
+    //UInteger cbData
+    //UInteger dwFlags
+//End_Struct
+
+//Struct _CERT_KEY_CONTEXT
+    //UInteger cbSize
+    // __MIDL____MIDL_itf_capicom_0001_00640106  // Bad type member
+    //UInteger dwKeySpec
+//End_Struct
+
+// CLSID: {A24104F5-46D0-4C0F-926D-665565908E91}
+// ISettings Interface
+Class cComISettings is a Mixin
+
+    // Property to get the current setting to enable/disable dialog box to prompt for certificate used to sign/decrypt a message.
+    Function ComEnablePromptForCertificateUI Returns Boolean
+        Handle hDispatchDriver
+        Boolean retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 1 OLE_VT_BOOL to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property to get the current setting to enable/disable dialog box to prompt for certificate used to sign/decrypt a message.
+    Procedure Set ComEnablePromptForCertificateUI Boolean value
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Set ComProperty of hDispatchDriver 1 OLE_VT_BOOL to value
+    End_Procedure
+
+    // Property to get the current Active Directory search location.
+    Function ComActiveDirectorySearchLocation Returns OLECAPICOM_ACTIVE_DIRECTORY_SEARCH_LOCATION
+        Handle hDispatchDriver
+        OLECAPICOM_ACTIVE_DIRECTORY_SEARCH_LOCATION retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 2 OLE_VT_I4 to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property to get the current Active Directory search location.
+    Procedure Set ComActiveDirectorySearchLocation OLECAPICOM_ACTIVE_DIRECTORY_SEARCH_LOCATION value
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Set ComProperty of hDispatchDriver 2 OLE_VT_I4 to value
+    End_Procedure
+End_Class
+
+// CoClass
+// ProgID: CAPICOM.Settings.1
+// CLSID: {A996E48C-D3DC-4244-89F7-AFA33EC60679}
+// Settings Class
+Class cComSettings is a cComAutomationObject
+    Import_Class_Protocol cComISettings
+
+    Procedure Construct_Object
+        Forward Send Construct_Object
+        Set psProgID to "{A996E48C-D3DC-4244-89F7-AFA33EC60679}"
+        Set peAutoCreate to acNoAutoCreate
+    End_Procedure
+End_Class
+
+// CLSID: {976B7E6D-1002-4051-BFD4-824A74BD74E2}
+// IEKU Interface
+Class cComIEKU is a Mixin
+
+    // Default property to get EKU name.
+    Function ComName Returns OLECAPICOM_EKU
+        Handle hDispatchDriver
+        OLECAPICOM_EKU retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 0 OLE_VT_I4 to retVal
+        Function_Return retVal
+    End_Function
+
+    // Default property to get EKU name.
+    Procedure Set ComName OLECAPICOM_EKU value
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Set ComProperty of hDispatchDriver 0 OLE_VT_I4 to value
+    End_Procedure
+
+    // Property to get the actual EKU OID string as defined in WinCrypt.h.
+    Function ComOID Returns String
+        Handle hDispatchDriver
+        String retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 1 OLE_VT_BSTR to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property to get the actual EKU OID string as defined in WinCrypt.h.
+    Procedure Set ComOID String value
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Set ComProperty of hDispatchDriver 1 OLE_VT_BSTR to value
+    End_Procedure
+End_Class
+
+// CoClass
+// CLSID: {8535F9A1-738A-40D0-8FB1-10CC8F74E7D3}
+// EKU Class
+Class cComEKU is a cComAutomationObject
+    Import_Class_Protocol cComIEKU
+
+    Procedure Construct_Object
+        Forward Send Construct_Object
+        Set peAutoCreate to acNoAutoCreate
+    End_Procedure
+End_Class
+
+// CLSID: {47C87CEC-8C4B-4E3C-8D22-34280274EFD1}
+// IEKUs Interface
+Class cComIEKUs is a Mixin
+
+    // Property Item.
+    Function ComItem Integer llIndex Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Send DefineParam to hDispatchDriver OLE_VT_I4 llIndex
+        Get InvokeComMethod of hDispatchDriver 0 OLE_VT_VARIANT to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property Count.
+    Function ComCount Returns Integer
+        Handle hDispatchDriver
+        Integer retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 1 OLE_VT_I4 to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property _NewEnum.
+    Function Com_NewEnum Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver -4 OLE_VT_UNKNOWN to retVal
+        Function_Return retVal
+    End_Function
+End_Class
+
+// CoClass
+// CLSID: {F1800663-5BFC-4D1A-8D44-56CE02DDA34F}
+// EKUs Class
+Class cComEKUs is a cComAutomationObject
+    Import_Class_Protocol cComIEKUs
+
+    Procedure Construct_Object
+        Forward Send Construct_Object
+        Set peAutoCreate to acNoAutoCreate
+    End_Procedure
+End_Class
+
+// CLSID: {41DD35A8-9FF9-45A6-9A7C-F65B2F085D1F}
+// IKeyUsage Interface
+Class cComIKeyUsage is a Mixin
+
+    // Property to check if the KeyUsage extension is present.
+    Function ComIsPresent Returns Boolean
+        Handle hDispatchDriver
+        Boolean retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 1 OLE_VT_BOOL to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property to check if the KeyUsage extension is marked critical.
+    Function ComIsCritical Returns Boolean
+        Handle hDispatchDriver
+        Boolean retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 2 OLE_VT_BOOL to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property to check if the digitalSignature bit is set.
+    Function ComIsDigitalSignatureEnabled Returns Boolean
+        Handle hDispatchDriver
+        Boolean retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 3 OLE_VT_BOOL to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property to check if the nonRepudiation bit is set.
+    Function ComIsNonRepudiationEnabled Returns Boolean
+        Handle hDispatchDriver
+        Boolean retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 4 OLE_VT_BOOL to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property to check if the keyEncipherment bit is set.
+    Function ComIsKeyEnciphermentEnabled Returns Boolean
+        Handle hDispatchDriver
+        Boolean retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 5 OLE_VT_BOOL to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property to check if the dataEncipherment bit is set.
+    Function ComIsDataEnciphermentEnabled Returns Boolean
+        Handle hDispatchDriver
+        Boolean retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 6 OLE_VT_BOOL to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property to check if the keyAgreement bit is set.
+    Function ComIsKeyAgreementEnabled Returns Boolean
+        Handle hDispatchDriver
+        Boolean retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 7 OLE_VT_BOOL to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property to check if the keyCertSign bit is set.
+    Function ComIsKeyCertSignEnabled Returns Boolean
+        Handle hDispatchDriver
+        Boolean retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 8 OLE_VT_BOOL to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property to check if the cRLSign bit is set.
+    Function ComIsCRLSignEnabled Returns Boolean
+        Handle hDispatchDriver
+        Boolean retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 9 OLE_VT_BOOL to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property to check if the encipherOnly bit is set.
+    Function ComIsEncipherOnlyEnabled Returns Boolean
+        Handle hDispatchDriver
+        Boolean retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 10 OLE_VT_BOOL to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property to check if the decipherOnly bit is set.
+    Function ComIsDecipherOnlyEnabled Returns Boolean
+        Handle hDispatchDriver
+        Boolean retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 11 OLE_VT_BOOL to retVal
+        Function_Return retVal
+    End_Function
+End_Class
+
+// CoClass
+// CLSID: {9226C95C-38BE-4CC4-B3A2-A867F5199C13}
+// KeyUsage Class
+Class cComKeyUsage is a cComAutomationObject
+    Import_Class_Protocol cComIKeyUsage
+
+    Procedure Construct_Object
+        Forward Send Construct_Object
+        Set peAutoCreate to acNoAutoCreate
+    End_Procedure
+End_Class
+
+// CLSID: {7289D408-987D-45D1-8DEE-CF9E91C2E90E}
+// IExtendedKeyUsage Interface
+Class cComIExtendedKeyUsage is a Mixin
+
+    // Property to check if the EKU extension is present.
+    Function ComIsPresent Returns Boolean
+        Handle hDispatchDriver
+        Boolean retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 1 OLE_VT_BOOL to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property to check if the EKU extension is marked critical.
+    Function ComIsCritical Returns Boolean
+        Handle hDispatchDriver
+        Boolean retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 2 OLE_VT_BOOL to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property to return an EKUs collection object.
+    Function ComEKUs Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 3 OLE_VT_DISPATCH to retVal
+        Function_Return retVal
+    End_Function
+End_Class
+
+// CoClass
+// CLSID: {42C18607-1B4B-4126-8F1B-76E2DC7F631A}
+// ExtendedKeyUsage Class
+Class cComExtendedKeyUsage is a cComAutomationObject
+    Import_Class_Protocol cComIExtendedKeyUsage
+
+    Procedure Construct_Object
+        Forward Send Construct_Object
+        Set peAutoCreate to acNoAutoCreate
+    End_Procedure
+End_Class
+
+// CLSID: {4E298C47-ABA6-459E-851B-993D6C626EAD}
+// IBasicConstraints Interface
+Class cComIBasicConstraints is a Mixin
+
+    // Property to check if the BasicConstraints extension is present.
+    Function ComIsPresent Returns Boolean
+        Handle hDispatchDriver
+        Boolean retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 1 OLE_VT_BOOL to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property to check if the BasicConstraints extension is marked critical.
+    Function ComIsCritical Returns Boolean
+        Handle hDispatchDriver
+        Boolean retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 2 OLE_VT_BOOL to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property to check if it is a certificate authority.
+    Function ComIsCertificateAuthority Returns Boolean
+        Handle hDispatchDriver
+        Boolean retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 3 OLE_VT_BOOL to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property to check if the path length constraint value is present.
+    Function ComIsPathLenConstraintPresent Returns Boolean
+        Handle hDispatchDriver
+        Boolean retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 4 OLE_VT_BOOL to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property to get the path length constraint value.
+    Function ComPathLenConstraint Returns Integer
+        Handle hDispatchDriver
+        Integer retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 5 OLE_VT_I4 to retVal
+        Function_Return retVal
+    End_Function
+End_Class
+
+// CoClass
+// CLSID: {C05AAC6E-3A58-45A9-A203-56952E961E48}
+// BasicConstraints Class
+Class cComBasicConstraints is a cComAutomationObject
+    Import_Class_Protocol cComIBasicConstraints
+
+    Procedure Construct_Object
+        Forward Send Construct_Object
+        Set peAutoCreate to acNoAutoCreate
+    End_Procedure
+End_Class
+
+// CLSID: {A4EAB890-0786-406B-9B31-2746F31F8D87}
+// ICertificateStatus3 Interface
+Class cComICertificateStatus3 is a Mixin
+
+    // Default property to get the certificate validity result.
+    Function ComResult Returns Boolean
+        Handle hDispatchDriver
+        Boolean retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 0 OLE_VT_BOOL to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property to get validity check flag.
+    Function ComCheckFlag Returns OLECAPICOM_CHECK_FLAG
+        Handle hDispatchDriver
+        OLECAPICOM_CHECK_FLAG retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 1 OLE_VT_I4 to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property to get validity check flag.
+    Procedure Set ComCheckFlag OLECAPICOM_CHECK_FLAG value
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Set ComProperty of hDispatchDriver 1 OLE_VT_I4 to value
+    End_Procedure
+
+    // Method to return an IEKU object for setting extended key usage to check (default is no EKU check).
+    Function ComEKU Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 2 OLE_VT_DISPATCH to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property to get verification time.
+    Function ComVerificationTime Returns DateTime
+        Handle hDispatchDriver
+        DateTime retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 3 OLE_VT_DATE to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property to get verification time.
+    Procedure Set ComVerificationTime DateTime value
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Set ComProperty of hDispatchDriver 3 OLE_VT_DATE to value
+    End_Procedure
+
+    // Property to get the URL retrieval timeout value (in seconds).
+    Function ComUrlRetrievalTimeout Returns Integer
+        Handle hDispatchDriver
+        Integer retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 4 OLE_VT_I4 to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property to get the URL retrieval timeout value (in seconds).
+    Procedure Set ComUrlRetrievalTimeout Integer value
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Set ComProperty of hDispatchDriver 4 OLE_VT_I4 to value
+    End_Procedure
+
+    // Method to get the certificate policies OIDs collection.
+    Function ComCertificatePolicies Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 5 OLE_VT_DISPATCH to retVal
+        Function_Return retVal
+    End_Function
+
+    // Method to get the application policies OIDs collection.
+    Function ComApplicationPolicies Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 6 OLE_VT_DISPATCH to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property to get useful validation certificates.
+    Function ComValidationCertificates Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 7 OLE_VT_DISPATCH to retVal
+        Function_Return retVal
+    End_Function
+End_Class
+
+// CoClass
+// CLSID: {0EF24D18-BD9B-47D4-9458-E05B489FB7BA}
+// CertificateStatus Class
+Class cComCertificateStatus is a cComAutomationObject
+    Import_Class_Protocol cComICertificateStatus3
+
+    Procedure Construct_Object
+        Forward Send Construct_Object
+        Set peAutoCreate to acNoAutoCreate
+    End_Procedure
+End_Class
+
+// CLSID: {6FE450DC-AD32-48D4-A366-01EE7E0B1374}
+// ICertificate2 Interface
+Class cComICertificate2 is a Mixin
+
+    // Property to get the version number.
+    Function ComVersion Returns Integer
+        Handle hDispatchDriver
+        Integer retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 1 OLE_VT_I4 to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property to get the serial number.
+    Function ComSerialNumber Returns String
+        Handle hDispatchDriver
+        String retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 2 OLE_VT_BSTR to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property to get the subject's name.
+    Function ComSubjectName Returns String
+        Handle hDispatchDriver
+        String retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 3 OLE_VT_BSTR to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property to get the issuer's name.
+    Function ComIssuerName Returns String
+        Handle hDispatchDriver
+        String retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 4 OLE_VT_BSTR to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property to get the valid notBefore date.
+    Function ComValidFromDate Returns DateTime
+        Handle hDispatchDriver
+        DateTime retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 5 OLE_VT_DATE to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property to get the valid notAfter date.
+    Function ComValidToDate Returns DateTime
+        Handle hDispatchDriver
+        DateTime retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 6 OLE_VT_DATE to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property to get the SHA1 hash.
+    Function ComThumbprint Returns String
+        Handle hDispatchDriver
+        String retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 7 OLE_VT_BSTR to retVal
+        Function_Return retVal
+    End_Function
+
+    // Method to check if private key is available.
+    Function ComHasPrivateKey Returns Boolean
+        Handle hDispatchDriver
+        Boolean retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 10 OLE_VT_BOOL to retVal
+        Function_Return retVal
+    End_Function
+
+    // Method to get other simple information of the certificate.
+    Function ComGetInfo OLECAPICOM_CERT_INFO_TYPE llInfoType Returns String
+        Handle hDispatchDriver
+        String retVal
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Send DefineParam to hDispatchDriver OLE_VT_I4 llInfoType
+        Get InvokeComMethod of hDispatchDriver 11 OLE_VT_BSTR to retVal
+        Function_Return retVal
+    End_Function
+
+    // Method to return the ICertificateStatus object for checking if the certificate is valid.
+    Function ComIsValid Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 12 OLE_VT_DISPATCH to retVal
+        Function_Return retVal
+    End_Function
+
+    // Method to return the KeyUsage object.
+    Function ComKeyUsage Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 13 OLE_VT_DISPATCH to retVal
+        Function_Return retVal
+    End_Function
+
+    // Method to return the ExtendedKeyUsage object.
+    Function ComExtendedKeyUsage Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 14 OLE_VT_DISPATCH to retVal
+        Function_Return retVal
+    End_Function
+
+    // Method to return the BasicConstraints object.
+    Function ComBasicConstraints Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 15 OLE_VT_DISPATCH to retVal
+        Function_Return retVal
+    End_Function
+
+    // Method to export the certificate.
+    Function ComExport OLECAPICOM_ENCODING_TYPE llEncodingType Returns String
+        Handle hDispatchDriver
+        String retVal
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Send DefineParam to hDispatchDriver OLE_VT_I4 llEncodingType
+        Get InvokeComMethod of hDispatchDriver 16 OLE_VT_BSTR to retVal
+        Function_Return retVal
+    End_Function
+
+    // Method to import a certificate.
+    Procedure ComImport String llEncodedCertificate
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Send DefineParam to hDispatchDriver OLE_VT_BSTR llEncodedCertificate
+        Send InvokeComMethod to hDispatchDriver 17 OLE_VT_VOID
+    End_Procedure
+
+    // Method to display the certificate.
+    Procedure ComDisplay
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send InvokeComMethod to hDispatchDriver 18 OLE_VT_VOID
+    End_Procedure
+
+    // Property to get archived status.
+    Function ComArchived Returns Boolean
+        Handle hDispatchDriver
+        Boolean retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 19 OLE_VT_BOOL to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property to get archived status.
+    Procedure Set ComArchived Boolean value
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Set ComProperty of hDispatchDriver 19 OLE_VT_BOOL to value
+    End_Procedure
+
+    // Method to return the Template object.
+    Function ComTemplate Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 20 OLE_VT_DISPATCH to retVal
+        Function_Return retVal
+    End_Function
+
+    // Method to return the PublicKey object.
+    Function ComPublicKey Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 21 OLE_VT_DISPATCH to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property to get the PrivateKey object.
+    Function ComPrivateKey Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 22 OLE_VT_DISPATCH to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property to get the PrivateKey object.
+    Procedure Set ComPrivateKey Variant value
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Set ComProperty of hDispatchDriver 22 OLE_VT_DISPATCH to value
+    End_Procedure
+
+    // Method to return the Extensions object.
+    Function ComExtensions Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 23 OLE_VT_DISPATCH to retVal
+        Function_Return retVal
+    End_Function
+
+    // Method to return the ExtendedProperties object.
+    Function ComExtendedProperties Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 24 OLE_VT_DISPATCH to retVal
+        Function_Return retVal
+    End_Function
+
+    // Method to load a certificate from file.
+    Procedure ComLoad String llFileName String llPassword OLECAPICOM_KEY_STORAGE_FLAG llKeyStorageFlag OLECAPICOM_KEY_LOCATION llKeyLocation
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 4
+        Send DefineParam to hDispatchDriver OLE_VT_BSTR llFileName
+        Send DefineParam to hDispatchDriver OLE_VT_BSTR llPassword
+        Send DefineParam to hDispatchDriver OLE_VT_I4 llKeyStorageFlag
+        Send DefineParam to hDispatchDriver OLE_VT_I4 llKeyLocation
+        Send InvokeComMethod to hDispatchDriver 25 OLE_VT_VOID
+    End_Procedure
+
+    // Method to save a certificate to file, with option to include the chain for PFX file.
+    Procedure ComSave String llFileName String llPassword OLECAPICOM_CERTIFICATE_SAVE_AS_TYPE llSaveAs OLECAPICOM_CERTIFICATE_INCLUDE_OPTION llIncludeOption
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 4
+        Send DefineParam to hDispatchDriver OLE_VT_BSTR llFileName
+        Send DefineParam to hDispatchDriver OLE_VT_BSTR llPassword
+        Send DefineParam to hDispatchDriver OLE_VT_I4 llSaveAs
+        Send DefineParam to hDispatchDriver OLE_VT_I4 llIncludeOption
+        Send InvokeComMethod to hDispatchDriver 26 OLE_VT_VOID
+    End_Procedure
+End_Class
+
+// CoClass
+// ProgID: CAPICOM.Certificate.3
+// CLSID: {9171C115-7DD9-46BA-B1E5-0ED50AFFC1B8}
+// Certificate Class
+Class cComCertificate is a cComAutomationObject
+    Import_Class_Protocol cComICertificate2
+
+    Procedure Construct_Object
+        Forward Send Construct_Object
+        Set psProgID to "{9171C115-7DD9-46BA-B1E5-0ED50AFFC1B8}"
+        Set peAutoCreate to acNoAutoCreate
+    End_Procedure
+End_Class
+
+// CLSID: {7B57C04B-1786-4B30-A7B6-36235CD58A14}
+// ICertificates2 Interface
+Class cComICertificates2 is a Mixin
+
+    // Property Item.
+    Function ComItem Integer llIndex Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Send DefineParam to hDispatchDriver OLE_VT_I4 llIndex
+        Get InvokeComMethod of hDispatchDriver 0 OLE_VT_VARIANT to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property Count.
+    Function ComCount Returns Integer
+        Handle hDispatchDriver
+        Integer retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 1 OLE_VT_I4 to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property _NewEnum.
+    Function Com_NewEnum Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver -4 OLE_VT_UNKNOWN to retVal
+        Function_Return retVal
+    End_Function
+
+    // Method to find certificates in the collection.
+    Function ComFind OLECAPICOM_CERTIFICATE_FIND_TYPE llFindType Variant llvarCriteria Boolean llbFindValidOnly Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 3
+        Send DefineParam to hDispatchDriver OLE_VT_I4 llFindType
+        Send DefineParam to hDispatchDriver OLE_VT_VARIANT llvarCriteria
+        Send DefineParam to hDispatchDriver OLE_VT_BOOL llbFindValidOnly
+        Get InvokeComMethod of hDispatchDriver 2 OLE_VT_DISPATCH to retVal
+        Function_Return retVal
+    End_Function
+
+    // Method to display the certificate selection dialog box.
+    Function ComSelect String llTitle String llDisplayString Boolean llbMultiSelect Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 3
+        Send DefineParam to hDispatchDriver OLE_VT_BSTR llTitle
+        Send DefineParam to hDispatchDriver OLE_VT_BSTR llDisplayString
+        Send DefineParam to hDispatchDriver OLE_VT_BOOL llbMultiSelect
+        Get InvokeComMethod of hDispatchDriver 3 OLE_VT_DISPATCH to retVal
+        Function_Return retVal
+    End_Function
+
+    // Method to add a certificate to the collection.
+    Procedure ComAdd Variant llpVal
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Send DefineParam to hDispatchDriver OLE_VT_DISPATCH llpVal
+        Send InvokeComMethod to hDispatchDriver 4 OLE_VT_VOID
+    End_Procedure
+
+    // Method to remove a certificate in the collection.
+    Procedure ComRemove Variant llIndex
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Send DefineParam to hDispatchDriver OLE_VT_VARIANT llIndex
+        Send InvokeComMethod to hDispatchDriver 5 OLE_VT_VOID
+    End_Procedure
+
+    // Method to remove all certificates in the collection.
+    Procedure ComClear
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send InvokeComMethod to hDispatchDriver 6 OLE_VT_VOID
+    End_Procedure
+
+    // Method to save certificate collection to file.
+    Procedure ComSave String llFileName String llPassword OLECAPICOM_CERTIFICATES_SAVE_AS_TYPE llSaveAs OLECAPICOM_EXPORT_FLAG llExportFlag
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 4
+        Send DefineParam to hDispatchDriver OLE_VT_BSTR llFileName
+        Send DefineParam to hDispatchDriver OLE_VT_BSTR llPassword
+        Send DefineParam to hDispatchDriver OLE_VT_I4 llSaveAs
+        Send DefineParam to hDispatchDriver OLE_VT_I4 llExportFlag
+        Send InvokeComMethod to hDispatchDriver 7 OLE_VT_VOID
+    End_Procedure
+End_Class
+
+// CoClass
+// ProgID: CAPICOM.Certificates.4
+// CLSID: {3605B612-C3CF-4AB4-A426-2D853391DB2E}
+// Certificates Class
+Class cComCertificates is a cComAutomationObject
+    Import_Class_Protocol cComICertificates2
+
+    Procedure Construct_Object
+        Forward Send Construct_Object
+        Set psProgID to "{3605B612-C3CF-4AB4-A426-2D853391DB2E}"
+        Set peAutoCreate to acNoAutoCreate
+    End_Procedure
+End_Class
+
+// CLSID: {CA65D842-2110-4073-AEE3-D0AA5F56C421}
+// IChain2 Interface
+Class cComIChain2 is a Mixin
+
+    // Default property to get an ordered certificates collection object representing the chain, where Item(1) represents the end certificate and Item(Count()) represents the root certificate.
+    Function ComCertificates Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 0 OLE_VT_DISPATCH to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property to get validity status of the chain or a particular certficate. For overall chain status, specify Index of 0, otherwise specify the 1 for the end certificate, and Certificates.Count() for the root certificate.
+    Function ComStatus Integer llIndex Returns Integer
+        Handle hDispatchDriver
+        Integer retVal
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Send DefineParam to hDispatchDriver OLE_VT_I4 llIndex
+        Get InvokeComMethod of hDispatchDriver 1 OLE_VT_I4 to retVal
+        Function_Return retVal
+    End_Function
+
+    // Method to build the certificate chain and get the overall result of the chain validity.
+    Function ComBuild Variant llpICertificate Returns Boolean
+        Handle hDispatchDriver
+        Boolean retVal
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Send DefineParam to hDispatchDriver OLE_VT_DISPATCH llpICertificate
+        Get InvokeComMethod of hDispatchDriver 2 OLE_VT_BOOL to retVal
+        Function_Return retVal
+    End_Function
+
+    // Method to get the certificate policies OIDs collection.
+    Function ComCertificatePolicies Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 3 OLE_VT_DISPATCH to retVal
+        Function_Return retVal
+    End_Function
+
+    // Method to get the application policies OIDs collection.
+    Function ComApplicationPolicies Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 4 OLE_VT_DISPATCH to retVal
+        Function_Return retVal
+    End_Function
+
+    // Method to get the extended error information description string.
+    Function ComExtendedErrorInfo Integer llIndex Returns String
+        Handle hDispatchDriver
+        String retVal
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Send DefineParam to hDispatchDriver OLE_VT_I4 llIndex
+        Get InvokeComMethod of hDispatchDriver 5 OLE_VT_BSTR to retVal
+        Function_Return retVal
+    End_Function
+End_Class
+
+// CoClass
+// ProgID: CAPICOM.Chain.3
+// CLSID: {550C8FFB-4DC0-4756-828C-862E6D0AE74F}
+// Chain Class
+Class cComChain is a cComAutomationObject
+    Import_Class_Protocol cComIChain2
+
+    Procedure Construct_Object
+        Forward Send Construct_Object
+        Set psProgID to "{550C8FFB-4DC0-4756-828C-862E6D0AE74F}"
+        Set peAutoCreate to acNoAutoCreate
+    End_Procedure
+End_Class
+
+// CLSID: {F701F8EC-31C7-48FB-B621-5DE417C3A607}
+// IStore3 Interface
+Class cComIStore3 is a Mixin
+
+    // Default property to get a Certificates collection object.
+    Function ComCertificates Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 0 OLE_VT_DISPATCH to retVal
+        Function_Return retVal
+    End_Function
+
+    // Method to open a store.
+    Procedure ComOpen OLECAPICOM_STORE_LOCATION llStoreLocation String llStoreName OLECAPICOM_STORE_OPEN_MODE llOpenMode
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 3
+        Send DefineParam to hDispatchDriver OLE_VT_I4 llStoreLocation
+        Send DefineParam to hDispatchDriver OLE_VT_BSTR llStoreName
+        Send DefineParam to hDispatchDriver OLE_VT_I4 llOpenMode
+        Send InvokeComMethod to hDispatchDriver 1 OLE_VT_VOID
+    End_Procedure
+
+    // Method to add a certificate to the store.
+    Procedure ComAdd Variant llpVal
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Send DefineParam to hDispatchDriver OLE_VT_DISPATCH llpVal
+        Send InvokeComMethod to hDispatchDriver 2 OLE_VT_VOID
+    End_Procedure
+
+    // Method to remove a certificate from the store.
+    Procedure ComRemove Variant llpVal
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Send DefineParam to hDispatchDriver OLE_VT_DISPATCH llpVal
+        Send InvokeComMethod to hDispatchDriver 3 OLE_VT_VOID
+    End_Procedure
+
+    // Method to export the store.
+    Function ComExport OLECAPICOM_STORE_SAVE_AS_TYPE llSaveAs OLECAPICOM_ENCODING_TYPE llEncodingType Returns String
+        Handle hDispatchDriver
+        String retVal
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 2
+        Send DefineParam to hDispatchDriver OLE_VT_I4 llSaveAs
+        Send DefineParam to hDispatchDriver OLE_VT_I4 llEncodingType
+        Get InvokeComMethod of hDispatchDriver 4 OLE_VT_BSTR to retVal
+        Function_Return retVal
+    End_Function
+
+    // Method to import a store.
+    Procedure ComImport String llEncodedStore
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Send DefineParam to hDispatchDriver OLE_VT_BSTR llEncodedStore
+        Send InvokeComMethod to hDispatchDriver 5 OLE_VT_VOID
+    End_Procedure
+
+    // Method to load certificate(s) from file.
+    Procedure ComLoad String llFileName String llPassword OLECAPICOM_KEY_STORAGE_FLAG llKeyStorageFlag
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 3
+        Send DefineParam to hDispatchDriver OLE_VT_BSTR llFileName
+        Send DefineParam to hDispatchDriver OLE_VT_BSTR llPassword
+        Send DefineParam to hDispatchDriver OLE_VT_I4 llKeyStorageFlag
+        Send InvokeComMethod to hDispatchDriver 6 OLE_VT_VOID
+    End_Procedure
+
+    // Method to get the name of the store.
+    Function ComName Returns String
+        Handle hDispatchDriver
+        String retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 7 OLE_VT_BSTR to retVal
+        Function_Return retVal
+    End_Function
+
+    // Method to get the location of the store.
+    Function ComLocation Returns OLECAPICOM_STORE_LOCATION
+        Handle hDispatchDriver
+        OLECAPICOM_STORE_LOCATION retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 8 OLE_VT_I4 to retVal
+        Function_Return retVal
+    End_Function
+
+    // Method to delete the store.
+    Function ComDelete Returns Boolean
+        Handle hDispatchDriver
+        Boolean retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 9 OLE_VT_BOOL to retVal
+        Function_Return retVal
+    End_Function
+
+    // Method to close the store.
+    Procedure ComClose
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send InvokeComMethod to hDispatchDriver 10 OLE_VT_VOID
+    End_Procedure
+End_Class
+
+// CoClass
+// ProgID: CAPICOM.Store.3
+// CLSID: {91D221C4-0CD4-461C-A728-01D509321556}
+// Store Class
+Class cComStore is a cComAutomationObject
+    Import_Class_Protocol cComIStore3
+
+    Procedure Construct_Object
+        Forward Send Construct_Object
+        Set psProgID to "{91D221C4-0CD4-461C-A728-01D509321556}"
+        Set peAutoCreate to acNoAutoCreate
+    End_Procedure
+End_Class
+
+// CLSID: {B17A8D78-B5A6-45F7-BA21-01AB94B08415}
+// IAttribute Interface
+Class cComIAttribute is a Mixin
+
+    // Default property to get attribute name.
+    Function ComName Returns OLECAPICOM_ATTRIBUTE
+        Handle hDispatchDriver
+        OLECAPICOM_ATTRIBUTE retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 0 OLE_VT_I4 to retVal
+        Function_Return retVal
+    End_Function
+
+    // Default property to get attribute name.
+    Procedure Set ComName OLECAPICOM_ATTRIBUTE value
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Set ComProperty of hDispatchDriver 0 OLE_VT_I4 to value
+    End_Procedure
+
+    // Property to get attribute value.
+    Function ComValue Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 1 OLE_VT_VARIANT to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property to get attribute value.
+    Procedure Set ComValue Variant value
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Set ComProperty of hDispatchDriver 1 OLE_VT_VARIANT to value
+    End_Procedure
+End_Class
+
+// CoClass
+// ProgID: CAPICOM.Attribute.1
+// CLSID: {54BA1E8F-818D-407F-949D-BAE1692C5C18}
+// Attribute Class
+Class cComAttribute is a cComAutomationObject
+    Import_Class_Protocol cComIAttribute
+
+    Procedure Construct_Object
+        Forward Send Construct_Object
+        Set psProgID to "{54BA1E8F-818D-407F-949D-BAE1692C5C18}"
+        Set peAutoCreate to acNoAutoCreate
+    End_Procedure
+End_Class
+
+// CLSID: {6ADC653E-D5B9-422A-991A-A2B0119CEDAC}
+// IAttributes Interface
+Class cComIAttributes is a Mixin
+
+    // Property Item.
+    Function ComItem Integer llIndex Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Send DefineParam to hDispatchDriver OLE_VT_I4 llIndex
+        Get InvokeComMethod of hDispatchDriver 0 OLE_VT_VARIANT to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property Count.
+    Function ComCount Returns Integer
+        Handle hDispatchDriver
+        Integer retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 1 OLE_VT_I4 to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property _NewEnum.
+    Function Com_NewEnum Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver -4 OLE_VT_UNKNOWN to retVal
+        Function_Return retVal
+    End_Function
+
+    // Method Add.
+    Procedure ComAdd Variant llpVal
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Send DefineParam to hDispatchDriver OLE_VT_DISPATCH llpVal
+        Send InvokeComMethod to hDispatchDriver 2 OLE_VT_VOID
+    End_Procedure
+
+    // Method Remove.
+    Procedure ComRemove Integer llIndex
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Send DefineParam to hDispatchDriver OLE_VT_I4 llIndex
+        Send InvokeComMethod to hDispatchDriver 3 OLE_VT_VOID
+    End_Procedure
+
+    // Method Clear.
+    Procedure ComClear
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send InvokeComMethod to hDispatchDriver 4 OLE_VT_VOID
+    End_Procedure
+End_Class
+
+// CoClass
+// CLSID: {933013A9-64C8-4485-ACEF-4908C3692A33}
+// Attributes Class
+Class cComAttributes is a cComAutomationObject
+    Import_Class_Protocol cComIAttributes
+
+    Procedure Construct_Object
+        Forward Send Construct_Object
+        Set peAutoCreate to acNoAutoCreate
+    End_Procedure
+End_Class
+
+// CLSID: {625B1F55-C720-41D6-9ECF-BA59F9B85F17}
+// ISigner2 Interface
+Class cComISigner2 is a Mixin
+
+    // Default property to get signer's certificate.
+    Function ComCertificate Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 0 OLE_VT_DISPATCH to retVal
+        Function_Return retVal
+    End_Function
+
+    // Default property to get signer's certificate.
+    Procedure Set ComCertificate Variant value
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Set ComProperty of hDispatchDriver 0 OLE_VT_DISPATCH to value
+    End_Procedure
+
+    // Property to add/remove authenticated attributes.
+    Function ComAuthenticatedAttributes Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 1 OLE_VT_DISPATCH to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property to get signer's chain.
+    Function ComChain Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 2 OLE_VT_DISPATCH to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property to get signer options.
+    Function ComOptions Returns OLECAPICOM_CERTIFICATE_INCLUDE_OPTION
+        Handle hDispatchDriver
+        OLECAPICOM_CERTIFICATE_INCLUDE_OPTION retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 3 OLE_VT_I4 to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property to get signer options.
+    Procedure Set ComOptions OLECAPICOM_CERTIFICATE_INCLUDE_OPTION value
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Set ComProperty of hDispatchDriver 3 OLE_VT_I4 to value
+    End_Procedure
+
+    // Method to load signing certificate from a PFX file.
+    Procedure ComLoad String llFileName String llPassword
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 2
+        Send DefineParam to hDispatchDriver OLE_VT_BSTR llFileName
+        Send DefineParam to hDispatchDriver OLE_VT_BSTR llPassword
+        Send InvokeComMethod to hDispatchDriver 4 OLE_VT_VOID
+    End_Procedure
+End_Class
+
+// CoClass
+// ProgID: CAPICOM.Signer.2
+// CLSID: {60A9863A-11FD-4080-850E-A8E184FC3A3C}
+// Signer Class
+Class cComSigner is a cComAutomationObject
+    Import_Class_Protocol cComISigner2
+
+    Procedure Construct_Object
+        Forward Send Construct_Object
+        Set psProgID to "{60A9863A-11FD-4080-850E-A8E184FC3A3C}"
+        Set peAutoCreate to acNoAutoCreate
+    End_Procedure
+End_Class
+
+// CLSID: {5A0780F8-9E6B-4BB0-BF54-87CD9627A8B4}
+// ISigners Interface
+Class cComISigners is a Mixin
+
+    // Property Item.
+    Function ComItem Integer llIndex Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Send DefineParam to hDispatchDriver OLE_VT_I4 llIndex
+        Get InvokeComMethod of hDispatchDriver 0 OLE_VT_VARIANT to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property Count.
+    Function ComCount Returns Integer
+        Handle hDispatchDriver
+        Integer retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 1 OLE_VT_I4 to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property _NewEnum.
+    Function Com_NewEnum Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver -4 OLE_VT_UNKNOWN to retVal
+        Function_Return retVal
+    End_Function
+End_Class
+
+// CoClass
+// CLSID: {1314C1D8-D3A8-4F8A-BED0-811FD7A8A633}
+// Signers Class
+Class cComSigners is a cComAutomationObject
+    Import_Class_Protocol cComISigners
+
+    Procedure Construct_Object
+        Forward Send Construct_Object
+        Set peAutoCreate to acNoAutoCreate
+    End_Procedure
+End_Class
+
+// CLSID: {AE9C454B-FC65-4C10-B130-CD9B45BA948B}
+// ISignedData Interface
+Class cComISignedData is a Mixin
+
+    // Default property to set content to be signed.
+    Procedure Set ComContent String value
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Set ComProperty of hDispatchDriver 0 OLE_VT_BSTR to value
+    End_Procedure
+
+    // Default property to set content to be signed.
+    Function ComContent Returns String
+        Handle hDispatchDriver
+        String retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 0 OLE_VT_BSTR to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property to get all the content signers as an ISigners collection object.
+    Function ComSigners Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 1 OLE_VT_DISPATCH to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property to get all certificates in the signed message.
+    Function ComCertificates Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 2 OLE_VT_DISPATCH to retVal
+        Function_Return retVal
+    End_Function
+
+    // Method to sign the message.
+    Function ComSign Variant llpSigner Boolean llbDetached OLECAPICOM_ENCODING_TYPE llEncodingType Returns String
+        Handle hDispatchDriver
+        String retVal
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 3
+        Send DefineParam to hDispatchDriver OLE_VT_DISPATCH llpSigner
+        Send DefineParam to hDispatchDriver OLE_VT_BOOL llbDetached
+        Send DefineParam to hDispatchDriver OLE_VT_I4 llEncodingType
+        Get InvokeComMethod of hDispatchDriver 3 OLE_VT_BSTR to retVal
+        Function_Return retVal
+    End_Function
+
+    // Method to CoSign the message.
+    Function ComCoSign Variant llpSigner OLECAPICOM_ENCODING_TYPE llEncodingType Returns String
+        Handle hDispatchDriver
+        String retVal
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 2
+        Send DefineParam to hDispatchDriver OLE_VT_DISPATCH llpSigner
+        Send DefineParam to hDispatchDriver OLE_VT_I4 llEncodingType
+        Get InvokeComMethod of hDispatchDriver 4 OLE_VT_BSTR to retVal
+        Function_Return retVal
+    End_Function
+
+    // Method to verify if signature(s) in the signed message is cryptographically valid.
+    Procedure ComVerify String llSignedMessage Boolean llbDetached OLECAPICOM_SIGNED_DATA_VERIFY_FLAG llVerifyFlag
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 3
+        Send DefineParam to hDispatchDriver OLE_VT_BSTR llSignedMessage
+        Send DefineParam to hDispatchDriver OLE_VT_BOOL llbDetached
+        Send DefineParam to hDispatchDriver OLE_VT_I4 llVerifyFlag
+        Send InvokeComMethod to hDispatchDriver 5 OLE_VT_VOID
+    End_Procedure
+End_Class
+
+// CoClass
+// ProgID: CAPICOM.SignedData.1
+// CLSID: {94AFFFCC-6C05-4814-B123-A941105AA77F}
+// SignedData Class
+Class cComSignedData is a cComAutomationObject
+    Import_Class_Protocol cComISignedData
+
+    Procedure Construct_Object
+        Forward Send Construct_Object
+        Set psProgID to "{94AFFFCC-6C05-4814-B123-A941105AA77F}"
+        Set peAutoCreate to acNoAutoCreate
+    End_Procedure
+End_Class
+
+// CLSID: {BF3D04A9-B0DA-4153-B45E-6CCFA5AC715B}
+// IAlgorithm Interface
+Class cComIAlgorithm is a Mixin
+
+    // Default property to get encryption algorithm.
+    Function ComName Returns OLECAPICOM_ENCRYPTION_ALGORITHM
+        Handle hDispatchDriver
+        OLECAPICOM_ENCRYPTION_ALGORITHM retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 0 OLE_VT_I4 to retVal
+        Function_Return retVal
+    End_Function
+
+    // Default property to get encryption algorithm.
+    Procedure Set ComName OLECAPICOM_ENCRYPTION_ALGORITHM value
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Set ComProperty of hDispatchDriver 0 OLE_VT_I4 to value
+    End_Procedure
+
+    // Property to get encryption key length. This property is ignored for DES or 3DES.
+    Function ComKeyLength Returns OLECAPICOM_ENCRYPTION_KEY_LENGTH
+        Handle hDispatchDriver
+        OLECAPICOM_ENCRYPTION_KEY_LENGTH retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 1 OLE_VT_I4 to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property to get encryption key length. This property is ignored for DES or 3DES.
+    Procedure Set ComKeyLength OLECAPICOM_ENCRYPTION_KEY_LENGTH value
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Set ComProperty of hDispatchDriver 1 OLE_VT_I4 to value
+    End_Procedure
+End_Class
+
+// CoClass
+// CLSID: {A1EEF42F-5026-4A32-BC5C-2E552B70FD96}
+// Algorithm Class
+Class cComAlgorithm is a cComAutomationObject
+    Import_Class_Protocol cComIAlgorithm
+
+    Procedure Construct_Object
+        Forward Send Construct_Object
+        Set peAutoCreate to acNoAutoCreate
+    End_Procedure
+End_Class
+
+// CLSID: {A694C896-FC38-4C34-AE61-3B1A95984C14}
+// IRecipients Interface
+Class cComIRecipients is a Mixin
+
+    // Property Item.
+    Function ComItem Integer llIndex Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Send DefineParam to hDispatchDriver OLE_VT_I4 llIndex
+        Get InvokeComMethod of hDispatchDriver 0 OLE_VT_VARIANT to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property Count.
+    Function ComCount Returns Integer
+        Handle hDispatchDriver
+        Integer retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 1 OLE_VT_I4 to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property _NewEnum.
+    Function Com_NewEnum Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver -4 OLE_VT_UNKNOWN to retVal
+        Function_Return retVal
+    End_Function
+
+    // Method Add.
+    Procedure ComAdd Variant llpVal
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Send DefineParam to hDispatchDriver OLE_VT_DISPATCH llpVal
+        Send InvokeComMethod to hDispatchDriver 2 OLE_VT_VOID
+    End_Procedure
+
+    // Method Remove.
+    Procedure ComRemove Integer llIndex
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Send DefineParam to hDispatchDriver OLE_VT_I4 llIndex
+        Send InvokeComMethod to hDispatchDriver 3 OLE_VT_VOID
+    End_Procedure
+
+    // Method Clear.
+    Procedure ComClear
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send InvokeComMethod to hDispatchDriver 4 OLE_VT_VOID
+    End_Procedure
+End_Class
+
+// CoClass
+// CLSID: {96A1B8B0-8F9A-436A-84DE-E23CD6818DA5}
+// Recipients Class
+Class cComRecipients is a cComAutomationObject
+    Import_Class_Protocol cComIRecipients
+
+    Procedure Construct_Object
+        Forward Send Construct_Object
+        Set peAutoCreate to acNoAutoCreate
+    End_Procedure
+End_Class
+
+// CLSID: {F6CB6A20-CC18-4424-AE57-6F2AA3DC2059}
+// IEnvelopedData Interface
+Class cComIEnvelopedData is a Mixin
+
+    // Default property to set the content to be enveloped.
+    Procedure Set ComContent String value
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Set ComProperty of hDispatchDriver 0 OLE_VT_BSTR to value
+    End_Procedure
+
+    // Default property to set the content to be enveloped.
+    Function ComContent Returns String
+        Handle hDispatchDriver
+        String retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 0 OLE_VT_BSTR to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property to get/set the encryption algorithm.
+    Function ComAlgorithm Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 1 OLE_VT_DISPATCH to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property to add/remove recipients.
+    Function ComRecipients Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 2 OLE_VT_DISPATCH to retVal
+        Function_Return retVal
+    End_Function
+
+    // Method to envelop the content.
+    Function ComEncrypt OLECAPICOM_ENCODING_TYPE llEncodingType Returns String
+        Handle hDispatchDriver
+        String retVal
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Send DefineParam to hDispatchDriver OLE_VT_I4 llEncodingType
+        Get InvokeComMethod of hDispatchDriver 3 OLE_VT_BSTR to retVal
+        Function_Return retVal
+    End_Function
+
+    // Method to decrypt the enveloped content.
+    Procedure ComDecrypt String llEnvelopedMessage
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Send DefineParam to hDispatchDriver OLE_VT_BSTR llEnvelopedMessage
+        Send InvokeComMethod to hDispatchDriver 4 OLE_VT_VOID
+    End_Procedure
+End_Class
+
+// CoClass
+// ProgID: CAPICOM.EnvelopedData.1
+// CLSID: {F3A12E08-EDE9-4160-8B51-334D982A9AD0}
+// EnvelopedData Class
+Class cComEnvelopedData is a cComAutomationObject
+    Import_Class_Protocol cComIEnvelopedData
+
+    Procedure Construct_Object
+        Forward Send Construct_Object
+        Set psProgID to "{F3A12E08-EDE9-4160-8B51-334D982A9AD0}"
+        Set peAutoCreate to acNoAutoCreate
+    End_Procedure
+End_Class
+
+// CLSID: {C4778A66-972F-42E4-87C5-5CC16F7931CA}
+// IEncryptedData Interface
+Class cComIEncryptedData is a Mixin
+
+    // Default property to set the content to be encrypted.
+    Procedure Set ComContent String value
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Set ComProperty of hDispatchDriver 0 OLE_VT_BSTR to value
+    End_Procedure
+
+    // Default property to set the content to be encrypted.
+    Function ComContent Returns String
+        Handle hDispatchDriver
+        String retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 0 OLE_VT_BSTR to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property to get/set the encryption algorithm.
+    Function ComAlgorithm Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 1 OLE_VT_DISPATCH to retVal
+        Function_Return retVal
+    End_Function
+
+    // Method to set the secret used to generate the symmetric key.
+    Procedure ComSetSecret String llnewVal OLECAPICOM_SECRET_TYPE llSecretType
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 2
+        Send DefineParam to hDispatchDriver OLE_VT_BSTR llnewVal
+        Send DefineParam to hDispatchDriver OLE_VT_I4 llSecretType
+        Send InvokeComMethod to hDispatchDriver 2 OLE_VT_VOID
+    End_Procedure
+
+    // Method to encrypt the content.
+    Function ComEncrypt OLECAPICOM_ENCODING_TYPE llEncodingType Returns String
+        Handle hDispatchDriver
+        String retVal
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Send DefineParam to hDispatchDriver OLE_VT_I4 llEncodingType
+        Get InvokeComMethod of hDispatchDriver 3 OLE_VT_BSTR to retVal
+        Function_Return retVal
+    End_Function
+
+    // Method to decrypt the encrypted content.
+    Procedure ComDecrypt String llEncryptedMessage
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Send DefineParam to hDispatchDriver OLE_VT_BSTR llEncryptedMessage
+        Send InvokeComMethod to hDispatchDriver 4 OLE_VT_VOID
+    End_Procedure
+End_Class
+
+// CoClass
+// ProgID: CAPICOM.EncryptedData.1
+// CLSID: {A440BD76-CFE1-4D46-AB1F-15F238437A3D}
+// EncryptedData Class
+Class cComEncryptedData is a cComAutomationObject
+    Import_Class_Protocol cComIEncryptedData
+
+    Procedure Construct_Object
+        Forward Send Construct_Object
+        Set psProgID to "{A440BD76-CFE1-4D46-AB1F-15F238437A3D}"
+        Set peAutoCreate to acNoAutoCreate
+    End_Procedure
+End_Class
+
+// CLSID: {208E5E9B-58B1-4086-970F-161B582A846F}
+// IOID Interface
+Class cComIOID is a Mixin
+
+    // Default property to get name.
+    Function ComName Returns OLECAPICOM_OID
+        Handle hDispatchDriver
+        OLECAPICOM_OID retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 0 OLE_VT_I4 to retVal
+        Function_Return retVal
+    End_Function
+
+    // Default property to get name.
+    Procedure Set ComName OLECAPICOM_OID value
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Set ComProperty of hDispatchDriver 0 OLE_VT_I4 to value
+    End_Procedure
+
+    // Default property to get friendly name.
+    Function ComFriendlyName Returns String
+        Handle hDispatchDriver
+        String retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 1 OLE_VT_BSTR to retVal
+        Function_Return retVal
+    End_Function
+
+    // Default property to get friendly name.
+    Procedure Set ComFriendlyName String value
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Set ComProperty of hDispatchDriver 1 OLE_VT_BSTR to value
+    End_Procedure
+
+    // Property to get the OID string value as defined in WinCrypt.h.
+    Function ComValue Returns String
+        Handle hDispatchDriver
+        String retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 2 OLE_VT_BSTR to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property to get the OID string value as defined in WinCrypt.h.
+    Procedure Set ComValue String value
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Set ComProperty of hDispatchDriver 2 OLE_VT_BSTR to value
+    End_Procedure
+End_Class
+
+// CoClass
+// ProgID: CAPICOM.OID.1
+// CLSID: {7BF3AC5C-CC84-429A-ACA5-74D916AD6B8C}
+// OID Class
+Class cComOID is a cComAutomationObject
+    Import_Class_Protocol cComIOID
+
+    Procedure Construct_Object
+        Forward Send Construct_Object
+        Set psProgID to "{7BF3AC5C-CC84-429A-ACA5-74D916AD6B8C}"
+        Set peAutoCreate to acNoAutoCreate
+    End_Procedure
+End_Class
+
+// CLSID: {DA55E8FC-8E27-451B-AEA8-1470D80FAD42}
+// IOIDs Interface
+Class cComIOIDs is a Mixin
+
+    // Property Item.
+    Function ComItem Variant llIndex Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Send DefineParam to hDispatchDriver OLE_VT_VARIANT llIndex
+        Get InvokeComMethod of hDispatchDriver 0 OLE_VT_VARIANT to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property Count.
+    Function ComCount Returns Integer
+        Handle hDispatchDriver
+        Integer retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 1 OLE_VT_I4 to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property _NewEnum.
+    Function Com_NewEnum Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver -4 OLE_VT_UNKNOWN to retVal
+        Function_Return retVal
+    End_Function
+
+    // Method Add.
+    Procedure ComAdd Variant llpVal
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Send DefineParam to hDispatchDriver OLE_VT_DISPATCH llpVal
+        Send InvokeComMethod to hDispatchDriver 2 OLE_VT_VOID
+    End_Procedure
+
+    // Method Remove.
+    Procedure ComRemove Variant llIndex
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Send DefineParam to hDispatchDriver OLE_VT_VARIANT llIndex
+        Send InvokeComMethod to hDispatchDriver 3 OLE_VT_VOID
+    End_Procedure
+
+    // Method Clear.
+    Procedure ComClear
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send InvokeComMethod to hDispatchDriver 4 OLE_VT_VOID
+    End_Procedure
+End_Class
+
+// CoClass
+// CLSID: {FD661131-D716-4D15-A187-AEAAB161C8AD}
+// OIDs Class
+Class cComOIDs is a cComAutomationObject
+    Import_Class_Protocol cComIOIDs
+
+    Procedure Construct_Object
+        Forward Send Construct_Object
+        Set peAutoCreate to acNoAutoCreate
+    End_Procedure
+End_Class
+
+// CLSID: {EE2C051D-33A1-4157-86B4-9280E29782F2}
+// INoticeNumbers Interface
+Class cComINoticeNumbers is a Mixin
+
+    // Property Item.
+    Function ComItem Integer llIndex Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Send DefineParam to hDispatchDriver OLE_VT_I4 llIndex
+        Get InvokeComMethod of hDispatchDriver 0 OLE_VT_VARIANT to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property Count.
+    Function ComCount Returns Integer
+        Handle hDispatchDriver
+        Integer retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 1 OLE_VT_I4 to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property _NewEnum.
+    Function Com_NewEnum Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver -4 OLE_VT_UNKNOWN to retVal
+        Function_Return retVal
+    End_Function
+End_Class
+
+// CoClass
+// CLSID: {A6FDF22A-8E00-464B-B15D-1A891D88B6ED}
+// NoticeNumbers Class
+Class cComNoticeNumbers is a cComAutomationObject
+    Import_Class_Protocol cComINoticeNumbers
+
+    Procedure Construct_Object
+        Forward Send Construct_Object
+        Set peAutoCreate to acNoAutoCreate
+    End_Procedure
+End_Class
+
+// CLSID: {3604C9DD-A22E-4A15-A469-8181C0C113DE}
+// IQualifier Interface
+Class cComIQualifier is a Mixin
+
+    // Default property to get the OID.
+    Function ComOID Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 0 OLE_VT_DISPATCH to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property to get the URI for the Certificate Practice Statement (CPS).
+    Function ComCPSPointer Returns String
+        Handle hDispatchDriver
+        String retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 1 OLE_VT_BSTR to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property to get the organization name.
+    Function ComOrganizationName Returns String
+        Handle hDispatchDriver
+        String retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 2 OLE_VT_BSTR to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property to get the notice numbers.
+    Function ComNoticeNumbers Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 3 OLE_VT_DISPATCH to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property to get the explicit text.
+    Function ComExplicitText Returns String
+        Handle hDispatchDriver
+        String retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 4 OLE_VT_BSTR to retVal
+        Function_Return retVal
+    End_Function
+End_Class
+
+// CoClass
+// CLSID: {E5F29B74-0902-4654-8A9A-21C5201DFA61}
+// Qualifier Class
+Class cComQualifier is a cComAutomationObject
+    Import_Class_Protocol cComIQualifier
+
+    Procedure Construct_Object
+        Forward Send Construct_Object
+        Set peAutoCreate to acNoAutoCreate
+    End_Procedure
+End_Class
+
+// CLSID: {6B5A8AB6-597D-4398-AC63-1036EF546348}
+// IQualifiers Interface
+Class cComIQualifiers is a Mixin
+
+    // Property Item.
+    Function ComItem Integer llIndex Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Send DefineParam to hDispatchDriver OLE_VT_I4 llIndex
+        Get InvokeComMethod of hDispatchDriver 0 OLE_VT_VARIANT to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property Count.
+    Function ComCount Returns Integer
+        Handle hDispatchDriver
+        Integer retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 1 OLE_VT_I4 to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property _NewEnum.
+    Function Com_NewEnum Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver -4 OLE_VT_UNKNOWN to retVal
+        Function_Return retVal
+    End_Function
+End_Class
+
+// CoClass
+// CLSID: {6C8006C0-F649-4783-B4A6-617DD0B270C7}
+// Qualifiers Class
+Class cComQualifiers is a cComAutomationObject
+    Import_Class_Protocol cComIQualifiers
+
+    Procedure Construct_Object
+        Forward Send Construct_Object
+        Set peAutoCreate to acNoAutoCreate
+    End_Procedure
+End_Class
+
+// CLSID: {8973710C-8411-4951-9E65-D45FD524FFDF}
+// IPolicyInformation Interface
+Class cComIPolicyInformation is a Mixin
+
+    // Default property to get the OID.
+    Function ComOID Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 0 OLE_VT_DISPATCH to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property to get the qualifiers collection object.
+    Function ComQualifiers Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 1 OLE_VT_DISPATCH to retVal
+        Function_Return retVal
+    End_Function
+End_Class
+
+// CoClass
+// CLSID: {0AAF88F4-1C22-4F65-A0E3-289D97DCE994}
+// PolicyInformation Class
+Class cComPolicyInformation is a cComAutomationObject
+    Import_Class_Protocol cComIPolicyInformation
+
+    Procedure Construct_Object
+        Forward Send Construct_Object
+        Set peAutoCreate to acNoAutoCreate
+    End_Procedure
+End_Class
+
+// CLSID: {CC7A72A7-C83A-4049-85F4-4292DE9DBFD3}
+// ICertificatePolicies Interface
+Class cComICertificatePolicies is a Mixin
+
+    // Property Item.
+    Function ComItem Integer llIndex Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Send DefineParam to hDispatchDriver OLE_VT_I4 llIndex
+        Get InvokeComMethod of hDispatchDriver 0 OLE_VT_VARIANT to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property Count.
+    Function ComCount Returns Integer
+        Handle hDispatchDriver
+        Integer retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 1 OLE_VT_I4 to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property _NewEnum.
+    Function Com_NewEnum Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver -4 OLE_VT_UNKNOWN to retVal
+        Function_Return retVal
+    End_Function
+End_Class
+
+// CoClass
+// CLSID: {988583C2-00C7-4D22-9241-E810E35EED1B}
+// CertificatePolicies Class
+Class cComCertificatePolicies is a cComAutomationObject
+    Import_Class_Protocol cComICertificatePolicies
+
+    Procedure Construct_Object
+        Forward Send Construct_Object
+        Set peAutoCreate to acNoAutoCreate
+    End_Procedure
+End_Class
+
+// CLSID: {D3D460F2-E7F3-4AF3-8EC6-8EB68C61C567}
+// IEncodedData Interface
+Class cComIEncodedData is a Mixin
+
+    // Default property to get the encoded data.
+    Function ComValue OLECAPICOM_ENCODING_TYPE llEncodingType Returns String
+        Handle hDispatchDriver
+        String retVal
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Send DefineParam to hDispatchDriver OLE_VT_I4 llEncodingType
+        Get InvokeComMethod of hDispatchDriver 0 OLE_VT_BSTR to retVal
+        Function_Return retVal
+    End_Function
+
+    // Method to format the encoded data for display purpose.
+    Function ComFormat Boolean llbMultiLines Returns String
+        Handle hDispatchDriver
+        String retVal
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Send DefineParam to hDispatchDriver OLE_VT_BOOL llbMultiLines
+        Get InvokeComMethod of hDispatchDriver 1 OLE_VT_BSTR to retVal
+        Function_Return retVal
+    End_Function
+
+    // Method to return the decoder object (IDispatch), which can be NULL.
+    Function ComDecoder Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 2 OLE_VT_DISPATCH to retVal
+        Function_Return retVal
+    End_Function
+End_Class
+
+// CoClass
+// CLSID: {7083C0AA-E7B9-48A4-8EFB-D6A109EBEC13}
+// EncodedData Class
+Class cComEncodedData is a cComAutomationObject
+    Import_Class_Protocol cComIEncodedData
+
+    Procedure Construct_Object
+        Forward Send Construct_Object
+        Set peAutoCreate to acNoAutoCreate
+    End_Procedure
+End_Class
+
+// CLSID: {ED4E4ED4-FDD8-476E-AED9-5239E7948257}
+// IExtension Interface
+Class cComIExtension is a Mixin
+
+    // Default property to get the IOID object.
+    Function ComOID Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 0 OLE_VT_DISPATCH to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property to get IsCritical setting.
+    Function ComIsCritical Returns Boolean
+        Handle hDispatchDriver
+        Boolean retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 1 OLE_VT_BOOL to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property to get the EncodedData object.
+    Function ComEncodedData Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 2 OLE_VT_DISPATCH to retVal
+        Function_Return retVal
+    End_Function
+End_Class
+
+// CoClass
+// CLSID: {D2359E2C-82D6-458F-BB6F-41559155E693}
+// Extension Class
+Class cComExtension is a cComAutomationObject
+    Import_Class_Protocol cComIExtension
+
+    Procedure Construct_Object
+        Forward Send Construct_Object
+        Set peAutoCreate to acNoAutoCreate
+    End_Procedure
+End_Class
+
+// CLSID: {BC530D61-E692-4225-9E7A-07B90B45856A}
+// IExtensions Interface
+Class cComIExtensions is a Mixin
+
+    // Property Item.
+    Function ComItem Variant llIndex Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Send DefineParam to hDispatchDriver OLE_VT_VARIANT llIndex
+        Get InvokeComMethod of hDispatchDriver 0 OLE_VT_VARIANT to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property Count.
+    Function ComCount Returns Integer
+        Handle hDispatchDriver
+        Integer retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 1 OLE_VT_I4 to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property _NewEnum.
+    Function Com_NewEnum Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver -4 OLE_VT_UNKNOWN to retVal
+        Function_Return retVal
+    End_Function
+End_Class
+
+// CoClass
+// CLSID: {7C92E131-C1DC-4CA1-B02C-F513A08B41ED}
+// Extensions Class
+Class cComExtensions is a cComAutomationObject
+    Import_Class_Protocol cComIExtensions
+
+    Procedure Construct_Object
+        Forward Send Construct_Object
+        Set peAutoCreate to acNoAutoCreate
+    End_Procedure
+End_Class
+
+// CLSID: {ECB8A5C8-562C-4989-B49D-FA37D40F8FC4}
+// IExtendedProperty Interface
+Class cComIExtendedProperty is a Mixin
+
+    // Default property to get PropID.
+    Function ComPropID Returns OLECAPICOM_PROPID
+        Handle hDispatchDriver
+        OLECAPICOM_PROPID retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 0 OLE_VT_I4 to retVal
+        Function_Return retVal
+    End_Function
+
+    // Default property to get PropID.
+    Procedure Set ComPropID OLECAPICOM_PROPID value
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Set ComProperty of hDispatchDriver 0 OLE_VT_I4 to value
+    End_Procedure
+
+    // Property to get the extended property data.
+    Function ComValue OLECAPICOM_ENCODING_TYPE llEncodingType Returns String
+        Handle hDispatchDriver
+        String retVal
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Send DefineParam to hDispatchDriver OLE_VT_I4 llEncodingType
+        Get InvokeComMethod of hDispatchDriver 1 OLE_VT_BSTR to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property to get the extended property data.
+    Procedure Set ComValue OLECAPICOM_ENCODING_TYPE llEncodingType String value
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 2
+        Send DefineParam to hDispatchDriver OLE_VT_I4 llEncodingType
+        Set ComProperty of hDispatchDriver 1 OLE_VT_BSTR to value
+    End_Procedure
+End_Class
+
+// CoClass
+// ProgID: CAPICOM.ExtendedProperty.1
+// CLSID: {9E7EA907-5810-4FCA-B817-CD0BBA8496FC}
+// ExtendedProperty Class
+Class cComExtendedProperty is a cComAutomationObject
+    Import_Class_Protocol cComIExtendedProperty
+
+    Procedure Construct_Object
+        Forward Send Construct_Object
+        Set psProgID to "{9E7EA907-5810-4FCA-B817-CD0BBA8496FC}"
+        Set peAutoCreate to acNoAutoCreate
+    End_Procedure
+End_Class
+
+// CLSID: {3B096E87-6218-4A3B-A880-F6CB951E7805}
+// IExtendedProperties Interface
+Class cComIExtendedProperties is a Mixin
+
+    // Property Item.
+    Function ComItem Integer llIndex Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Send DefineParam to hDispatchDriver OLE_VT_I4 llIndex
+        Get InvokeComMethod of hDispatchDriver 0 OLE_VT_VARIANT to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property Count.
+    Function ComCount Returns Integer
+        Handle hDispatchDriver
+        Integer retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 1 OLE_VT_I4 to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property _NewEnum.
+    Function Com_NewEnum Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver -4 OLE_VT_UNKNOWN to retVal
+        Function_Return retVal
+    End_Function
+
+    // Method Add.
+    Procedure ComAdd Variant llpVal
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Send DefineParam to hDispatchDriver OLE_VT_DISPATCH llpVal
+        Send InvokeComMethod to hDispatchDriver 2 OLE_VT_VOID
+    End_Procedure
+
+    // Method Remove.
+    Procedure ComRemove OLECAPICOM_PROPID llPropID
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Send DefineParam to hDispatchDriver OLE_VT_I4 llPropID
+        Send InvokeComMethod to hDispatchDriver 3 OLE_VT_VOID
+    End_Procedure
+End_Class
+
+// CoClass
+// CLSID: {90E7143D-1A07-438D-8F85-3DBB0B73D314}
+// ExtendedProperties Class
+Class cComExtendedProperties is a cComAutomationObject
+    Import_Class_Protocol cComIExtendedProperties
+
+    Procedure Construct_Object
+        Forward Send Construct_Object
+        Set peAutoCreate to acNoAutoCreate
+    End_Procedure
+End_Class
+
+// CLSID: {5F10FFCE-C922-476F-AA76-DF99D5BDFA2C}
+// ITemplate Interface
+Class cComITemplate is a Mixin
+
+    // Property to check if the CertificateTemplate extension is present.
+    Function ComIsPresent Returns Boolean
+        Handle hDispatchDriver
+        Boolean retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 1 OLE_VT_BOOL to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property to check if the CertificateTemplate extension is marked critical.
+    Function ComIsCritical Returns Boolean
+        Handle hDispatchDriver
+        Boolean retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 2 OLE_VT_BOOL to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property to get the name of the CertificateTemplate extension.
+    Function ComName Returns String
+        Handle hDispatchDriver
+        String retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 3 OLE_VT_BSTR to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property to get the OID object.
+    Function ComOID Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 4 OLE_VT_DISPATCH to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property to get the major version number.
+    Function ComMajorVersion Returns Integer
+        Handle hDispatchDriver
+        Integer retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 5 OLE_VT_I4 to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property to get the minor version number.
+    Function ComMinorVersion Returns Integer
+        Handle hDispatchDriver
+        Integer retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 6 OLE_VT_I4 to retVal
+        Function_Return retVal
+    End_Function
+End_Class
+
+// CoClass
+// CLSID: {61F0D2BD-373E-4F3C-962E-59B7C42C1B22}
+// Template Class
+Class cComTemplate is a cComAutomationObject
+    Import_Class_Protocol cComITemplate
+
+    Procedure Construct_Object
+        Forward Send Construct_Object
+        Set peAutoCreate to acNoAutoCreate
+    End_Procedure
+End_Class
+
+// CLSID: {72BF9ADA-6817-4C31-B43E-25F7C7B091F4}
+// IPublicKey Interface
+Class cComIPublicKey is a Mixin
+
+    // Default property to get the algorithm OID object.
+    Function ComAlgorithm Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 0 OLE_VT_DISPATCH to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property to get key length.
+    Function ComLength Returns Integer
+        Handle hDispatchDriver
+        Integer retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 1 OLE_VT_I4 to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property to get the EncodedData object for the key.
+    Function ComEncodedKey Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 2 OLE_VT_DISPATCH to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property to get the EncodedData object for the parameters.
+    Function ComEncodedParameters Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 3 OLE_VT_DISPATCH to retVal
+        Function_Return retVal
+    End_Function
+End_Class
+
+// CoClass
+// CLSID: {301FC658-4055-4D76-9703-AA38E6D7236A}
+// PublicKey Class
+Class cComPublicKey is a cComAutomationObject
+    Import_Class_Protocol cComIPublicKey
+
+    Procedure Construct_Object
+        Forward Send Construct_Object
+        Set peAutoCreate to acNoAutoCreate
+    End_Procedure
+End_Class
+
+// CLSID: {659DEDC3-6C85-42DB-8527-EFCB21742862}
+// IPrivateKey Interface
+Class cComIPrivateKey is a Mixin
+
+    // Default property to get the key container name.
+    Function ComContainerName Returns String
+        Handle hDispatchDriver
+        String retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 0 OLE_VT_BSTR to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property to get the unique key container name.
+    Function ComUniqueContainerName Returns String
+        Handle hDispatchDriver
+        String retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 1 OLE_VT_BSTR to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property to get the provider name.
+    Function ComProviderName Returns String
+        Handle hDispatchDriver
+        String retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 2 OLE_VT_BSTR to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property to get the provider type.
+    Function ComProviderType Returns OLECAPICOM_PROV_TYPE
+        Handle hDispatchDriver
+        OLECAPICOM_PROV_TYPE retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 3 OLE_VT_I4 to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property to get the key spec value.
+    Function ComKeySpec Returns OLECAPICOM_KEY_SPEC
+        Handle hDispatchDriver
+        OLECAPICOM_KEY_SPEC retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 4 OLE_VT_I4 to retVal
+        Function_Return retVal
+    End_Function
+
+    // Method to check if the key is accessible.
+    Function ComIsAccessible Returns Boolean
+        Handle hDispatchDriver
+        Boolean retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 5 OLE_VT_BOOL to retVal
+        Function_Return retVal
+    End_Function
+
+    // Method to check if the key is protected.
+    Function ComIsProtected Returns Boolean
+        Handle hDispatchDriver
+        Boolean retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 6 OLE_VT_BOOL to retVal
+        Function_Return retVal
+    End_Function
+
+    // Method to check if the key is marked exportable.
+    Function ComIsExportable Returns Boolean
+        Handle hDispatchDriver
+        Boolean retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 7 OLE_VT_BOOL to retVal
+        Function_Return retVal
+    End_Function
+
+    // Method to check if the key is in removable storage.
+    Function ComIsRemovable Returns Boolean
+        Handle hDispatchDriver
+        Boolean retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 8 OLE_VT_BOOL to retVal
+        Function_Return retVal
+    End_Function
+
+    // Method to check if the key is a machine keyset.
+    Function ComIsMachineKeyset Returns Boolean
+        Handle hDispatchDriver
+        Boolean retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 9 OLE_VT_BOOL to retVal
+        Function_Return retVal
+    End_Function
+
+    // Method to check if the key is stored in hardware device.
+    Function ComIsHardwareDevice Returns Boolean
+        Handle hDispatchDriver
+        Boolean retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 10 OLE_VT_BOOL to retVal
+        Function_Return retVal
+    End_Function
+
+    // Method to open an existing key container.
+    Procedure ComOpen String llContainerName String llProviderName OLECAPICOM_PROV_TYPE llProviderType OLECAPICOM_KEY_SPEC llKeySpec OLECAPICOM_STORE_LOCATION llStoreLocation Boolean llbCheckExistence
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 6
+        Send DefineParam to hDispatchDriver OLE_VT_BSTR llContainerName
+        Send DefineParam to hDispatchDriver OLE_VT_BSTR llProviderName
+        Send DefineParam to hDispatchDriver OLE_VT_I4 llProviderType
+        Send DefineParam to hDispatchDriver OLE_VT_I4 llKeySpec
+        Send DefineParam to hDispatchDriver OLE_VT_I4 llStoreLocation
+        Send DefineParam to hDispatchDriver OLE_VT_BOOL llbCheckExistence
+        Send InvokeComMethod to hDispatchDriver 11 OLE_VT_VOID
+    End_Procedure
+
+    // Method to delete the existing key container.
+    Procedure ComDelete
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send InvokeComMethod to hDispatchDriver 12 OLE_VT_VOID
+    End_Procedure
+End_Class
+
+// CoClass
+// ProgID: CAPICOM.PrivateKey.1
+// CLSID: {03ACC284-B757-4B8F-9951-86E600D2CD06}
+// PrivateKey Class
+Class cComPrivateKey is a cComAutomationObject
+    Import_Class_Protocol cComIPrivateKey
+
+    Procedure Construct_Object
+        Forward Send Construct_Object
+        Set psProgID to "{03ACC284-B757-4B8F-9951-86E600D2CD06}"
+        Set peAutoCreate to acNoAutoCreate
+    End_Procedure
+End_Class
+
+// CLSID: {84FBCB95-5600-404C-9187-AC25B4CD6E94}
+// ISignedCode Interface
+Class cComISignedCode is a Mixin
+
+    // Default property to get the filename of code to be signed.
+    Function ComFileName Returns String
+        Handle hDispatchDriver
+        String retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 0 OLE_VT_BSTR to retVal
+        Function_Return retVal
+    End_Function
+
+    // Default property to get the filename of code to be signed.
+    Procedure Set ComFileName String value
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Set ComProperty of hDispatchDriver 0 OLE_VT_BSTR to value
+    End_Procedure
+
+    // Property to get the description text.
+    Function ComDescription Returns String
+        Handle hDispatchDriver
+        String retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 1 OLE_VT_BSTR to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property to get the description text.
+    Procedure Set ComDescription String value
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Set ComProperty of hDispatchDriver 1 OLE_VT_BSTR to value
+    End_Procedure
+
+    // Property to get the description URL.
+    Function ComDescriptionURL Returns String
+        Handle hDispatchDriver
+        String retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 2 OLE_VT_BSTR to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property to get the description URL.
+    Procedure Set ComDescriptionURL String value
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Set ComProperty of hDispatchDriver 2 OLE_VT_BSTR to value
+    End_Procedure
+
+    // Property to get the signer.
+    Function ComSigner Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 3 OLE_VT_DISPATCH to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property to get the time stamper.
+    Function ComTimeStamper Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 4 OLE_VT_DISPATCH to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property to get all certificates in the signed code.
+    Function ComCertificates Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 5 OLE_VT_DISPATCH to retVal
+        Function_Return retVal
+    End_Function
+
+    // Method to sign the code.
+    Procedure ComSign Variant llpISigner2
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Send DefineParam to hDispatchDriver OLE_VT_DISPATCH llpISigner2
+        Send InvokeComMethod to hDispatchDriver 6 OLE_VT_VOID
+    End_Procedure
+
+    // Method to timestamp the signed code.
+    Procedure ComTimestamp String llURL
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Send DefineParam to hDispatchDriver OLE_VT_BSTR llURL
+        Send InvokeComMethod to hDispatchDriver 7 OLE_VT_VOID
+    End_Procedure
+
+    // Method to verify the signed code.
+    Procedure ComVerify Boolean llbUIAllowed
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Send DefineParam to hDispatchDriver OLE_VT_BOOL llbUIAllowed
+        Send InvokeComMethod to hDispatchDriver 8 OLE_VT_VOID
+    End_Procedure
+End_Class
+
+// CoClass
+// ProgID: CAPICOM.SignedCode.1
+// CLSID: {8C3E4934-9FA4-4693-9253-A29A05F99186}
+// SignedCode Class
+Class cComSignedCode is a cComAutomationObject
+    Import_Class_Protocol cComISignedCode
+
+    Procedure Construct_Object
+        Forward Send Construct_Object
+        Set psProgID to "{8C3E4934-9FA4-4693-9253-A29A05F99186}"
+        Set peAutoCreate to acNoAutoCreate
+    End_Procedure
+End_Class
+
+// CLSID: {9F7F23E8-06F4-42E8-B965-5CBD044BF27F}
+// IHashedData Interface
+Class cComIHashedData is a Mixin
+
+    // Default property to get hashed value in hex format. Once the hashed value is obtained, future call to the Hash method starts a new hash.
+    Function ComValue Returns String
+        Handle hDispatchDriver
+        String retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 0 OLE_VT_BSTR to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property to get hashing algorithm.
+    Function ComAlgorithm Returns OLECAPICOM_HASH_ALGORITHM
+        Handle hDispatchDriver
+        OLECAPICOM_HASH_ALGORITHM retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 1 OLE_VT_I4 to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property to get hashing algorithm.
+    Procedure Set ComAlgorithm OLECAPICOM_HASH_ALGORITHM value
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Set ComProperty of hDispatchDriver 1 OLE_VT_I4 to value
+    End_Procedure
+
+    // Method to hash data. Must repeatedly call this method until all data are hashed, then the hashed value can be obtained through the Value property.
+    Procedure ComHash String llnewVal
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Send DefineParam to hDispatchDriver OLE_VT_BSTR llnewVal
+        Send InvokeComMethod to hDispatchDriver 2 OLE_VT_VOID
+    End_Procedure
+End_Class
+
+// CoClass
+// ProgID: CAPICOM.HashedData.1
+// CLSID: {CE32ABF6-475D-41F6-BF82-D27F03E3D38B}
+// HashedData Class
+Class cComHashedData is a cComAutomationObject
+    Import_Class_Protocol cComIHashedData
+
+    Procedure Construct_Object
+        Forward Send Construct_Object
+        Set psProgID to "{CE32ABF6-475D-41F6-BF82-D27F03E3D38B}"
+        Set peAutoCreate to acNoAutoCreate
+    End_Procedure
+End_Class
+
+// CLSID: {EB166CF6-2AE6-44DA-BD96-0C1635D183FE}
+// IUtilities Interface
+Class cComIUtilities is a Mixin
+
+    // Method to get a secure random number.
+    Function ComGetRandom Integer llLength OLECAPICOM_ENCODING_TYPE llEncodingType Returns String
+        Handle hDispatchDriver
+        String retVal
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 2
+        Send DefineParam to hDispatchDriver OLE_VT_I4 llLength
+        Send DefineParam to hDispatchDriver OLE_VT_I4 llEncodingType
+        Get InvokeComMethod of hDispatchDriver 1 OLE_VT_BSTR to retVal
+        Function_Return retVal
+    End_Function
+
+    // Method to Base64 encode a string.
+    Function ComBase64Encode String llSrcString Returns String
+        Handle hDispatchDriver
+        String retVal
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Send DefineParam to hDispatchDriver OLE_VT_BSTR llSrcString
+        Get InvokeComMethod of hDispatchDriver 2 OLE_VT_BSTR to retVal
+        Function_Return retVal
+    End_Function
+
+    // Method to Base64 decode a string.
+    Function ComBase64Decode String llEncodedString Returns String
+        Handle hDispatchDriver
+        String retVal
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Send DefineParam to hDispatchDriver OLE_VT_BSTR llEncodedString
+        Get InvokeComMethod of hDispatchDriver 3 OLE_VT_BSTR to retVal
+        Function_Return retVal
+    End_Function
+
+    // Method to convert a binary packed string to hex string.
+    Function ComBinaryToHex String llBinaryString Returns String
+        Handle hDispatchDriver
+        String retVal
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Send DefineParam to hDispatchDriver OLE_VT_BSTR llBinaryString
+        Get InvokeComMethod of hDispatchDriver 4 OLE_VT_BSTR to retVal
+        Function_Return retVal
+    End_Function
+
+    // Method to convert a hex string to binary packed string.
+    Function ComHexToBinary String llHexString Returns String
+        Handle hDispatchDriver
+        String retVal
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Send DefineParam to hDispatchDriver OLE_VT_BSTR llHexString
+        Get InvokeComMethod of hDispatchDriver 5 OLE_VT_BSTR to retVal
+        Function_Return retVal
+    End_Function
+
+    // Method to convert binary packed string to an array of bytes (VT_ARRAY | VT_UI1).
+    Function ComBinaryStringToByteArray String llBinaryString Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Send DefineParam to hDispatchDriver OLE_VT_BSTR llBinaryString
+        Get InvokeComMethod of hDispatchDriver 6 OLE_VT_VARIANT to retVal
+        Function_Return retVal
+    End_Function
+
+    // Method to convert an array of bytes (VT_ARRAY | VT_UI1) to binary packed string.
+    Function ComByteArrayToBinaryString Variant llvarByteArray Returns String
+        Handle hDispatchDriver
+        String retVal
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Send DefineParam to hDispatchDriver OLE_VT_VARIANT llvarByteArray
+        Get InvokeComMethod of hDispatchDriver 7 OLE_VT_BSTR to retVal
+        Function_Return retVal
+    End_Function
+
+    // Method to convert local time to UTC time.
+    Function ComLocalTimeToUTCTime DateTime llLocalTime Returns DateTime
+        Handle hDispatchDriver
+        DateTime retVal
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Send DefineParam to hDispatchDriver OLE_VT_DATE llLocalTime
+        Get InvokeComMethod of hDispatchDriver 8 OLE_VT_DATE to retVal
+        Function_Return retVal
+    End_Function
+
+    // Method to convert UTC time to local time.
+    Function ComUTCTimeToLocalTime DateTime llUTCTime Returns DateTime
+        Handle hDispatchDriver
+        DateTime retVal
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Send DefineParam to hDispatchDriver OLE_VT_DATE llUTCTime
+        Get InvokeComMethod of hDispatchDriver 9 OLE_VT_DATE to retVal
+        Function_Return retVal
+    End_Function
+End_Class
+
+// CoClass
+// ProgID: CAPICOM.Utilities.1
+// CLSID: {22A85CE1-F011-4231-B9E4-7E7A0438F71B}
+// Utilities Class
+Class cComUtilities is a cComAutomationObject
+    Import_Class_Protocol cComIUtilities
+
+    Procedure Construct_Object
+        Forward Send Construct_Object
+        Set psProgID to "{22A85CE1-F011-4231-B9E4-7E7A0438F71B}"
+        Set peAutoCreate to acNoAutoCreate
+    End_Procedure
+End_Class
+
+// CLSID: {BF95660E-F743-4EAC-9DE5-960787A4606C}
+// ICertificateStatus2 Interface
+Class cComICertificateStatus2 is a cComAutomationObject
+
+    // Default property to get the certificate validity result.
+    Function ComResult Returns Boolean
+        Handle hDispatchDriver
+        Boolean retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 0 OLE_VT_BOOL to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property to get validity check flag.
+    Function ComCheckFlag Returns OLECAPICOM_CHECK_FLAG
+        Handle hDispatchDriver
+        OLECAPICOM_CHECK_FLAG retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 1 OLE_VT_I4 to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property to get validity check flag.
+    Procedure Set ComCheckFlag OLECAPICOM_CHECK_FLAG value
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Set ComProperty of hDispatchDriver 1 OLE_VT_I4 to value
+    End_Procedure
+
+    // Method to return an IEKU object for setting extended key usage to check (default is no EKU check).
+    Function ComEKU Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 2 OLE_VT_DISPATCH to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property to get verification time.
+    Function ComVerificationTime Returns DateTime
+        Handle hDispatchDriver
+        DateTime retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 3 OLE_VT_DATE to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property to get verification time.
+    Procedure Set ComVerificationTime DateTime value
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Set ComProperty of hDispatchDriver 3 OLE_VT_DATE to value
+    End_Procedure
+
+    // Property to get the URL retrieval timeout value (in seconds).
+    Function ComUrlRetrievalTimeout Returns Integer
+        Handle hDispatchDriver
+        Integer retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 4 OLE_VT_I4 to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property to get the URL retrieval timeout value (in seconds).
+    Procedure Set ComUrlRetrievalTimeout Integer value
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Set ComProperty of hDispatchDriver 4 OLE_VT_I4 to value
+    End_Procedure
+
+    // Method to get the certificate policies OIDs collection.
+    Function ComCertificatePolicies Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 5 OLE_VT_DISPATCH to retVal
+        Function_Return retVal
+    End_Function
+
+    // Method to get the application policies OIDs collection.
+    Function ComApplicationPolicies Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 6 OLE_VT_DISPATCH to retVal
+        Function_Return retVal
+    End_Function
+End_Class
+
+// CLSID: {AB769053-6D38-49D4-86EF-5FA85ED3AF27}
+// ICertificateStatus Interface
+Class cComICertificateStatus is a cComAutomationObject
+
+    // Default property to get the certificate validity result.
+    Function ComResult Returns Boolean
+        Handle hDispatchDriver
+        Boolean retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 0 OLE_VT_BOOL to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property to get validity check flag.
+    Function ComCheckFlag Returns OLECAPICOM_CHECK_FLAG
+        Handle hDispatchDriver
+        OLECAPICOM_CHECK_FLAG retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 1 OLE_VT_I4 to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property to get validity check flag.
+    Procedure Set ComCheckFlag OLECAPICOM_CHECK_FLAG value
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Set ComProperty of hDispatchDriver 1 OLE_VT_I4 to value
+    End_Procedure
+
+    // Method to return an IEKU object for setting extended key usage to check (default is no EKU check).
+    Function ComEKU Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 2 OLE_VT_DISPATCH to retVal
+        Function_Return retVal
+    End_Function
+End_Class
+
+// CLSID: {68646716-BDA0-4046-AB82-4444BC93B84A}
+// ICertificates Interface
+Class cComICertificates is a cComAutomationObject
+
+    // Property Item.
+    Function ComItem Integer llIndex Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Send DefineParam to hDispatchDriver OLE_VT_I4 llIndex
+        Get InvokeComMethod of hDispatchDriver 0 OLE_VT_VARIANT to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property Count.
+    Function ComCount Returns Integer
+        Handle hDispatchDriver
+        Integer retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 1 OLE_VT_I4 to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property _NewEnum.
+    Function Com_NewEnum Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver -4 OLE_VT_UNKNOWN to retVal
+        Function_Return retVal
+    End_Function
+End_Class
+
+// CLSID: {0BBA0B86-766C-4755-A443-243FF2BD8D29}
+// ICertificate Interface
+Class cComICertificate is a cComAutomationObject
+
+    // Property to get the version number.
+    Function ComVersion Returns Integer
+        Handle hDispatchDriver
+        Integer retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 1 OLE_VT_I4 to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property to get the serial number.
+    Function ComSerialNumber Returns String
+        Handle hDispatchDriver
+        String retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 2 OLE_VT_BSTR to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property to get the subject's name.
+    Function ComSubjectName Returns String
+        Handle hDispatchDriver
+        String retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 3 OLE_VT_BSTR to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property to get the issuer's name.
+    Function ComIssuerName Returns String
+        Handle hDispatchDriver
+        String retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 4 OLE_VT_BSTR to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property to get the valid notBefore date.
+    Function ComValidFromDate Returns DateTime
+        Handle hDispatchDriver
+        DateTime retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 5 OLE_VT_DATE to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property to get the valid notAfter date.
+    Function ComValidToDate Returns DateTime
+        Handle hDispatchDriver
+        DateTime retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 6 OLE_VT_DATE to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property to get the SHA1 hash.
+    Function ComThumbprint Returns String
+        Handle hDispatchDriver
+        String retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 7 OLE_VT_BSTR to retVal
+        Function_Return retVal
+    End_Function
+
+    // Method to check if private key is available.
+    Function ComHasPrivateKey Returns Boolean
+        Handle hDispatchDriver
+        Boolean retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 10 OLE_VT_BOOL to retVal
+        Function_Return retVal
+    End_Function
+
+    // Method to get other simple information of the certificate.
+    Function ComGetInfo OLECAPICOM_CERT_INFO_TYPE llInfoType Returns String
+        Handle hDispatchDriver
+        String retVal
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Send DefineParam to hDispatchDriver OLE_VT_I4 llInfoType
+        Get InvokeComMethod of hDispatchDriver 11 OLE_VT_BSTR to retVal
+        Function_Return retVal
+    End_Function
+
+    // Method to return the ICertificateStatus object for checking if the certificate is valid.
+    Function ComIsValid Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 12 OLE_VT_DISPATCH to retVal
+        Function_Return retVal
+    End_Function
+
+    // Method to return the KeyUsage object.
+    Function ComKeyUsage Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 13 OLE_VT_DISPATCH to retVal
+        Function_Return retVal
+    End_Function
+
+    // Method to return the ExtendedKeyUsage object.
+    Function ComExtendedKeyUsage Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 14 OLE_VT_DISPATCH to retVal
+        Function_Return retVal
+    End_Function
+
+    // Method to return the BasicConstraints object.
+    Function ComBasicConstraints Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 15 OLE_VT_DISPATCH to retVal
+        Function_Return retVal
+    End_Function
+
+    // Method to export the certificate.
+    Function ComExport OLECAPICOM_ENCODING_TYPE llEncodingType Returns String
+        Handle hDispatchDriver
+        String retVal
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Send DefineParam to hDispatchDriver OLE_VT_I4 llEncodingType
+        Get InvokeComMethod of hDispatchDriver 16 OLE_VT_BSTR to retVal
+        Function_Return retVal
+    End_Function
+
+    // Method to import a certificate.
+    Procedure ComImport String llEncodedCertificate
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Send DefineParam to hDispatchDriver OLE_VT_BSTR llEncodedCertificate
+        Send InvokeComMethod to hDispatchDriver 17 OLE_VT_VOID
+    End_Procedure
+
+    // Method to display the certificate.
+    Procedure ComDisplay
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send InvokeComMethod to hDispatchDriver 18 OLE_VT_VOID
+    End_Procedure
+End_Class
+
+// CLSID: {77F6F881-5D3A-4F2F-AEF0-E4A2F9AA689D}
+// IChain Interface
+Class cComIChain is a cComAutomationObject
+
+    // Default property to get an ordered certificates collection object representing the chain, where Item(1) represents the end certificate and Item(Count()) represents the root certificate.
+    Function ComCertificates Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 0 OLE_VT_DISPATCH to retVal
+        Function_Return retVal
+    End_Function
+
+    // Property to get validity status of the chain or a particular certficate. For overall chain status, specify Index of 0, otherwise specify the 1 for the end certificate, and Certificates.Count() for the root certificate.
+    Function ComStatus Integer llIndex Returns Integer
+        Handle hDispatchDriver
+        Integer retVal
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Send DefineParam to hDispatchDriver OLE_VT_I4 llIndex
+        Get InvokeComMethod of hDispatchDriver 1 OLE_VT_I4 to retVal
+        Function_Return retVal
+    End_Function
+
+    // Method to build the certificate chain and get the overall result of the chain validity.
+    Function ComBuild Variant llpICertificate Returns Boolean
+        Handle hDispatchDriver
+        Boolean retVal
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Send DefineParam to hDispatchDriver OLE_VT_DISPATCH llpICertificate
+        Get InvokeComMethod of hDispatchDriver 2 OLE_VT_BOOL to retVal
+        Function_Return retVal
+    End_Function
+End_Class
+
+// CLSID: {4DA6ABC4-BDCD-4317-B650-262075B93A9C}
+// IStore2 Interface
+Class cComIStore2 is a cComAutomationObject
+
+    // Default property to get a Certificates collection object.
+    Function ComCertificates Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 0 OLE_VT_DISPATCH to retVal
+        Function_Return retVal
+    End_Function
+
+    // Method to open a store.
+    Procedure ComOpen OLECAPICOM_STORE_LOCATION llStoreLocation String llStoreName OLECAPICOM_STORE_OPEN_MODE llOpenMode
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 3
+        Send DefineParam to hDispatchDriver OLE_VT_I4 llStoreLocation
+        Send DefineParam to hDispatchDriver OLE_VT_BSTR llStoreName
+        Send DefineParam to hDispatchDriver OLE_VT_I4 llOpenMode
+        Send InvokeComMethod to hDispatchDriver 1 OLE_VT_VOID
+    End_Procedure
+
+    // Method to add a certificate to the store.
+    Procedure ComAdd Variant llpVal
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Send DefineParam to hDispatchDriver OLE_VT_DISPATCH llpVal
+        Send InvokeComMethod to hDispatchDriver 2 OLE_VT_VOID
+    End_Procedure
+
+    // Method to remove a certificate from the store.
+    Procedure ComRemove Variant llpVal
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Send DefineParam to hDispatchDriver OLE_VT_DISPATCH llpVal
+        Send InvokeComMethod to hDispatchDriver 3 OLE_VT_VOID
+    End_Procedure
+
+    // Method to export the store.
+    Function ComExport OLECAPICOM_STORE_SAVE_AS_TYPE llSaveAs OLECAPICOM_ENCODING_TYPE llEncodingType Returns String
+        Handle hDispatchDriver
+        String retVal
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 2
+        Send DefineParam to hDispatchDriver OLE_VT_I4 llSaveAs
+        Send DefineParam to hDispatchDriver OLE_VT_I4 llEncodingType
+        Get InvokeComMethod of hDispatchDriver 4 OLE_VT_BSTR to retVal
+        Function_Return retVal
+    End_Function
+
+    // Method to import a store.
+    Procedure ComImport String llEncodedStore
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Send DefineParam to hDispatchDriver OLE_VT_BSTR llEncodedStore
+        Send InvokeComMethod to hDispatchDriver 5 OLE_VT_VOID
+    End_Procedure
+
+    // Method to load certificate(s) from file.
+    Procedure ComLoad String llFileName String llPassword OLECAPICOM_KEY_STORAGE_FLAG llKeyStorageFlag
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 3
+        Send DefineParam to hDispatchDriver OLE_VT_BSTR llFileName
+        Send DefineParam to hDispatchDriver OLE_VT_BSTR llPassword
+        Send DefineParam to hDispatchDriver OLE_VT_I4 llKeyStorageFlag
+        Send InvokeComMethod to hDispatchDriver 6 OLE_VT_VOID
+    End_Procedure
+End_Class
+
+// CLSID: {E860EF75-1B63-4254-AF47-960DAA3DD337}
+// IStore Interface
+Class cComIStore is a cComAutomationObject
+
+    // Default property to get a Certificates collection object.
+    Function ComCertificates Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 0 OLE_VT_DISPATCH to retVal
+        Function_Return retVal
+    End_Function
+
+    // Method to open a store.
+    Procedure ComOpen OLECAPICOM_STORE_LOCATION llStoreLocation String llStoreName OLECAPICOM_STORE_OPEN_MODE llOpenMode
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 3
+        Send DefineParam to hDispatchDriver OLE_VT_I4 llStoreLocation
+        Send DefineParam to hDispatchDriver OLE_VT_BSTR llStoreName
+        Send DefineParam to hDispatchDriver OLE_VT_I4 llOpenMode
+        Send InvokeComMethod to hDispatchDriver 1 OLE_VT_VOID
+    End_Procedure
+
+    // Method to add a certificate to the store.
+    Procedure ComAdd Variant llpVal
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Send DefineParam to hDispatchDriver OLE_VT_DISPATCH llpVal
+        Send InvokeComMethod to hDispatchDriver 2 OLE_VT_VOID
+    End_Procedure
+
+    // Method to remove a certificate from the store.
+    Procedure ComRemove Variant llpVal
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Send DefineParam to hDispatchDriver OLE_VT_DISPATCH llpVal
+        Send InvokeComMethod to hDispatchDriver 3 OLE_VT_VOID
+    End_Procedure
+
+    // Method to export the store.
+    Function ComExport OLECAPICOM_STORE_SAVE_AS_TYPE llSaveAs OLECAPICOM_ENCODING_TYPE llEncodingType Returns String
+        Handle hDispatchDriver
+        String retVal
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 2
+        Send DefineParam to hDispatchDriver OLE_VT_I4 llSaveAs
+        Send DefineParam to hDispatchDriver OLE_VT_I4 llEncodingType
+        Get InvokeComMethod of hDispatchDriver 4 OLE_VT_BSTR to retVal
+        Function_Return retVal
+    End_Function
+
+    // Method to import a store.
+    Procedure ComImport String llEncodedStore
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Send DefineParam to hDispatchDriver OLE_VT_BSTR llEncodedStore
+        Send InvokeComMethod to hDispatchDriver 5 OLE_VT_VOID
+    End_Procedure
+End_Class
+
+// CLSID: {51017B88-1913-49AD-82BE-6BB7C417DCF2}
+// ISigner Interface
+Class cComISigner is a cComAutomationObject
+
+    // Default property to get signer's certificate.
+    Function ComCertificate Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 0 OLE_VT_DISPATCH to retVal
+        Function_Return retVal
+    End_Function
+
+    // Default property to get signer's certificate.
+    Procedure Set ComCertificate Variant value
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Set ComProperty of hDispatchDriver 0 OLE_VT_DISPATCH to value
+    End_Procedure
+
+    // Property to add/remove authenticated attributes.
+    Function ComAuthenticatedAttributes Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 1 OLE_VT_DISPATCH to retVal
+        Function_Return retVal
+    End_Function
+End_Class

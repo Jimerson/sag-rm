@@ -1,0 +1,46 @@
+// Classes do VDF
+Use LanguageText.pkg
+Use DfAllEnt.pkg
+Use Dfaclnt.pkg
+Use Dftimer.pkg
+Use Dfpanel.pkg
+
+// Tamanho de argumento padr’o
+Define SYS_ARG_SIZE for 500000
+Set_Argument_Size SYS_ARG_SIZE
+
+// VDF SIG Library
+//Use SigCJLibraries.pkg
+//Use cSigCJDockingPane_Container.pkg
+//Use cSigCjShortcutBar.pkg
+//Use cSigCJGlobalSettings.pkg
+//Use SigCJMonthCalendar.sl
+
+// Standard
+//Use cCJCommandBarSystem.pkg
+Use cCJSkinFramework.pkg
+Use oEditContextMenu.pkg
+Use oDEOEditContextMenu17.pkg
+
+// Outras
+//Use WindowsProcesses.pkg
+
+// Atributos dos elementos da janela principal
+Define C_Bar_Menu 	   for 1
+Define C_Bar_Favoritos for 2
+Define C_Bar_Recentes  for 3
+
+Define C_Pane_Short_Cut_Bar for 1
+Define C_Pane_Error_Log_Bar for 2
+Define C_Pane_Notify_Bar for 3
+Define C_Pane_Search_Bar for 4
+
+Define C_Theme_DLL for "Office2010.dll"
+Define C_Theme_Color for "Office2010Silver.ini"
+Define C_Language_File for "SuitePro.ResourcePtBr.dll"
+
+// Formatacao da data para 4 digitos e ano inicial
+Set_Date_Attribute SysDate4_State to True
+Set_Date_Attribute Date4_State    to True
+Set_Date_Attribute Epoch_Value    to 30
+

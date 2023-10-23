@@ -1,0 +1,33 @@
+-----------------------------------------------------------------------------
+  DATE: 10/08/2021      TIME: 11:33                                  PAGE:  1
+  FILE DEFINITION FOR FILE: GWGERAREBO (# 29)
+-----------------------------------------------------------------------------
+  DRIVER NAME               : MSSQLDRV
+  FILE ROOT NAME            : GWGERAREBO.INT
+  USER DISPLAY NAME         : GWGERAREBO
+  DATAFLEX FILE NAME        : GWGERAREBO
+-----------------------------------------------------------------------------
+  RECORD LENGTH             : 46        ( USED: 46 )
+  MAX NUMBER OF RECORDS     : 2147483647  ( USED: 0 )
+  FILE COMPRESSION          : NONE
+  RE-USE DELETED SPACE      : YES
+  LOCKING TYPE              : RECORD
+  HEADER INTEGRITY CHECKING : NO 
+  TRANSACTION TYPE          : SERVER LOGGED
+  RECORD IDENTITY INDEX     : 0 ( 0 , 0 )
+  FILE LOGIN PARAMETER      : DFCONNID=SAGRM
+  SYSTEM FILE               : NO 
+-----------------------------------------------------------------------------
+
+NUM  FIELD NAME       TYPE SIZE  OFFST IX   RELATES TO FILE.FIELD
+---  ---------------  ---- ----- ----- --   ---------------------------------
+  1  USUARIO          ASC     20     1  1   
+  2  CODIGO           ASC      8    21      
+  3  PLACA            ASC      7    29      
+
+
+INDEX# FIELDS          DES U/C    LENGTH LEVELS SEGMENTS MODE
+------ --------------- --- ---    ------ ------ -------- -------
+  1    USUARIO         NO  NO       0      0       2     ON-LINE
+       Recnum          NO  NO 
+

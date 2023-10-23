@@ -1,0 +1,80 @@
+// Processo ativo
+//#IFNDEF ghoActiveProcess
+//    Handle ghoActiveProcess
+//#ENDIF
+
+String gsCompany
+String gsProduct
+String gsVersaoSys          // Guarda a versao do PSGA
+String gsCodUser            // Codigo do usuario do sistema passado por parametro
+String  gsPath              // Path para verificar proteΒo somente leitura
+Boolean gbExist             // Verifica que arquivo existe, para verificar proteΒo somente leitura
+Boolean gbTeste             //Variavel para indicar que � ambiente de teste
+Handle ghoDDSeq
+Handle ghoVersionInfo
+
+Integer giArrayQuery   
+
+Boolean gbLoginCfg
+
+Object oArrayQueryResult is an array
+    Move Self to giArrayQuery
+End_Object
+
+Struct tDadosField    // declares a new struct type
+    String sNome
+    Integer iTipo
+    Integer iSeq
+    Integer iSize
+    Integer iPrecision
+End_Struct
+
+Struct tFilterComponents
+    Handle hObject
+    Integer iGroupFilter
+    Integer iObjectType //C_VISUALCONTROL_FORM; C_VISUALCONTROL_COMBO; C_VISUALCONTROL_CHECK
+    Integer iFilterType //>= = <=
+    Integer iDataType   //DF_ASCII, DF_BCD, DF_DATE, DF_DATETIME, DF_OVERLAP, DF_TEXT, DF_BINARY
+End_Struct
+
+
+//Constantes tipo de dados Form
+Define C_FORMTYPE_CHAR for 0
+Define C_FORMTYPE_NUMBER for 1
+Define C_FORMTYPE_DATE for 2
+
+//Contantes tipo GFILTREL
+Define C_TIPOFILT_IGUAL for 0
+Define C_TIPOFILT_INI_FIN for 1
+
+//Constantes tipo de objeto
+Define C_VISUALCONTROL_FORM for 0
+Define C_VISUALCONTROL_COMBO for 1
+Define C_VISUALCONTROL_CHECK for 2
+
+//Constantes Tipo Retorno Get_Description
+Define C_GETDESC_LABEL_LONG for 0
+Define C_GETDESC_LABEL_SHORT for 1
+Define C_GETDESC_STATUS_HELP FOR 2
+
+//Constantes Tipo Retorno Get_Names
+Define C_GETNAME_FILE for 0
+Define C_GETNAME_FIELD for 1
+Define C_GETNAME_BOTH for 2
+Define C_GETNAME_FIELDNUMBER for 3
+
+//Constantes Tipo de Filtro
+Define C_FILTERTYPE_EQ for 0    // =
+Define C_FILTERTYPE_GE for 1    // >=
+Define C_FILTERTYPE_LE for 2    // <=
+
+//Constantes Tipo Pesquisa Get_Description_itens
+Define C_FINDTYPE_DESCRIPTIONITENS_SEQ for 0
+Define C_FINDTYPE_DESCRIPTIONITENS_LABEL for 1
+Define C_FINDTYPE_DESCRIPTIONITENS_BOTH for 2
+
+//Constantes Tipo de Retorno Get_Description_Itens
+Define C_RETURNTYPE_DESCRIPTIONITENS_SEQ for 0
+Define C_RETURNTYPE_DESCRIPTIONITENS_LABEL for 1
+Define C_RETURNTYPE_DESCRIPTIONITENS_BOTH for 2
+

@@ -1,0 +1,21 @@
+Use DataDict.pkg
+Use BPCoreBase.bp
+
+Class DataDictionary_SI is a DataDictionary
+    
+    Procedure Construct_Object
+        Forward Send Construct_Object
+        
+    End_Procedure
+
+    Procedure End_Construct_Object
+        Integer iFile        
+        
+        Forward Send End_Construct_Object
+        
+        Get Main_File to iFile
+        Send LoadValidationTables of (oBPCoreBase(Self)) Self iFile
+        
+    End_Procedure
+
+End_Class

@@ -1,0 +1,21 @@
+Use DfClient.pkg
+
+{ DesignerClass=cDTView }
+Class cDbView_SI is a dbView
+    
+    Procedure Construct_Object
+        
+        Forward Send Construct_Object
+        
+        Set Maximize_Icon to True
+        Set pbAutoActivate to True
+        Set Verify_Save_msg to (RefFunc(No_Confirmation))
+
+    End_Procedure
+
+    Procedure End_Construct_Object
+        Forward Send End_Construct_Object
+
+    End_Procedure
+
+End_Class

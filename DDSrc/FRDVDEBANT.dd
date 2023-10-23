@@ -1,0 +1,67 @@
+Use DataDict.pkg
+
+Open FRDVDEBANT
+Open FRDVH
+
+Class FRDVDEBANTDataDictionary is a DataDictionary
+    
+    Procedure Construct_Object
+        Forward Send Construct_Object
+        Set Main_File to FRDVDEBANT.File_Number
+
+        Set Add_Server_File to FRDVH.File_Number
+
+        Set Foreign_Field_Option DD_KEYFIELD DD_NOPUT to True
+        Set Foreign_Field_Option DD_KEYFIELD DD_FINDREQ to True
+        Set Foreign_Field_Option DD_INDEXFIELD DD_NOPUT to True
+        Set Foreign_Field_Option DD_DEFAULT DD_DISPLAYONLY to True
+        
+        Set Field_Label_Long Field FRDVDEBANT.FRDVH_COD to "RDV"
+        Set Field_Label_Short Field FRDVDEBANT.FRDVH_COD to "RDV"
+        Set Field_Option Field FRDVDEBANT.FRDVH_COD DD_AUTOFIND to True
+        Set Key_Field_State Field FRDVDEBANT.FRDVH_COD to True
+
+        Set Field_Label_Long Field FRDVDEBANT.SEQ to "Seq."
+        Set Field_Label_Short Field FRDVDEBANT.SEQ to "Seq."
+        Set Field_Option Field FRDVDEBANT.SEQ DD_AUTOFIND to True
+        Set Key_Field_State Field FRDVDEBANT.SEQ to True
+
+        Set Field_Label_Long Field FRDVDEBANT.PES_CODIGO to "C¢d. Pessoa"
+        Set Field_Label_Short Field FRDVDEBANT.PES_CODIGO to "C¢d. Pessoa"
+
+        Set Field_Label_Long Field FRDVDEBANT.RAZAO_SOCIAL to "Raz∆o Social"
+        Set Field_Label_Short Field FRDVDEBANT.RAZAO_SOCIAL to "Raz∆o Social"
+        Set Field_Option Field FRDVDEBANT.RAZAO_SOCIAL DD_CAPSLOCK to True
+
+        Set Field_Label_Long Field FRDVDEBANT.DPR_DOCUM to "Documento"
+        Set Field_Label_Short Field FRDVDEBANT.DPR_DOCUM to "Documento"
+        Set Field_Option Field FRDVDEBANT.DPR_DOCUM DD_CAPSLOCK to True
+
+        Set Field_Label_Long Field FRDVDEBANT.AGR_COD to "C¢d. Agrupador"
+        Set Field_Label_Short Field FRDVDEBANT.AGR_COD to "C¢d. Agrupador"
+        Set Field_Option Field FRDVDEBANT.AGR_COD DD_CAPSLOCK to True
+
+        Set Field_Label_Long Field FRDVDEBANT.DESCRICAO to "Descr. Agrupador"
+        Set Field_Label_Short Field FRDVDEBANT.DESCRICAO to "Descr. Agrupador"
+        Set Field_Option Field FRDVDEBANT.DESCRICAO DD_CAPSLOCK to True
+
+        Set Field_Label_Long Field FRDVDEBANT.VALOR to "Valor"
+        Set Field_Label_Short Field FRDVDEBANT.VALOR to "Valor"
+
+        Set Field_Label_Long Field FRDVDEBANT.DT_VENCTO to "Data Vencto."
+        Set Field_Label_Short Field FRDVDEBANT.DT_VENCTO to "Data Vencto."
+
+        Set Field_Label_Long Field FRDVDEBANT.HISTORICO to "Hist¢rico"
+        Set Field_Label_Short Field FRDVDEBANT.HISTORICO to "Hist¢rico"
+        Set Field_Option Field FRDVDEBANT.HISTORICO DD_CAPSLOCK to True
+
+        Set Field_Label_Long Field FRDVDEBANT.TIPO to "Tipo"
+        Set Field_Label_Short Field FRDVDEBANT.TIPO to "Tipo"
+
+        Set Field_Label_Long Field FRDVDEBANT.ABONADO to "Abonado"
+        Set Field_Label_Short Field FRDVDEBANT.ABONADO to "Abonado"
+        Set Field_Class_Name Field FRDVDEBANT.ABONADO to "Checkbox"
+
+    End_Procedure
+
+End_Class

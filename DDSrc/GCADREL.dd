@@ -1,0 +1,34 @@
+Use DataDict.pkg
+
+Open GCADREL
+
+Class GCADRELDataDictionary is a DataDictionary
+    
+    Procedure Construct_Object
+        Forward Send Construct_Object
+        Set Main_File to GCADREL.File_Number
+
+        Set Foreign_Field_Option DD_KEYFIELD DD_NOPUT to True
+        Set Foreign_Field_Option DD_KEYFIELD DD_FINDREQ to True
+        Set Foreign_Field_Option DD_INDEXFIELD DD_NOPUT to True
+        Set Foreign_Field_Option DD_DEFAULT DD_DISPLAYONLY to True
+
+        Set Field_Option Field GCADREL.CHAVE DD_AUTOFIND to True
+        Set Key_Field_State Field GCADREL.CHAVE to True
+        Set Field_Label_Long Field GCADREL.CHAVE to "Chave"
+        Set Field_Label_Short Field GCADREL.CHAVE to "Chave"
+
+        Set Field_Label_Long Field GCADREL.NOME_REL to "Nome Relat¢rio"
+        Set Field_Label_Short Field GCADREL.NOME_REL to "Nome Rel."
+
+        Set Field_Label_Long Field GCADREL.NOME_ARQ to "Arquivo (.rpt)"
+        Set Field_Label_Short Field GCADREL.NOME_ARQ to "Arquivo (.rpt)"
+
+        Set Field_Label_Long Field GCADREL.CUSTOM to "Custom"
+        Set Field_Label_Short Field GCADREL.CUSTOM to "Custom"
+        Set Field_Checkbox_Values Field GCADREL.CUSTOM to "1" "0"
+        Set Field_Class_Name Field GCADREL.CUSTOM to "Checkbox"
+
+    End_Procedure
+
+End_Class

@@ -1,0 +1,46 @@
+Use cCrystal_SI.pkg
+Open GFILEREL
+
+Object oCrystalReportReadInfo is a cCrystal_SI
+    Set peOutputDestination to PRINT_TO_WINDOW
+    
+    Procedure OnInitializeReport Handle hoReport
+        String sReportName sTable
+        Integer iTable iSize
+        Handle[] hoTables
+        
+        Get psReportNameShort to sReportName
+//        Set psReportNameShort to sReportName
+
+        // Limpar arquivos do rpt atual
+        Clear GFILEREL
+        Move (Trim(Uppercase(sReportName))) to GFILEREL.RPT
+        Repeat
+            Find gt GFILEREL by Index.1
+            If ((Found) and (Trim(Uppercase(sReportName)) = Trim(Uppercase(GFILEREL.RPT)))) Delete GFILEREL
+            Else Break
+        Loop
+    
+        Get TableObjects of hoReport to hoTables
+        Move (SizeOfArray(hoTables)) to iSize
+
+        For iTable from 0 to (iSize - 1)
+            Get ComName of hoTables[iTable] to sTable
+            
+            //Pega a String de Conexao do RPT
+            //Get ComConnectBufferString of hoTables [iTable] to sLink
+            
+            Clear GFILEREL
+            Move (Trim(Uppercase(sReportName))) to GFILEREL.RPT
+            Move sTable                         to GFILEREL.FILE
+            Find eq GFILEREL by Index.1
+            If (not(Found)) Begin
+                Clear GFILEREL
+                Move (Trim(Uppercase(sReportName))) to GFILEREL.RPT
+                Move (Trim(Uppercase(sTable)))      to GFILEREL.FILE
+                SaveRecord GFILEREL
+            End
+        Loop
+        
+    End_Procedure
+End_Object  // oCrystalReport

@@ -1,0 +1,28 @@
+Use Windows.pkg
+
+Class cFormFiltro_SI is a Form
+    
+    Procedure Construct_Object
+        Forward Send Construct_Object
+        
+        { Visibility=Public }
+        Property String psTableName ""
+        
+        { Visibility=Public }
+        Property String psFieldName ""
+        
+        { Visibility=Public }
+        Property String psKeyName ""
+        
+        { Visibility=Public }
+        Property String pbForceEnabled False
+
+    End_Procedure
+
+    Procedure End_Construct_Object
+        Forward Send End_Construct_Object
+
+    End_Procedure
+
+
+End_Class

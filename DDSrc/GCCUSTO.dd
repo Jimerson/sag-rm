@@ -1,0 +1,36 @@
+Use DataDict.pkg
+
+Open GCCUSTO
+
+Register_Object oSLGCCUSTO
+
+Class GCCUSTODataDictionary is a DataDictionary
+    
+    Procedure Construct_Object
+        Forward Send Construct_Object
+        Set Main_File to GCCUSTO.File_Number
+
+        Set Foreign_Field_Option DD_KEYFIELD DD_NOPUT to True
+        Set Foreign_Field_Option DD_KEYFIELD DD_FINDREQ to True
+        Set Foreign_Field_Option DD_INDEXFIELD DD_NOPUT to True
+        Set Foreign_Field_Option DD_DEFAULT DD_DISPLAYONLY to True
+
+        Set Field_Label_Long Field GCCUSTO.CCU_CODIGO to "C¢digo"
+        Set Field_Label_Short Field GCCUSTO.CCU_CODIGO to "C¢digo"
+        Set Field_Option Field GCCUSTO.CCU_CODIGO DD_AUTOFIND to True
+        Set Field_Option Field GCCUSTO.CCU_CODIGO DD_CAPSLOCK to True
+        Set Field_Prompt_Object Field GCCUSTO.CCU_CODIGO to oSLGCCUSTO
+        Set Key_Field_State Field GCCUSTO.CCU_CODIGO to True
+
+        Set Field_Label_Long Field GCCUSTO.DESCRICAO to "Descri‡Æo"
+        Set Field_Label_Short Field GCCUSTO.DESCRICAO to "Descri‡Æo"
+        Set Field_Option Field GCCUSTO.DESCRICAO DD_CAPSLOCK to True
+
+    End_Procedure
+
+End_Class
+
+#IFDEF Is$WebApp
+#ELSE
+Use SLGCCUSTO.sl
+#ENDIF

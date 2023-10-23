@@ -1,0 +1,34 @@
+-----------------------------------------------------------------------------
+  DATE: 10/08/2021      TIME: 11:33                                  PAGE:  1
+  FILE DEFINITION FOR FILE: SRVINI (# 20)
+-----------------------------------------------------------------------------
+  DRIVER NAME               : DATAFLEX
+  FILE ROOT NAME            : SRVINI
+  USER DISPLAY NAME         : SRVINI
+  DATAFLEX FILE NAME        : SRVINI
+-----------------------------------------------------------------------------
+  RECORD LENGTH             : 256       ( USED: 200 )
+  MAX NUMBER OF RECORDS     : 10000     ( USED: 1 )
+  FILE COMPRESSION          : NONE
+  RE-USE DELETED SPACE      : YES
+  LOCKING TYPE              : FILE
+  HEADER INTEGRITY CHECKING : YES
+  TRANSACTION TYPE          : CLIENT ATOMIC
+  RECORD IDENTITY INDEX     : 0 ( 0 , 0 )
+  FILE LOGIN PARAMETER      : 
+  SYSTEM FILE               : NO 
+-----------------------------------------------------------------------------
+
+NUM  FIELD NAME       TYPE SIZE  OFFST IX   RELATES TO FILE.FIELD
+---  ---------------  ---- ----- ----- --   ---------------------------------
+  1  FIELD1           ASC     40     1      
+  2  FIELD2           ASC     40    41      
+  3  FIELD3           ASC     40    81      
+  4  FIELD4           ASC     40   121      
+  5  FIELD_5          ASC     40   161      
+
+
+INDEX# FIELDS          DES U/C    LENGTH LEVELS SEGMENTS MODE
+------ --------------- --- ---    ------ ------ -------- -------
+  1    Recnum          NO  NO       3      2       1     ON-LINE
+

@@ -1,0 +1,353 @@
+//Relat rio de Registros de Viagens
+
+// Register all objects
+Register_Object RVFRDVH
+Register_Object oFrdvhCodigoGroup
+Register_Object oFromFrdvhCodigo
+Register_Object oToFrdvhCodigo
+Register_Object oFrdvhCcuCodigoGroup
+Register_Object oFromFrdvhCcuCodigo
+Register_Object oToFrdvhCcuCodigo
+Register_Object oFrdvhMesGroup
+Register_Object oFromFrdvhMes
+Register_Object oToFrdvhMes
+Register_Object oFrdvhAnoGroup
+Register_Object oFromFrdvhAno
+Register_Object oToFrdvhAno
+Register_Object oDestinationGroup
+Register_Object oScreenRadio
+Register_Object oPrinterRadio
+Register_Object oFileRadio
+Register_Object oDetailsGroup
+Register_Object oDetailRadio
+Register_Object oSummaryRadio
+Register_Object oSortOrderGroup
+Register_Object FrdvhCodigoRadio
+Register_Object oDescendingCheckBox
+Register_Object oPrintButton
+Register_Object oCancelButton
+Register_Object oCrystalRVFRDVH
+
+Use DFAllEnt.pkg
+Use cCrystal_SI.pkg
+Use cReportView_SI.pkg
+Use GCADREL.dd
+Use cDbCJGrid_SI.pkg
+Use dfTabDlg.pkg
+Use Windows.pkg
+Use dfLine.pkg
+
+Deferred_View Activate_oRVFRDVH for ;
+Object oRVFRDVH is a cReportView_SI
+    Set Label to "Relat rio de Registros de Viagens"
+    Set psChaveRel to 'RVFRDVH'
+    
+    Object oDestinationGroup is a RadioGroup
+        Set Label to "Sa¡da"
+        Set Location to 14 289
+        Set Size to 46 77
+        Set peAnchors to anTopRight
+    
+        Object oScreenRadio is a Radio
+            Set Label to "V¡deo"
+            Set Size to 10 60
+            Set Location to 10 6
+            Set Status_Help to "Print the report to screen"
+        End_Object // oScreenRadio
+            
+        Object oPrinterRadio is a Radio
+            Set Label to "Impressora"
+            Set Size to 10 60
+            Set Location to 22 6
+            Set Status_Help to "Prints the report to printer"
+        End_Object // oPrinterRadio
+            
+        Object oFileRadio is a Radio
+            Set Label to "Exporta‡Æo"
+            Set Size to 10 60
+            Set Location to 34 6
+            Set Status_Help to "Outputs the report to disk file, application or email"
+        End_Object // oFileRadio
+        
+        
+        // This function returns the output destination constant.
+        
+        Function PrintDestination Returns Integer
+            Integer iCurrentRadio eDestination
+            Get Current_Radio to iCurrentRadio
+            If (iCurrentRadio=0)  Move PRINT_TO_WINDOW  to eDestination
+            If (iCurrentRadio=1)  Move PRINT_TO_PRINTER to eDestination
+            If (iCurrentRadio=2)  Move PRINT_TO_FILE    to eDestination
+            Function_Return eDestination
+        End_Function // PrintDestination                                            
+    
+    End_Object // oDestinationGroup
+    
+    Object oDetailsGroup is a RadioGroup
+        Set Label to "Detalhes do Rel."
+        Set Location to 15 376
+        Set Size to 46 55
+        Set peAnchors to anTopRight
+        
+        Object oDetailRadio is a Radio
+            Set Label to "Detalhes"
+            Set Size to 10 41
+            Set Location to 13 7
+            Set Status_Help to "Show detailed report"
+        End_Object // oDetailRadio
+        
+        Object oSummaryRadio is a Radio
+            Set Label to "Sum rios"
+            Set Size to 10 41
+            Set Location to 28 7
+            Set Status_Help to "Show summary report"
+        End_Object // oSummaryRadio
+        
+        
+        // This function returns true if the Show Detail radio is checked,
+        // false if the Show Summary radio is checked.
+        
+        Function IsDetail Returns Integer
+            Integer iCurrentRadio
+            Get Current_Radio to iCurrentRadio
+            Function_Return (iCurrentRadio=0)
+        End_Function // IsDetail
+    
+    
+    End_Object // oDetailsGroup
+    
+    Object oBtnImprimir is a Button
+        Set Label to "Imprimir"
+        Set Size to 42 50
+        Set Location to 18 437
+        Set Status_Help to "Print the report"
+        Set Default_State to True
+        Set psImage to "ActionPrint.ico"
+        Set Skip_State to True
+        Set peAnchors to anTopRight
+        
+        // This procedure outputs the report by sending RunReport.
+        
+        Procedure OnClick
+            Boolean bRet
+            Integer iLoop iCount
+            Handle[] hoArray 
+            Handle hoObj
+            String s
+            
+            Send RunReport of oCrystalRVFRDVH
+            
+            //Send LoadFieldsByReport (Trim(GCADREL.NOME_ARQ))
+
+        End_Procedure // OnClick
+    
+    End_Object
+    
+    Object oBtnCancelar is a Button
+        Set Label to "Cancelar"
+        Set Size to 14 50
+        Set Location to 64 437
+        Set Status_Help to "Cancel this Panel"
+        Set Skip_State to True
+        Set psImage to "ActionUndo.ico"
+        Set peAnchors to anTopRight
+        
+        // This procedure closes the view.
+        
+        Procedure OnClick
+            Send Close_Panel
+        End_Procedure // OnClick
+    
+    End_Object
+    
+    
+    Object oCrystalRVFRDVH is a cCrystal_SI
+        
+        
+        // This event is sent when the report is run and the cCrystalReport COM object has been created.
+        Procedure OnInitializeReport Handle hoReport
+            Integer eDestination
+            String  sSelection sReportName
+            Boolean bDetail bShowFormula
+            Integer iSortField 
+            Boolean bDescending
+            
+            Forward Send OnInitializeReport hoReport
+            
+            // Set the print destination.
+            
+            Get PrintDestination of oDestinationGroup to eDestination
+            Set peOutputDestination to eDestination
+            
+            // Set the selection formula.
+            //Set ComRecordSelectionFormula of hoReport to sSelection
+            Get Checked_State of oCkExibeFormula to bShowFormula
+            Set pbShowSelectionFormula to bShowFormula
+            Get Monta_Filtro to sSelection
+            Set SelectionFormula of hoReport to sSelection
+
+            // Set the details section to visible/invisible.
+            
+            Get IsDetail of oDetailsGroup to bDetail
+            If (not(bDetail)) Begin
+                Send MakeSectionsInvisible crDetail
+            End
+            
+            
+            // Set the Sort Order.
+            
+//            // Delete the existing sort order.
+//            Send DeleteSortOrder of hoReport
+//            // Create the new sort order.
+//            Get SortField    of oSortOrderGroup to iSortField
+//            Get IsDescending of oSortOrderGroup to bDescending
+//            If (iSortField=0) Send AppendSortField of hoReport "FRDVH" "CODIGO" (If(bDescending,crDescendingOrder,crAscendingOrder))
+            
+        
+        End_Procedure // OnInitializeReport
+        
+        
+        // Event is called when report is sent to previewer
+        Procedure OnDisplayReport Handle hoReport
+            Forward Send OnDisplayReport hoReport
+        End_Procedure // OnDisplayReport
+        
+        
+        // Event is called when report is sent to Export
+        Procedure OnExportReport Handle hoReport
+            Forward Send OnExportReport hoReport
+        End_Procedure // OnExportReport
+        
+        
+        // procedure is called when report is sent to printer
+        Procedure OnPrintReport Handle hoReport
+        
+            Forward Send OnPrintReport hoReport
+        
+            Set pbPrinterPrompt of hoReport to True // will prompt to set-up printer
+        
+            // Or... printer can be set up within the program
+            //Send ComSelectPrinter of hoReport "sDriverName" "sPrinterName" "sPortName"
+            //Set piPrinterCopies   of hoReport to 1
+            //Set pbPrinterCollate  of hoReport to True
+        
+        End_Procedure // OnPrintReport
+        
+        
+        // Mark all section of passed type as hidden
+        Procedure MakeSectionsInvisible Integer eSectionType
+            Handle  hoReport
+            Handle  hoAreas hoArea
+            Variant vAreas  vArea
+            Integer iAreas  iArea iKind
+            
+            Get ReportObject to hoReport
+            
+            Get Create of hoReport U_cCrystalAreas to hoAreas // areas collection
+            Get Create of hoReport U_cCrystalArea  to hoArea  // area object
+            
+            Get ComAreas of hoReport to vAreas // areas dispatch
+            Set pvComObject of hoAreas to vAreas // attach dispatch to object
+            Get ComCount of hoAreas to iAreas
+            For iArea from 1 to iAreas
+                Get ComItem of hoAreas iArea to vArea
+                Set pvComObject of hoArea to vArea // attach area dispatch to object
+                Get ComKind of hoArea to iKind // is it the right kind, if so, suppress
+                If (iKind=eSectionType) Begin
+                    Set ComSuppress of hoArea to True
+                End
+            Loop
+            Send Destroy of hoArea //destroy objects used
+            Send Destroy of hoAreas
+        End_Procedure // MakeSectionsInvisible
+    
+    End_Object // oCrystalRVFRDVH
+    
+    Set Location to 2 -1
+    Set Size to 301 494
+
+    Object oDbTabDialogView1 is a dbTabDialogView
+        Set Size to 125 279
+        Set Location to 4 4
+        Set peAnchors to anAll
+        Object oGCADREL_DD is a GCADRELDataDictionary
+            Procedure OnConstrain
+                String sChave
+                Forward Send OnConstrain
+                
+                Get psChaveRel to sChave
+                Constrain GCADREL.CHAVE eq sChave
+            End_Procedure
+        End_Object
+    
+        Set Main_DD to oGCADREL_DD
+        Set Server to oGCADREL_DD
+
+        Object oDbTVRelatorios is a dbTabView
+            Set Label to 'Relat¢rios'
+
+            Object oDbCJGrid1 is a cDbCJGrid_SI
+                Set Size to 103 269
+                Set Location to 4 2
+                Set pbReadOnly to True
+                Set peAnchors to anAll
+        
+                Object oGCADREL_NOME_REL is a cDbCJGridColumn
+                    Entry_Item GCADREL.NOME_REL
+                    Set piWidth to 470
+                    Set psCaption to "Relat¢rio"
+                End_Object
+        
+                Procedure Entering_Scope Returns Integer
+                    Integer iRetVal
+                    Forward Get msg_Entering_Scope to iRetVal
+                    
+                    Send Rebuild_Constraints of oGCADREL_DD
+                    Send MoveToFirstRow of oDbCJGrid1
+                    
+                    Procedure_Return iRetVal
+                End_Procedure
+
+                Procedure Refresh Integer eMode
+                    Forward Send Refresh eMode
+                    
+                    Set psReportName of oCrystalRVFRDVH     to (Trim(GCADREL.NOME_ARQ))
+                    Set psReportTitle of oCrystalRVFRDVH    to (Trim(GCADREL.NOME_REL))
+                    
+                    Send LoadFieldsByReport (GCADREL.NOME_ARQ)
+                End_Procedure
+            End_Object
+        End_Object
+    End_Object
+
+    Object oGroupFiltros is a Group
+        Set Size to 166 484
+        Set Location to 131 5
+        Set Label to 'Filtros'
+        Set peAnchors to anBottomLeftRight
+
+        Object oLineControl1 is a LineControl
+            Set Size to 160 2
+            Set Location to 5 156
+            Set Horizontal_State to False
+        End_Object
+
+        Object oLineControl1 is a LineControl
+            Set Size to 160 2
+            Set Location to 4 310
+            Set Horizontal_State to False
+        End_Object
+        
+
+    End_Object
+
+    Object oCkExibeFormula is a CheckBox
+        Set Size to 10 50
+        Set Location to 83 437
+        Set Label to "Exibe F¢rmula"
+        Set peAnchors to anTopRight
+    End_Object
+
+
+Cd_End_Object
+

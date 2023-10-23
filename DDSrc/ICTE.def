@@ -1,0 +1,42 @@
+-----------------------------------------------------------------------------
+  DATE: 10/08/2021      TIME: 11:33                                  PAGE:  1
+  FILE DEFINITION FOR FILE: ICTE (# 12)
+-----------------------------------------------------------------------------
+  DRIVER NAME               : MSSQLDRV
+  FILE ROOT NAME            : ICTE.INT
+  USER DISPLAY NAME         : ICTE
+  DATAFLEX FILE NAME        : ICTE
+-----------------------------------------------------------------------------
+  RECORD LENGTH             : 273       ( USED: 273 )
+  MAX NUMBER OF RECORDS     : 2147483647  ( USED: 37465 )
+  FILE COMPRESSION          : NONE
+  RE-USE DELETED SPACE      : YES
+  LOCKING TYPE              : RECORD
+  HEADER INTEGRITY CHECKING : NO 
+  TRANSACTION TYPE          : SERVER LOGGED
+  RECORD IDENTITY INDEX     : 0 ( 0 , 0 )
+  FILE LOGIN PARAMETER      : DFCONNID=SAGRM
+  SYSTEM FILE               : NO 
+-----------------------------------------------------------------------------
+
+NUM  FIELD NAME       TYPE SIZE  OFFST IX   RELATES TO FILE.FIELD
+---  ---------------  ---- ----- ----- --   ---------------------------------
+  1  NUMERO           ASC      8     1  1   
+  2  COD_SERIE        ASC      6     9  1   
+  3  COD_TRANSP       ASC      8    15  1   
+  4  COD_PRODUTO      ASC     25    23      
+  5  PRODUTO          ASC    100    48      
+  6  MUN_ORIGEM       ASC     30   148      
+  7  MUN_DESTINO      ASC     30   178      
+  8  VLR_FRETE        NUM   12.4   208      
+  9  VINCULADO        NUM    1.0   226      
+ 10  DATA             DAT     10   232      
+ 11  CCU_CODIGO       ASC      8   255      
+
+
+INDEX# FIELDS          DES U/C    LENGTH LEVELS SEGMENTS MODE
+------ --------------- --- ---    ------ ------ -------- -------
+  1    NUMERO          NO  NO       0      0       3     ON-LINE
+       COD_TRANSP      NO  NO 
+       COD_SERIE       NO  NO 
+

@@ -1,0 +1,38 @@
+Use DataDict.pkg
+
+Open GVIEWS
+Open GVIEWUSER
+Open GSEQ
+
+Register_Object oSLGVIEWS
+
+Class GVIEWSDataDictionary is a DataDictionary
+    
+    Procedure Construct_Object
+        Forward Send Construct_Object
+        Set Main_File to GVIEWS.File_Number
+
+        Set Add_Client_File to GVIEWUSER.File_Number
+
+        Set Add_System_File to GSEQ.File_Number DD_Lock_On_All
+
+        Set Foreign_Field_Option DD_KEYFIELD DD_NOPUT to True
+        Set Foreign_Field_Option DD_KEYFIELD DD_FINDREQ to True
+        Set Foreign_Field_Option DD_KEYFIELD DD_AUTOFIND to True
+        Set Foreign_Field_Option DD_INDEXFIELD DD_NOPUT to True
+        Set Foreign_Field_Option DD_DEFAULT DD_DISPLAYONLY to True
+
+        Set Field_Option Field GVIEWS.CODIGO DD_AUTOFIND to True
+        Set Field_Prompt_Object Field GVIEWS.CODIGO to oSLGVIEWS
+        Set Field_Auto_Increment Field GVIEWS.CODIGO to File_Field GSEQ.SEQ_GVIEWS
+        Set Key_Field_State Field GVIEWS.CODIGO to True
+        Set Cascade_Delete_State to False
+
+    End_Procedure
+
+End_Class
+
+#IFDEF Is$WebApp
+#ELSE
+Use GSLVIEWS.sl
+#ENDIF
